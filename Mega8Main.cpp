@@ -8,6 +8,7 @@
  **************************************************************/
 
 #include "Mega8Main.h"
+#include "include/bell.h"
 
 #include <wx/msgdlg.h>
 #include <wx/dcmemory.h>
@@ -67,7 +68,7 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 }
 
 Mix_Chunk *gSound = NULL;
-Mix_Music *gMusic = NULL;
+Mix_Chunk *gMusic = NULL;
 const long Mega8Frame::idChipGLCanvas = wxNewId();
 
 const int Mega8Frame::StatusBarFieldsStatus = 1;
@@ -303,6 +304,10 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
         exit(1);
     }
 
+    // Init Audio
+    gSound = NULL;
+    gMusic = NULL;
+
     // Get Application Directory
     wxString exePath = wxPathOnly(::wxStandardPaths::Get().GetExecutablePath());
 
@@ -327,6 +332,16 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
 
 Mega8Frame::~Mega8Frame()
 {
+    if (gMusic != NULL) {
+        Mix_FreeChunk(gMusic);
+        gMusic = NULL;
+    }
+
+    if (gSound != NULL) {
+        Mix_FreeChunk(gSound);
+        gMusic = NULL;
+    }
+
     delete _machine;
     //(*Destroy(Mega8Frame)
     //*)
@@ -349,6 +364,11 @@ void Mega8Frame::DoOpen() {
 	    _frequency = -1;
 		CurrentRomPath = OpenDialog->GetPath();
 		CurrentRomDir = OpenDialog->GetDirectory();
+
+        if (gMusic != NULL) {
+            Mix_FreeChunk(gMusic);
+            gMusic = NULL;
+        }
 
 		// Sets our current document to the file the user selected
 		// Delete CPU Thread
@@ -452,39 +472,39 @@ void Mega8Frame::OnCPUThreadUpdate(wxThreadEvent&)
     static bool isPlaying;
 
     // Check if we must play a sound
-    if (_machine->timerSound() != 0 && gSound != NULL && _machine->getType() != MCHIP8) {
+    if (_machine->timerSound() != 0 && _machine->getType() != MCHIP8) {
         //Load sound effects
-        SDL_RWops *chunk = SDL_RWFromConstMem(bell_wav, bell_wav_len);
-        gSound = Mix_LoadWAV_RW(chunk, 0);
-        if( gSound == NULL )
-        {
-            printf( "Failed to load beep sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
-            SDL_RWclose(chunk);
-            exit(1);
-        }
-        SDL_RWclose(chunk);
-
-        Mix_PlayChannel( -1, gSound, 0 );
-    } else {
-        if (_machine->getSoundBuffer() != NULL && !isPlaying) {
-
-
-            /*SDL_RWops *chunk = SDL_RWFromConstMem(_machine->getSoundBuffer(), _machine->getSoundBufferSize());
-            gSound = Mix_LoadWAV_RW(chunk, 0);*/
-            gSound = Mix_QuickLoad_RAW(_machine->getSoundBuffer(), _machine->getSoundBufferSize());
+        if (gSound == NULL) {
+            SDL_RWops *chunk = SDL_RWFromConstMem(bell_wav, bell_wav_len);
+            gSound = Mix_LoadWAV_RW(chunk, 0);
             if( gSound == NULL )
             {
-                printf( "Failed to load Mega-Chip sound effect! SDL_mixer Error: %s\n", Mix_GetError() );
-                //SDL_RWclose(chunk);
-                exit(1);
+                printf( "Failed to load Beep Sound Effect! SDL_mixer Error: %s\n", Mix_GetError() );
+                SDL_RWclose(chunk);
+                gSound = NULL;
             }
-            //SDL_RWclose(chunk);
+            SDL_RWclose(chunk);
+        }
+
+        if (gSound != NULL)
+            Mix_PlayChannel( -1, gSound, 0 );
+    } else {
+        if (_machine->getSoundBuffer() != NULL && !isPlaying) {
+            // Load RAW Data from Chip8 (8bit mono 11025Hz)
+            gMusic = Mix_QuickLoad_RAW(_machine->getSoundBuffer(), _machine->getSoundBufferSize());
+            if( gMusic == NULL )
+            {
+                printf( "Failed to load Mega-Chip Music! SDL_mixer Error: %s\n", Mix_GetError() );
+                gMusic = NULL;
+            }
             isPlaying = true;
 
-            Mix_FadeInChannel( -1, gSound, _machine->getSoundRepeat(), 3000 );
+            if (gMusic != NULL)
+                Mix_FadeInChannel( -1, gMusic, _machine->getSoundRepeat(), 3000 );
+
         } else if (_machine->getSoundBuffer() == NULL && isPlaying) {
-            Mix_FreeChunk(gSound);
-            gSound = NULL;
+            Mix_FreeChunk(gMusic);
+            gMusic = NULL;
             isPlaying = false;
         }
     }
@@ -739,7 +759,28 @@ void Mega8Frame::OnReset(wxCommandEvent& event)
 
 void Mega8Frame::Reset() {
     if (_machine) {
-        _machine->initialize(_machine->getType());
+        // Hard Reset
+        if (gMusic != NULL) {
+            Mix_FreeChunk(gMusic);
+            gMusic = NULL;
+        }
+
+		/*// Delete CPU Thread
+		if (_CPUThread) {
+            if (_Paused)
+                DoResumeCPUThread();
+
+            DeleteCPUThread();
+            delete _CPUThread;
+            _CPUThread = NULL;
+		}
+
+        delete _machine;
+        _machine = new Chip8();*/
+		_machine->initialize(CHIP8);
+		SetSyncClock(MnuSyncClock->IsChecked());
+		SetFiltered(MnuFilter->IsChecked());
+        _machine->initialize(CHIP8);
         if (CurrentRomPath == wxEmptyString)
             _machine->loadBios();
         else

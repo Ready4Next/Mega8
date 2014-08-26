@@ -3189,11 +3189,10 @@
 	<fstream>
 	<string.h>
 
-1409052176 source:/home/junta/Devel/C++/Mega8/Chip8/Chip8.cpp
+1409054887 source:/home/junta/Devel/C++/Mega8/Chip8/Chip8.cpp
 	"Chip8.h"
 
-1408974452 /home/junta/Devel/C++/Mega8/Chip8/Chip8.h
-	"Chip8Sound.h"
+1409052802 /home/junta/Devel/C++/Mega8/Chip8/Chip8.h
 	<stdlib.h>
 	<sys/time.h>
 	<cstdio>
@@ -3210,7 +3209,7 @@
 1408880681 source:/home/junta/Devel/C++/Mega8/Chip8/Chip8Sound.cpp
 	"Chip8Sound.h"
 
-1409046085 source:/home/junta/Devel/C++/Mega8/Mega8App.cpp
+1409062162 source:/home/junta/Devel/C++/Mega8/Mega8App.cpp
 	"Mega8App.h"
 	"Mega8Main.h"
 	<wx/image.h>
@@ -3219,7 +3218,7 @@
 	<wx/app.h>
 	"Mega8Main.h"
 
-1408976383 /home/junta/Devel/C++/Mega8/Mega8Main.h
+1409062066 /home/junta/Devel/C++/Mega8/Mega8Main.h
 	<wx/menu.h>
 	<wx/statusbr.h>
 	<wx/frame.h>
@@ -3229,7 +3228,6 @@
 	<wx/string.h>
 	"Chip8/Chip8.h"
 	"include/Chip8GL.h"
-	"include/bell.h"
 	<iostream>
 	<iomanip>
 	<math.h>
@@ -3244,10 +3242,11 @@
 	<vector>
 	<string>
 
-1408522302 /home/junta/Devel/C++/Mega8/include/bell.h
+1409062549 /home/junta/Devel/C++/Mega8/include/bell.h
 
-1409052443 source:/home/junta/Devel/C++/Mega8/Mega8Main.cpp
+1409062274 source:/home/junta/Devel/C++/Mega8/Mega8Main.cpp
 	"Mega8Main.h"
+	"include/bell.h"
 	<wx/msgdlg.h>
 	<wx/dcmemory.h>
 	<wx/dcclient.h>

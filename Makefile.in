@@ -11,14 +11,14 @@ AR = ar
 LD = g++
 WINDRES = windres
 
-INC = -I/usr/i586-mingw32msvc/include/wx-3.0/
+INC = -Iinclude -IChip8
 CFLAGS = -std=c++11 -Wall -g `wx-config --cflags --gl-libs`
 RESINC = 
-LIBDIR = -L../../../../../usr/i586-mingw32msvc/lib
+LIBDIR = 
 LIB = -lGL
 LDFLAGS = `wx-config --cflags --gl-libs` -lSDL2 -lSDL2_mixer -lrt -lftgl
 
-INC_DEBUG = $(INC) -Iinclude -IChip8
+INC_DEBUG = $(INC)
 CFLAGS_DEBUG = $(CFLAGS) -std=c++11 -g `wx-config --cflags`
 RESINC_DEBUG = $(RESINC)
 RCFLAGS_DEBUG = $(RCFLAGS)
@@ -29,7 +29,7 @@ OBJDIR_DEBUG = obj/Debug
 DEP_DEBUG = 
 OUT_DEBUG = bin/Debug/Mega8
 
-INC_RELEASE = $(INC) -Iinclude -IChip8
+INC_RELEASE = $(INC)
 CFLAGS_RELEASE = $(CFLAGS) -O2 -std=c++11 `wx-config --cflags --gl-libs`
 RESINC_RELEASE = $(RESINC)
 RCFLAGS_RELEASE = $(RCFLAGS)

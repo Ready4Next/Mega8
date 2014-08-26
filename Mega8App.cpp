@@ -30,7 +30,7 @@ bool Mega8App::OnInit()
     wxInitAllImageHandlers();
     if ( wxsOK )
     {
-    	Frame = new Mega8Frame(0);
+    	Mega8Frame* Frame = new Mega8Frame(0);
     	Frame->Show();
     	SetTopWindow(Frame);
     }

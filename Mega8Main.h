@@ -22,7 +22,6 @@
 #include <wx/string.h>
 #include "Chip8/Chip8.h"
 #include "include/Chip8GL.h"
-#include "include/bell.h"
 #include <iostream>     // std::cout, std::fixed
 #include <iomanip>      // std::setprecision
 #include <math.h>
