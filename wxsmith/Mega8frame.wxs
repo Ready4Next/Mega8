@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wxsmith>
+	<object class="wxFrame" name="Mega8Frame">
+		<title>Chip 8 Emulator</title>
+		<style>wxDEFAULT_FRAME_STYLE|wxWANTS_CHARS</style>
+		<handler function="OnClose" entry="EVT_CLOSE" />
+		<object class="wxMenuBar" variable="MenuBar1" member="yes">
+			<object class="wxMenu" variable="Menu1" member="no">
+				<label>&amp;File</label>
+				<object class="wxMenuItem" name="idMenuOpen" variable="MenuItem3" member="yes">
+					<label>Open</label>
+					<accel>O</accel>
+					<help>Open ROM</help>
+					<handler function="OnOpen" entry="EVT_MENU" />
+				</object>
+				<object class="wxMenuItem" name="idMenuClose" variable="MenuItem7" member="yes">
+					<label>Close</label>
+					<accel>C</accel>
+					<help>Close current ROM</help>
+					<handler function="OnMenuClose" entry="EVT_MENU" />
+				</object>
+				<object class="wxMenuItem" name="idMenuQuit" variable="MenuItem1" member="no">
+					<label>Quit</label>
+					<accel>ESC</accel>
+					<help>Quit emulator</help>
+					<handler function="OnQuit" entry="EVT_MENU" />
+				</object>
+			</object>
+			<object class="wxMenu" variable="Menu3" member="yes">
+				<label>&amp;Emulation</label>
+				<object class="wxMenuItem" name="idMenuReset" variable="MenuItem4" member="yes">
+					<label>Reset</label>
+					<accel>ALT-R</accel>
+					<help>Reset Emulator</help>
+					<handler function="OnReset" entry="EVT_MENU" />
+				</object>
+				<object class="wxMenuItem" name="idMenuPause" variable="MenuItem6" member="yes">
+					<label>Start / Pause</label>
+					<help>Start / Pause emulation</help>
+					<handler function="OnPause" entry="EVT_MENU" />
+				</object>
+				<object class="separator" />
+				<object class="wxMenu" name="ID_MENUITEM3" variable="MenuItem5" member="yes">
+					<label>Color Theme</label>
+					<object class="wxMenuItem" name="idMenuCTDefault" variable="MenuItem9" member="yes">
+						<label>Default</label>
+						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuCTC64" variable="MenuItem17" member="yes">
+						<label>C64</label>
+						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuCTGameBoy" variable="MenuItem18" member="yes">
+						<label>Game Boy</label>
+						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuCTRed" variable="MenuItem19" member="yes">
+						<label>Red</label>
+						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuCTGreen" variable="MenuItem20" member="yes">
+						<label>Green</label>
+						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuCTBlue" variable="MenuItem21" member="yes">
+						<label>Blue</label>
+						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="separator" />
+					<object class="wxMenuItem" name="idMenuCTInverse" variable="MenuItem16" member="yes">
+						<label>Inverse</label>
+						<handler function="OnMenuColorInverse" entry="EVT_MENU" />
+						<checkable>1</checkable>
+					</object>
+				</object>
+				<object class="separator" />
+				<object class="wxMenu" name="idMenuSpeed" variable="MenuItem8" member="yes">
+					<label>Speed</label>
+					<object class="wxMenuItem" name="idMenuSpeedAuto" variable="MenuSpeedAuto" member="yes">
+						<label>Automatic</label>
+						<checked>1</checked>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<checkable>1</checkable>
+					</object>
+					<object class="separator" />
+					<object class="wxMenuItem" name="idMenuSpeedDiv40" variable="MenuSpeedDiv40" member="yes">
+						<label>/40</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeedDiv20" variable="MenuSpeedDiv20" member="yes">
+						<label>/20</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeedDiv4" variable="MenuSpeedDiv4" member="yes">
+						<label>/4</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeed1" variable="MenuSpeed1" member="yes">
+						<label>1x</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeed2" variable="MenuSpeed2" member="yes">
+						<label>2x</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeed4" variable="MenuSpeed4" member="yes">
+						<label>4x</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeed8" variable="MenuSpeed8" member="yes">
+						<label>8x</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeed16" variable="MenuSpeed16" member="yes">
+						<label>16x</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeed32" variable="MenuSpeed32" member="yes">
+						<label>32x</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeed256" variable="MenuSpeed256" member="yes">
+						<label>256x</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="wxMenuItem" name="idMenuSpeed1024" variable="MenuSpeed1024" member="yes">
+						<label>1024x</label>
+						<handler function="OnMenuSpeedSelected" entry="EVT_MENU" />
+						<radio>1</radio>
+					</object>
+					<object class="separator" />
+					<object class="wxMenuItem" name="idSyncToBase" variable="MnuSyncClock" member="yes">
+						<label>Sync clock @60Hz</label>
+						<checked>1</checked>
+						<handler function="OnMenuSyncClock" entry="EVT_MENU" />
+						<checkable>1</checkable>
+					</object>
+				</object>
+				<object class="wxMenu" name="ID_MENUITEM1" variable="Menu4" member="yes">
+					<label>Graphics</label>
+					<object class="wxMenuItem" name="idMenuDisplayHUD" variable="MenuDisplayHUD" member="yes">
+						<label>Display HUD</label>
+						<accel>H</accel>
+						<help>Display on screen informations</help>
+						<handler function="OnMenuDisplayHUDSelected" entry="EVT_MENU" />
+						<checkable>1</checkable>
+					</object>
+					<object class="wxMenuItem" name="idMenuFiltered" variable="MnuFilter" member="yes">
+						<label>Filter Texture</label>
+						<help>Apply OpenGL linear filtering</help>
+						<handler function="OnFilter" entry="EVT_MENU" />
+						<checkable>1</checkable>
+					</object>
+					<object class="separator" />
+					<object class="wxMenuItem" name="idMenuSize1x1" variable="MenuSize1" member="yes">
+						<label>1x1</label>
+						<help>Set base size (Chip-8: 64x32, SChip-8: 128x64)</help>
+						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
+					</object>
+					<object class="wxMenuItem" name="idMenuSize2x2" variable="MenuItem11" member="yes">
+						<label>2x2</label>
+						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
+					</object>
+					<object class="wxMenuItem" name="idMenuSize3x3" variable="MenuItem12" member="yes">
+						<label>3x3</label>
+						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
+					</object>
+					<object class="wxMenuItem" name="idMenuSize4x4" variable="MenuItem13" member="yes">
+						<label>4x4</label>
+						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
+					</object>
+					<object class="wxMenuItem" name="idMenuSize5x5" variable="MenuItem10" member="yes">
+						<label>5x5</label>
+						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
+					</object>
+					<object class="wxMenuItem" name="idMenuSize10x10" variable="MenuItem15" member="yes">
+						<label>10x10</label>
+						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
+					</object>
+					<object class="separator" />
+					<object class="wxMenuItem" name="idMenuFullScreen" variable="MenuItem14" member="yes">
+						<label>FullScreen</label>
+						<accel>F</accel>
+						<help>Set emulator fullscreen</help>
+						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
+					</object>
+				</object>
+				<object class="wxMenuItem" name="ID_MENUITEM2" variable="MenuCheckKeypad" member="yes">
+					<label>Input</label>
+					<help>Check keypad</help>
+					<handler function="OnMenuCheckKeypadSelected" entry="EVT_MENU" />
+				</object>
+			</object>
+			<object class="wxMenu" variable="Menu2" member="no">
+				<label>&amp;Help</label>
+				<object class="wxMenuItem" name="idMenuAbout" variable="MenuItem2" member="no">
+					<label>About</label>
+					<accel>F1</accel>
+					<help>Show info about this application</help>
+					<handler function="OnAbout" entry="EVT_MENU" />
+				</object>
+			</object>
+		</object>
+		<object class="wxStatusBar" name="ID_STATUSBAR1" variable="StatusBar" member="yes">
+			<fields>7</fields>
+			<widths>-1,-10,-10,-10,-10,-10,-10</widths>
+			<styles>wxSB_NORMAL,wxSB_NORMAL,wxSB_NORMAL,wxSB_NORMAL,wxSB_NORMAL,wxSB_NORMAL,wxSB_NORMAL</styles>
+		</object>
+	</object>
+</wxsmith>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Mega8" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Mega8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add option="`wx-config --cflags`" />
+					<Add directory="include" />
+					<Add directory="Chip8" />
+				</Compiler>
+				<Linker>
+					<Add option="`wx-config --libs` -lSDL2" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Mega8" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="0" />
+				<Option compiler="gcc" />
+				<Option projectLinkerOptionsRelation="2" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-std=c++11" />
+					<Add option="`wx-config --cflags --gl-libs`" />
+					<Add directory="include" />
+					<Add directory="Chip8" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="`wx-config --libs` -lSDL2" />
+				</Linker>
+			</Target>
+			<Target title="winDebug">
+				<Option platforms="Windows;" />
+				<Option output="Mega8" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="cross_windows" />
+			</Target>
+			<Target title="winRelease">
+				<Option platforms="Windows;" />
+				<Option output="Mega8" prefix_auto="1" extension_auto="1" />
+				<Option type="0" />
+				<Option compiler="cross_windows" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-std=c++11" />
+			<Add option="-Wall" />
+			<Add option="-g" />
+			<Add option="`wx-config --cflags --gl-libs`" />
+			<Add directory="/usr/i586-mingw32msvc/include/wx-3.0/" />
+		</Compiler>
+		<ResourceCompiler>
+			<Add directory="/usr/i586-mingw32msvc/include/wx-3.0/" />
+			<Add directory="`wx-config --host=i586-mingw32msvc --rescomp`" />
+		</ResourceCompiler>
+		<Linker>
+			<Add option="`wx-config --cflags --gl-libs` -lSDL2 -lSDL2_mixer -lrt" />
+			<Add option="-lftgl" />
+			<Add library="GL" />
+			<Add directory="../../../../../usr/i586-mingw32msvc/lib" />
+		</Linker>
+		<Unit filename="Chip8/Chip8.cpp" />
+		<Unit filename="Chip8/Chip8.h" />
+		<Unit filename="Chip8/Chip8Sound.cpp" />
+		<Unit filename="Chip8/Chip8Sound.h" />
+		<Unit filename="Mega8App.cpp" />
+		<Unit filename="Mega8App.h" />
+		<Unit filename="Mega8Main.cpp" />
+		<Unit filename="Mega8Main.h" />
+		<Unit filename="README.md" />
+		<Unit filename="include/Chip8GL.h" />
+		<Unit filename="src/Chip8GL.cpp" />
+		<Unit filename="wxsmith/Mega8frame.wxs" />
+		<Extensions>
+			<envvars />
+			<code_completion />
+			<debugger />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="Mega8App.cpp" main="Mega8Frame" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxFrame wxs="wxsmith/Mega8frame.wxs" src="Mega8Main.cpp" hdr="Mega8Main.h" fwddecl="0" i18n="1" name="Mega8Frame" language="CPP" />
+				</resources>
+			</wxsmith>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
