@@ -41,18 +41,6 @@
 					<Add option="`wx-config --libs` -lSDL2" />
 				</Linker>
 			</Target>
-			<Target title="winDebug">
-				<Option platforms="Windows;" />
-				<Option output="Mega8" prefix_auto="1" extension_auto="1" />
-				<Option type="0" />
-				<Option compiler="cross_windows" />
-			</Target>
-			<Target title="winRelease">
-				<Option platforms="Windows;" />
-				<Option output="Mega8" prefix_auto="1" extension_auto="1" />
-				<Option type="0" />
-				<Option compiler="cross_windows" />
-			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++11" />

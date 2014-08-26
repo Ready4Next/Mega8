@@ -40,9 +40,9 @@ OBJDIR_RELEASE = obj/Release
 DEP_RELEASE = 
 OUT_RELEASE = bin/Release/Mega8
 
-OBJ_DEBUG = $(OBJDIR_DEBUG)/Chip8/Chip8.o $(OBJDIR_DEBUG)/Chip8/Chip8Sound.o $(OBJDIR_DEBUG)/Mega8App.o $(OBJDIR_DEBUG)/Mega8Main.o $(OBJDIR_DEBUG)/src/Chip8GL.o
+OBJ_DEBUG = $(OBJDIR_DEBUG)/Chip8/Chip8.o $(OBJDIR_DEBUG)/Mega8App.o $(OBJDIR_DEBUG)/Mega8Main.o $(OBJDIR_DEBUG)/src/Chip8GL.o
 
-OBJ_RELEASE = $(OBJDIR_RELEASE)/Chip8/Chip8.o $(OBJDIR_RELEASE)/Chip8/Chip8Sound.o $(OBJDIR_RELEASE)/Mega8App.o $(OBJDIR_RELEASE)/Mega8Main.o $(OBJDIR_RELEASE)/src/Chip8GL.o
+OBJ_RELEASE = $(OBJDIR_RELEASE)/Chip8/Chip8.o $(OBJDIR_RELEASE)/Mega8App.o $(OBJDIR_RELEASE)/Mega8Main.o $(OBJDIR_RELEASE)/src/Chip8GL.o
 
 all: debug release
 
@@ -63,9 +63,6 @@ out_debug: before_debug $(OBJ_DEBUG) $(DEP_DEBUG)
 
 $(OBJDIR_DEBUG)/Chip8/Chip8.o: Chip8/Chip8.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c Chip8/Chip8.cpp -o $(OBJDIR_DEBUG)/Chip8/Chip8.o
-
-$(OBJDIR_DEBUG)/Chip8/Chip8Sound.o: Chip8/Chip8Sound.cpp
-	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c Chip8/Chip8Sound.cpp -o $(OBJDIR_DEBUG)/Chip8/Chip8Sound.o
 
 $(OBJDIR_DEBUG)/Mega8App.o: Mega8App.cpp
 	$(CXX) $(CFLAGS_DEBUG) $(INC_DEBUG) -c Mega8App.cpp -o $(OBJDIR_DEBUG)/Mega8App.o
@@ -98,9 +95,6 @@ out_release: before_release $(OBJ_RELEASE) $(DEP_RELEASE)
 
 $(OBJDIR_RELEASE)/Chip8/Chip8.o: Chip8/Chip8.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c Chip8/Chip8.cpp -o $(OBJDIR_RELEASE)/Chip8/Chip8.o
-
-$(OBJDIR_RELEASE)/Chip8/Chip8Sound.o: Chip8/Chip8Sound.cpp
-	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c Chip8/Chip8Sound.cpp -o $(OBJDIR_RELEASE)/Chip8/Chip8Sound.o
 
 $(OBJDIR_RELEASE)/Mega8App.o: Mega8App.cpp
 	$(CXX) $(CFLAGS_RELEASE) $(INC_RELEASE) -c Mega8App.cpp -o $(OBJDIR_RELEASE)/Mega8App.o
