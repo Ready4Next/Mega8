@@ -631,7 +631,7 @@ void Chip8::playSound(byte repeat) {
     _soundRepeat = (repeat == 0) ? -1: repeat;
 
     for (unsigned int i = 0; i < _soundBufferSize; i++) {
-        _soundBuffer[i] = readMemB(_I + (i - sizeof(soundHeader)));
+        _soundBuffer[i] = readMemB(_I + i);
     }
 }
 
