@@ -1,6 +1,12 @@
 #ifndef CHIP8_H
 #define CHIP8_H
 
+#include <stdlib.h>     /* srand, rand */
+#include <sys/time.h>       /* time */
+#include <cstdio>
+#include <string.h>     // memcpy
+#include <math.h>
+
 #include <fstream>
 #include <stack>
 #include <chrono>
@@ -9,6 +15,7 @@ using namespace std;
 
 enum Chip8Types { CHIP8, CHIP8_HiRes, CHIP8_HiRes2, SCHIP8, MCHIP8 };
 enum Chip8ColorTheme { DEFAULT, INVERSE, GAMEBOY, C64, RED, GREEN, BLUE };
+enum Chip8BlendModes { BLEND_NORMAL = 0, BLEND_25 = 1, BLEND_50 = 2, BLEND_75 = 3, BLEND_ADD = 4, BLEND_MUL = 5};
 
 struct TCOLOR {
     unsigned int foreColor;
@@ -17,18 +24,20 @@ struct TCOLOR {
 
 #define byte unsigned char
 
-#define getNanoFromHertz(h)     (((double)1.0/h) * 1000) * 1000000)
-#define getMicroFromHertz(h)    (((double)1.0/h) * 1000000)
-#define getMilliFromHertz(h)    (((double)1.0/h) * 1000)
-#define getSecondsFromHertz(h)  ((double)1.0/h)
-#define getR(color)             ((color >> 16) & 0xFF)
-#define getG(color)             ((color >> 8) & 0xFF)
-#define getB(color)             (color & 0xFF)
-#define getRGB(R, G, B)         (R << 16) | (G << 8) | B
+#define getNanoFromHertz(h)         (((double)1.0/h) * 1000) * 1000000)
+#define getMicroFromHertz(h)        (((double)1.0/h) * 1000000)
+#define getMilliFromHertz(h)        (((double)1.0/h) * 1000)
+#define getSecondsFromHertz(h)      ((double)1.0/h)
+#define getR(color)                 ((color >> 24) & 0xFF)
+#define getG(color)                 ((color >> 16) & 0xFF)
+#define getB(color)                 ((color >> 8) & 0xFF)
+#define getAlpha(color)             (color & 0xFF)
+#define getRGB(R, G, B)             (unsigned int)((R << 16) | (G << 8) | B)
+#define getRGBA(R, G, B, Alpha)     (unsigned int)((R << 24) | (G << 16) | (B << 8) | Alpha)
 
 // Original Chip-8 Frequencies according to various docs
 // CPU Frequency (COSMAC VIP)
-const float    BASE_FREQ     = 1760;
+const float    BASE_FREQ     = 44;//1760;
 // Clock Frequency 60Hz
 const float    BASE_CLOCK    = 60;
 const double   BASE_CLOCK_MS = (1/BASE_CLOCK) * 1000;
@@ -126,6 +135,30 @@ class BaseCHIP8 {
             _inverseColor  = false;
         };
 
+        // Chips base frequency
+        int getFrequencyMultiplicator() {
+            switch (_type) {
+                case MCHIP8:
+                    return 640;
+                case SCHIP8:
+                    return 160;
+                default:
+                    return 40;
+            }
+        }
+
+        // Mega Chip-8
+        void setCollisionColorIndex(byte value) { _collisionColorIndex = value; }
+        byte getCollisionColorIndex() { return _collisionColorIndex; }
+        void setSpriteBlendMode(Chip8BlendModes value) { _spriteBlendMode = value; }
+        Chip8BlendModes getSpriteBlendMode() { return _spriteBlendMode; }
+        void setExtendedMode(bool value) { _extendedMode = value; }
+        bool getExtendedMode() { return _extendedMode; }
+        unsigned short getSpriteWidth() { return _spriteWidth; }
+        unsigned short getSpriteHeight() { return _spriteHeight; }
+        void setSpriteWidth(unsigned short value) { _spriteWidth = value; }
+        void setSpriteHeight(unsigned short value) { _spriteHeight = value; }
+
         bool getInverseColor() { return _inverseColor; }
         Chip8ColorTheme getColorTheme() { return _colorTheme; }
         Chip8Types getType() { return _type; }
@@ -145,37 +178,37 @@ class BaseCHIP8 {
             switch (color) {
             case INVERSE:
                 tCol.foreColor = 0;
-                tCol.backColor = 0xFFFFFF;
+                tCol.backColor = 0xFFFFFFFF;
                 break;
 
             case GAMEBOY:
-                tCol.foreColor = 0x103F10;
-                tCol.backColor = 0x9CB916;
+                tCol.foreColor = 0x103F10FF;
+                tCol.backColor = 0x9CB916FF;
                 break;
 
             case C64:
-                tCol.foreColor = 0x11BCFF;
-                tCol.backColor = 0x0019FF;
+                tCol.foreColor = 0x11BCFFFF;
+                tCol.backColor = 0x0019FFFF;
                 break;
 
             case RED:
-                tCol.foreColor = 0xFF0000;
+                tCol.foreColor = 0xFF0000FF;
                 tCol.backColor = 0;
                 break;
 
             case GREEN:
-                tCol.foreColor = 0xFF000;
+                tCol.foreColor = 0xFF000FF;
                 tCol.backColor = 0;
                 break;
 
             case BLUE:
-                tCol.foreColor = 0xFF;
-                tCol.backColor = 0x000000;
+                tCol.foreColor = 0xFFFF;
+                tCol.backColor = 0;
                 break;
 
             case DEFAULT:
             default:
-                tCol.foreColor = 0xFFFFFF;
+                tCol.foreColor = 0xFFFFFFFF;
                 tCol.backColor = 0;
                 break;
             }
@@ -204,12 +237,27 @@ class BaseCHIP8 {
                     _height = 64;
                     break;
                 case SCHIP8:
-                    _width = 128;
-                    _height = 64;
+                    if (_extendedMode) {
+                        _width = 128;
+                        _height = 64;
+                    } else {
+                        _width = 64;
+                        _height = 32;
+                    }
                     break;
                 case MCHIP8:
-                    _width = 256;
-                    _height = 192;
+                    if (_extendedMode) {
+                        _width = 256;
+                        _height = 192;
+                    } else {
+                        /* According to some docs (and SCHIP behavior to switch to a lower resolution when extended mode is off
+                           In fact, it can cause some demos (Megamaze, MegaSirpinsky) not to work
+                        _width = 128;
+                        _height = 64;
+                        */
+                        _width = 256;
+                        _height = 192;
+                    }
                     break;
             }
         }
@@ -217,6 +265,15 @@ class BaseCHIP8 {
     private:
         unsigned short _width;
         unsigned short _height;
+
+        // Mega-Chip8
+        unsigned short _spriteWidth;
+        unsigned short _spriteHeight;
+        Chip8BlendModes _spriteBlendMode;
+        byte _collisionColorIndex;
+
+        bool _extendedMode;
+
         byte  _bytesPerPixel;
         Chip8Types _type;
         Chip8ColorTheme _colorTheme;
@@ -241,12 +298,17 @@ class Chip8: public BaseCHIP8
         unsigned char timerSound() { return _timerSound; }
         unsigned char timerDelay() { return _timerDelay; }
 
+        // Sound
+        unsigned char *getSoundBuffer() { return _soundBuffer; }
+        unsigned long getSoundBufferSize() { return _soundBufferSize; }
+        unsigned char getSoundRepeat() { return _soundRepeat; }
+
         // Others
         void setColorTheme(Chip8ColorTheme value);
         void setInverseColor(bool value);
         bool getSyncClockToOriginal() { return _syncClockToOriginal; }
         void SetSyncClockToOriginal(bool value) { _syncClockToOriginal = value; }
-        void ChangeMachineType(Chip8Types Type);
+        void ChangeMachineType(Chip8Types Type, bool extMode);
         bool loaded() { return _loaded; }
         void initialize(Chip8Types Type);
         void reset();
@@ -260,6 +322,7 @@ class Chip8: public BaseCHIP8
 
         bool _loaded;
         bool _isRunning;
+        bool _needToRefresh;
 
         // Does the clock follow the CPU Frequency or it stick to the base frequency of 60 Hz ?
         bool _syncClockToOriginal;
@@ -272,8 +335,9 @@ class Chip8: public BaseCHIP8
             0x050-0x0A0 - Used for the built in 4x5 pixel font set (0-F)
             0x200-0xFFF - Program ROM and work RAM
         */
-        /* Chip 8 4096 */
-        unsigned char _memory[4096];
+        /* Chip 8 4096 - Mega More */
+        unsigned char *_memory;
+        unsigned int _memorySize;
 
         // 16 registers
         unsigned char _V[16];
@@ -290,6 +354,12 @@ class Chip8: public BaseCHIP8
 
         // Graphic 64 * 32 pixels
         unsigned char *_gfx;
+        unsigned char *_gfxBuffer;
+        unsigned char *_soundBuffer;
+        unsigned long _soundBufferSize;
+        unsigned char _soundRepeat;
+        // Mega Chip-8 - 255 Color palette + alpha
+        unsigned int _palette[256];
 
         // Timers at 60 Hz;
         unsigned char _timerDelay;
@@ -297,18 +367,58 @@ class Chip8: public BaseCHIP8
 
         // Stack
         stack<unsigned short> _callStack;
+        deque<string> _opcodeTrace;
         //unsigned short _stack[16];
         //unsigned short _sp;
 
         // Keys
         bool _key[16];
 
+        // Function used by opcodes
+        // Graphics
+        void drawScreen(byte coordX, byte coordY, byte K);
+        void flip();
+        void clearGfx();
+        void scrollDown(byte lines);
+        void scrollUp(byte lines);
+        void scrollLeft();
+        void scrollRight();
+        bool opcodesMega(byte Code, byte KK,  byte K);
+        void opcodesSuper(byte Code, byte K);
+        void opcodesCalc(byte Code, byte X, byte Y);
+        void opcodesKeyboard(byte Code, byte X);
+        void opcodesOther(byte Code, byte X);
+
+        // Get/Set pixel
+        void setPixel(byte X, byte Y, byte R, byte G, byte B, byte Alpha);
+        void setPixel(byte X, byte Y, unsigned int color);
+        void setPixel(unsigned int adr, byte R, byte G, byte B, byte Alpha);
+        void setPixel(unsigned int adr, unsigned int color);
+
+        unsigned int getPixelAdr(byte X, byte Y);
+        unsigned int getPixel(byte X, byte Y);
+        unsigned int getPixel(unsigned int adr);
+        unsigned int getMegaColor(int spriteX, int spriteY, int destX, int destY);
+
+        // Sound
+        void playSound(byte repeat);
+        void clearSound();
+
+        // Memory
+        void writeMemB(unsigned int adr, byte toWrite);
+        void writeMemS(unsigned int adr, unsigned short int toWrite);
+        byte readMemB(unsigned int adr);
+        unsigned short int readMemS(unsigned int adr);
+
         // functions
         void refreshScreen(TCOLOR colorFrom, TCOLOR colorTo);
-        void UpdateScreen(unsigned char X, unsigned char Y, unsigned char K);
         void loadFont();
         void load(char *rom, unsigned int size);
-        void clearGfx();
+
+        // Logs
+        void backtrace(unsigned short int Code, unsigned short int pc);
+        void backtrace(string trace);
+        void printBacktrace();
 };
 
 #endif // CHIP8_H

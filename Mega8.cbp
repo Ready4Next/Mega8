@@ -73,8 +73,6 @@
 		</Linker>
 		<Unit filename="Chip8/Chip8.cpp" />
 		<Unit filename="Chip8/Chip8.h" />
-		<Unit filename="Chip8/Chip8Sound.cpp" />
-		<Unit filename="Chip8/Chip8Sound.h" />
 		<Unit filename="Mega8App.cpp" />
 		<Unit filename="Mega8App.h" />
 		<Unit filename="Mega8Main.cpp" />

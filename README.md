@@ -1,7 +1,7 @@
-Chip8Emu
-========
+Mega8
+=====
 
-S/HiRes/Chip-8 Emulator in C/C++, OpenGL, SDL, wxWidgets.
+Mega/Super/HiRes/Chip-8 Emulator in C/C++, OpenGL, SDL, wxWidgets.
 I made it just to see if I was capable of doing an emulator and to learn how
 OpenGL/wxWidgets works. You can use the source as you want, but if you use the source,
 it would be kind to add a reference to me somewhere in your project ;-). It has been coded
@@ -12,11 +12,30 @@ on other systems, be aware that you must have:
       the IDE you like;
     - wxWidgets 3.0.1 development files;
     - OpenGL Support in wxWidget (wxGLCanvas);
-    - SDL2 and SDL_Mixer (for the wav file);
+    - SDL2 and SDL_Mixer;
     - C++11 std support(I use Chrono from std, not from libboost)
 
 HOW TO USE
 ==========
+
+COMPILE
+=======
+
+After adding the required libs to your system, you can compile with Code::Block or simply
+type in your shell
+
+`
+`
+`
+./configure
+make
+cd bin/Release
+./Mega8
+`
+`
+`
+
+Makefile created by cbp2mak & autotools.
 
 KEYBOARD
 ========
@@ -35,7 +54,7 @@ Original CHIP-8 Keypad              PC Numpad
 
 This can't be changed right now, that can make
 some games horrible to play, because some games don't use the same
-keys to move... Somes uses 4-8-6-2 (Astrododge), others 1-5-3-2, ...
+keys to move... Some uses 4-8-6-2 (Astrododge), others 1-5-3-2, ...
 You can check the keyboard at anytime by pressing 'K'.
 
 GRAPHICS
@@ -54,10 +73,9 @@ SPEED
 
 Since all documents I've found are unclear about the real frequency of the chip,
 I'm basing on the clock speed from the COSMAC VIP, about 1.76 Khz.
-But you can change by pressing CTRL+/- to change the speed from 88 Hz to
-17.6 Khz (from 1/20x to 10x). When you change the frequency, the base clock stays
-still @60Hz (Delay and sound), but you can change that too to follow the actual
-frequency you've set by pressing 'S'.
+But you can press CTRL+/- to change the speed from 44 Hz to 1.8 Mhz (from 1/20x up to 1024x).
+When you change the frequency, the base clock stays still @60Hz (Delay and sound),
+but you can make it follow the actual frequency you've set by pressing 'S'.
 
 SOUND
 =====
