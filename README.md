@@ -37,16 +37,15 @@ Makefile created by cbp2mak & autotools.
 
 Keyboard is binded like this :
 
-   |Original CHIP-8 Keypad|            |	PC Numpad       |
-   |----------------------|	       |------------------------|
-   | 1 | 2 | 3 | C        |            |   7  | 8 |   9   | DEL |
-   |---+---+---+----------|            |------+---+-------+-----|
-   | 4 | 5 | 6 | D        |            |   4  | 5 |   6   | ADD |
-   |---+---+---+----------|            |------+---+-------+-----|
-   | 7 | 8 | 9 | E 	  |            |   1  | 2 |   3   | SUB |
-   |---+---+---+----------|            |------+---+-------+-----|
-   | A | 0 | B | F 	  |            |  MUL | 0 | ENTER | DIV |
-   +----------------------+	       +------------------------+
+    Original CHIP-8 Keypad              PC Numpad
+
+    1 | 2 | 3 | C                7  | 8 |   9   | DEL
+    --+---+---+--               ----+---+-------+--
+    4 | 5 | 6 | D                4  | 5 |   6   | ADD
+    --+---+---+--               ----+---+-------+--
+    7 | 8 | 9 | E                1  | 2 |   3   | SUB
+    --+---+---+--               ----+---+-------+--
+    A | 0 | B | F               MUL | 0 | ENTER | DIV
 
 This can't be changed right now, that can make
 some games horrible to play, because some games don't use the same
