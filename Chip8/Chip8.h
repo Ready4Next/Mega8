@@ -379,17 +379,13 @@ class Chip8: public BaseCHIP8
         void drawScreen(byte coordX, byte coordY, byte K);
         void flip();
         void clearGfx();
-        void scrollDown(byte lines);
-        void scrollUp(byte lines);
-        void scrollLeft();
-        void scrollRight();
         bool opcodesMega(byte Code, byte KK,  byte K);
         void opcodesSuper(byte Code, byte K);
         void opcodesCalc(byte Code, byte X, byte Y);
         void opcodesKeyboard(byte Code, byte X);
         void opcodesOther(byte Code, byte X);
 
-        // Get/Set pixel
+        // Get/Set pixel ** Buffer Only **
         void setPixel(byte X, byte Y, byte R, byte G, byte B, byte Alpha);
         void setPixel(byte X, byte Y, unsigned int color);
         void setPixel(unsigned int adr, byte R, byte G, byte B, byte Alpha);
@@ -399,6 +395,13 @@ class Chip8: public BaseCHIP8
         unsigned int getPixel(byte X, byte Y);
         unsigned int getPixel(unsigned int adr);
         unsigned int getMegaColor(int spriteX, int spriteY, int destX, int destY);
+
+        // Animations
+        void setScreenAlpha(float alpha);
+        void scrollDown(byte lines);
+        void scrollUp(byte lines);
+        void scrollLeft();
+        void scrollRight();
 
         // Sound
         void playSound(byte repeat);
