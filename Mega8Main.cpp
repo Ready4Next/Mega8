@@ -20,6 +20,12 @@
 #include <wx/thread.h>
 #include <wx/stdpaths.h>
 
+#ifndef __WIN32__
+    #include "mega8.xpm"
+#else
+    #include <wx/wxicon.h>
+#endif // __WIN32__
+
 #include <chrono>
 
 //(*InternalHeaders(Mega8Frame)
@@ -278,6 +284,14 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&Mega8Frame::OnAbout);
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Mega8Frame::OnClose);
     //*)
+
+#ifdef __WIN32__
+    // Application icon
+    SetIcon(wxIcon(AppIcon));
+#else
+    wxIcon AppIcon(mega8_xpm);
+    SetIcon(AppIcon);
+#endif // __WIN32__
 
     // Create Panel
     int GLCanvasAttributes[] = {
@@ -1070,7 +1084,7 @@ void Mega8Frame::OnKeyDown(wxKeyEvent& event)
             }
             MenuSpeedAuto->Check(false);
             _frequency = 0;
-            if (_freqCoeff > sizeof(FREQ_MENU_INDEX))
+            if (_freqCoeff >= sizeof(FREQ_MENU_INDEX))
                 _freqCoeff = 0;
             else
                 _freqCoeff++;
@@ -1104,7 +1118,7 @@ void Mega8Frame::OnKeyDown(wxKeyEvent& event)
             }
             MenuSpeedAuto->Check(false);
             _frequency = 0;
-            if (_freqCoeff <= 0)
+            if (_freqCoeff == 0)
                 _freqCoeff = sizeof(FREQ_MENU_INDEX) - 1;
             else
                 _freqCoeff--;
