@@ -18,23 +18,74 @@ on other systems, be aware that you must have:
 HOW TO USE
 ==========
 
+## Quick Manual
+
+# Shortcuts
+
+CTRL+O: Open a ROM (File | Open)
+CTRL+C: Close a ROM (File | Close)
+CTRL+R: Reset ROM (Emulation | Reset)
+CTRL+SPACE: Starts / Pause (Emulation | Start / Pause)
+ESC: Exit application (File | Quit)
+CTRL+F: Set fullscreen mode (Emulation | Graphics | Fullscreen)
+CTRL+L: Set opengl filter (Emulation | Graphics | Filter Texture)
+CTRL+H: Display some informations on screen (Emulation | Graphics | Display HUD)
+CTRL+A: Set automatic mode frequency  (Emulation | Speed | Automatic)
+CTRL+Y: Set clock timer to 60 Hz, else follow current frequency
+
+# Other Menus
+
+File | Color Themes: Replace black / white colors with some funny ones
+File | Graphics: You can also change here the size of the window regarding the original resolution
+File | Speed: You can choose from 1/40x to 1024x the original COSMAC VIP base frequency (1760 Hz), useful for debugging purpose and smoothness of Twisterbar Demo ;-)
+File | Input: There you can change the keyboard mapping in relation to the ROM you play
+File | About: Some build infos, shortcuts list and some credits
+
+## Changes
+
+Mega8 1.2
+---------
+
+Windows / Linux
+- Added key configuration editor (Can be set by profile/ROM)
+- Corrected big mistake in sound !!! (length and frequency)
+- It supports from 11025 Hz up to 44100 Hz (still in 8bits mono)
+- With that correction, you can have more than one sound :-P
+- Now supports saving settings like Filtering activated, Fullscreen,...
+- Changed shortcuts (All "command" shortcuts must be set with CTRL+shortcut)
+- Size of main window defaults to 5x the sizeof Chip-8 resolution
+- Main window appear at the center of the screen
+- Correction with std::chrono precision. In Linux it delivers nano and microseconds as well, in Windows, only milliseconds (Aaargh !)
+  Now wxStopWatch is used, in Windows it make use of QueryPerformanceCounter
+- Small corrections on scrolling parts
+- Corrections when changing frequencies
+- Correction when calculating FPS
+- ...
+
+Windows Only
+- Binaries finally released !!
+- Both in 32 and 64 bits
+
+Linux Only:
+- Binaries are in 64bits mode only
+- Command line compilation broken :-(
+
 ## COMPILE
 
-After adding the required libs to your system, you can compile with Code::Block or simply
-type in your shell:
+After adding the required libs to your system, you can compile with Code::Blocks. Here are the required libs:
 
-```
-./configure
-make clean all
-cd bin/Release
-./Mega8
-```
+- wxWidgets 3.0.1
+- FTGL
+- SDL 2
+- SDL_Mixer 2
+- Freetype 2
 
-Makefile created by cbp2mak & autotools.
+Command line compilation (Using Makefile) is broken with 1.2 due to added Windows (i686 and x86_64) builds. 
+I'll fix that soon.
 
 ## KEYBOARD
 
-Keyboard is binded like this :
+Keyboard is binded like this by default :
 
     Original CHIP-8 Keypad              PC Numpad
 
@@ -46,19 +97,14 @@ Keyboard is binded like this :
     --+---+---+--               ----+---+-------+--
     A | 0 | B | F               MUL | 0 | ENTER | DIV
 
-This can't be changed right now, that can make
-some games horrible to play, because some games don't use the same
-keys to move... Some uses 4-8-6-2 (Astrododge), others 1-5-3-2, ...
-You can check the keyboard at anytime by pressing 'K'.
+This can be changed with 1.2 simply go to Emulation | Input and set the keys you want. 
+It is saved by profile / game.
 
 ## GRAPHICS
 
-It uses OpenGL for rendering, it's quite fast. You can use texture filtering
-to make it look less like 'Minecraft' by pressing 'L' ;-).
-You can change the display size freely or you can make it x1, x2,... of the
-original resolution.
-To ENTER fullscreen mode, just press 'F'.
-To display some informations, just type 'H' (the HUD can make a huge drop down
+It uses OpenGL for rendering, it's quite fast. It supports texture filtering
+to make it look less like 'Minecraft'. It has also a little on screen display with some
+informations regarding the system (the HUD can make a huge drop down
 to the actual FPS... at least on my old system).
 
 ## SPEED
@@ -79,12 +125,12 @@ but you can make it follow the actual frequency you've set by pressing 'S'.
 This emulator is still in development because I want to add some
 more features to it, like:
 
-    - ~~Mega-Chip support~~ Done !
+    - ~~Mega-Chip support~~ Done !;
     - Mega-Chip small modifications I have in mind;
     - CDP1802 opcodes;
     - Support for hybrid Chip-8 roms;
-    - Input configuration;
-    - ~~Better sound support (actually a wav file is played for beep)~~ Done !
+    - ~~Input configuration~~ Done (1.2) !;
+    - ~~Better sound support (actually a wav file is played for beep)~~ Done !;
     - Internationalization support;
     - Load/Save State;
     - Screenshot or video.
