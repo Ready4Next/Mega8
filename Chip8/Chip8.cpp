@@ -114,8 +114,13 @@ void Chip8::ChangeMachineType(Chip8Types Type, bool extMode) {
 
 unsigned int Chip8::getPixelAdr(byte X, byte Y) {
     // Screen overflow
-    X %= getWidth();
-    Y %= getHeight();
+    if (getType() != MCHIP8) {
+        X %= getWidth();
+        Y %= getHeight();
+    } else {
+        if (X > getWidth() || Y > getHeight())
+            return 0;
+    }
     // Calc adr
     unsigned int adr = ((Y * getWidth()) + X) * getBytesPerPixel();
     if (adr < getScreenSizeOf()) {
@@ -370,7 +375,8 @@ void Chip8::refreshScreen(TCOLOR colorFrom, TCOLOR colorTo) {
 /* 0xDXYK
  * Draw K lines from Memory to GFX
  * Draws an 8xK (width x height) sprite at the coordinates given in register X and Y.
- * If height specified is 0, draws a 16x16 sprite. See notes below.
+ * Chip8: If height specified is 0, draws a 16x16 sprite.
+ * Mega : If height and width are 0, draws a 256x256 sprite.
  */
 
 void Chip8::drawScreen(unsigned char coordX, unsigned char coordY, unsigned char K) {
@@ -434,6 +440,10 @@ void Chip8::drawScreen(unsigned char coordX, unsigned char coordY, unsigned char
 
                     // Undocumented
                     oldPixel = ((_palette[getCollisionColorIndex()] == oldPixelColor) ? 1 : 0);
+
+                    // Collision Detection - New pixel not black and pixel in buffer == ColorCollision
+                    if (((color >> 8) != 0) && oldPixel != 0)
+                        _V[0xF] = 1;
                 } else {
                     // CHIP8, SCHIP8, HIRES-CHIP8: Si le pixel à écrire est différent du pixel présent
                     oldPixel = (oldPixelColor == getColor(getColorTheme()).foreColor) ? 1 : 0;
@@ -444,15 +454,15 @@ void Chip8::drawScreen(unsigned char coordX, unsigned char coordY, unsigned char
                         // Draw theme backColor
                         color = getColor(getColorTheme()).backColor;
                     }
+
+                    // Collision Detection
+                    //_V[0xF] = (byte)(oldPixel & pixelToWrite);
+                    if (pixelToWrite != 0 && oldPixel != 0)
+                        _V[0xF] = 1;
                 }
 
                 // Finally draw the pixel
                 setPixel(pixelAdr, color);
-
-                // Collision Detection
-                //_V[0xF] = (byte)(oldPixel & pixelToWrite);
-                if (pixelToWrite != 0 && oldPixel != 0)
-                    _V[0xF] = 1;
             }
         }
     }
@@ -481,8 +491,12 @@ void Chip8::scrollDown(byte lines) {
     for (int i = getScreenSizeOf(); i >= 0; i--) {
         // On bouge nos bytes
         if (start > 0) {
-            // Not buffer anymore
             _gfx[i] = _gfx[start];
+
+            // Do the same in buffer if we're not in Mega Mode
+            if (getType() != MCHIP8) {
+                _gfxBuffer[i] = _gfxBuffer[start];
+            }
         } else {
             // Place the missing color
             int colorPos = i % 4;
@@ -494,11 +508,15 @@ void Chip8::scrollDown(byte lines) {
                     color = getColor(getColorTheme()).backColor;
                 }
 
-                // not buffer anymore
                 _gfx[i    ] = getR(color);
                 _gfx[i + 1] = getG(color);
                 _gfx[i + 2] = getB(color);
                 _gfx[i + 3] = getAlpha(color);
+
+                // Do the same in buffer if we're not in Mega Mode
+                if (getType() != MCHIP8) {
+                    setPixel(i, color);
+                }
             }
         }
 
@@ -524,6 +542,11 @@ void Chip8::scrollUp(byte lines) {
         // On bouge nos bytes
         if (start < (int)(getScreenSizeOf() - nbBytesToMove)) {
             _gfx[i] = _gfx[start];
+
+            // Do the same in buffer if we're not in Mega Mode
+            if (getType() != MCHIP8) {
+                _gfxBuffer[i] = _gfxBuffer[start];
+            }
         } else {
             // Place the missing color
             int colorPos = i % 4;
@@ -540,6 +563,11 @@ void Chip8::scrollUp(byte lines) {
                 _gfx[i + 1] = getG(color);
                 _gfx[i + 2] = getB(color);
                 _gfx[i + 3] = getAlpha(color);
+
+                // Do the same in buffer if we're not in Mega Mode
+                if (getType() != MCHIP8) {
+                    setPixel(i, color);
+                }
             }
         }
 
@@ -565,34 +593,55 @@ void Chip8::scrollRight() {
     // For each lines
     for (int i = 0; i < getHeight(); i++) {
         // For each col
-        for (int j = (realWidth - shift); j > 0  ; j-- ) {
+        for (int j = (realWidth - shift); j >= 0  ; j-- ) {
             // Ce byte
             int current =  (i * realWidth) + j ;
-            // Sera décalé vers la droite
-            _gfx[current + shift] = _gfx[current];
+
+            if (getType() == MCHIP8) {
+                // Sera décalé vers la droite
+                _gfx[current + shift] = _gfx[current];
+            } else {
+                // Do the same in buffer if we're not in Mega Mode
+                _gfxBuffer[current + shift] = _gfxBuffer[current];
+            }
 
             if (j <= shift) {
                 // Place the missing color
-                int colorPos = current % 4;
+                int colorPos = current % getBytesPerPixel();
                 if (colorPos == 0) {
                     if (getType() == MCHIP8) {
                         // New: Get pixel color on buffer
                         color = getPixel(current);
                     } else {
+                        // Do the same in buffer if we're not in Mega Mode
                         color = getColor(getColorTheme()).backColor;
                     }
+                }
 
-                    // not buffer anymore
-                    _gfx[current    ] = getR(color);
-                    _gfx[current + 1] = getG(color);
-                    _gfx[current + 2] = getB(color);
-                    _gfx[current + 3] = getAlpha(color);
+                if (getType() == MCHIP8) {
+                    // Draw the pixels
+                    if (current % getBytesPerPixel() == 0)
+                        _gfx[current] = getR(color);
+                    if (current % getBytesPerPixel() == 1)
+                        _gfx[current] = getG(color);
+                    if (current % getBytesPerPixel() == 2)
+                        _gfx[current] = getB(color);
+                    if (current % getBytesPerPixel() == 3)
+                        _gfx[current] = getAlpha(color);
+                } else {
+                    // Draw the pixels
+                    if (current % getBytesPerPixel() == 0)
+                        _gfxBuffer[current] = getR(color);
+                    if (current % getBytesPerPixel() == 1)
+                        _gfxBuffer[current] = getG(color);
+                    if (current % getBytesPerPixel() == 2)
+                        _gfxBuffer[current] = getB(color);
+                    if (current % getBytesPerPixel() == 3)
+                        _gfxBuffer[current] = getAlpha(color);
                 }
             }
         }
     }
-
-    //flip();
 }
 
 /*
@@ -612,28 +661,53 @@ void Chip8::scrollLeft() {
     // For each lines
     for (int i = 0; i < getHeight(); i++) {
         // For each col
-        for (int j = shift; j <= realWidth ; j ++ ) {
-            // Ce byte
+        for (int j = shift; j <= realWidth; j ++ ) {
+            // This byte
             int current =  (i * realWidth) + j ;
-            // Sera décalé vers la gauche
-            _gfxBuffer[current - shift] = _gfxBuffer[current];
 
+            if (getType() == MCHIP8) {
+                // Sera décalé vers la gauche
+                _gfx[current - shift] = _gfx[current];
+            } else {
+                // And if we're not in MegaMode...
+                _gfxBuffer[current - shift] = _gfxBuffer[current];
+            }
+
+            // If we are over the old screen
             if (j >= (realWidth - shift)) {
                 // Place the missing color
-                int colorPos = current % 4;
+                int colorPos = current % getBytesPerPixel();
                 if (colorPos == 0) {
+                    // Do the same in buffer if we're not in Mega Mode
                     if (getType() == MCHIP8) {
                         // New: Get pixel color on buffer
                         color = getPixel(current);
+
                     } else {
                         color = getColor(getColorTheme()).backColor;
                     }
+                }
 
-                    // not buffer anymore
-                    _gfx[current    ] = getR(color);
-                    _gfx[current + 1] = getG(color);
-                    _gfx[current + 2] = getB(color);
-                    _gfx[current + 3] = getAlpha(color);
+                if (getType() == MCHIP8) {
+                    // Draw the pixels
+                    if (current % getBytesPerPixel() == 0)
+                        _gfx[current] = getR(color);
+                    if (current % getBytesPerPixel() == 1)
+                        _gfx[current] = getG(color);
+                    if (current % getBytesPerPixel() == 2)
+                        _gfx[current] = getB(color);
+                    if (current % getBytesPerPixel() == 3)
+                        _gfx[current] = getAlpha(color);
+                } else {
+                    // Draw the pixels
+                    if (current % getBytesPerPixel() == 0)
+                        _gfxBuffer[current] = getR(color);
+                    if (current % getBytesPerPixel() == 1)
+                        _gfxBuffer[current] = getG(color);
+                    if (current % getBytesPerPixel() == 2)
+                        _gfxBuffer[current] = getB(color);
+                    if (current % getBytesPerPixel() == 3)
+                        _gfxBuffer[current] = getAlpha(color);
                 }
             }
         }
@@ -651,15 +725,20 @@ void Chip8::playSound(byte repeat) {
     // Copy to soundBuffer
     if (_soundBuffer != NULL)
         free(_soundBuffer);
-    // Don't take extra 4K in account
-    unsigned long bufSize = (_memorySize - _I - 4096);
-    _soundBufferSize = bufSize;
+    // Apparently, the first two bytes are for the frequency
+    // The next 3 bytes is the size
+    //unsigned long bufSize = (_memorySize - _I - 4096);
+    int BkpI = _I;
+    _soundBufferFrequency = readMemS(BkpI);
+    BkpI += 2;
+    _soundBufferSize = (readMemS(BkpI) << 8) | readMemB(BkpI + 2); //bufSize;
+    BkpI += 8;
     _soundBuffer = (unsigned char*)malloc(_soundBufferSize);
     // K = 0 => infinite; -1 for SDL_Mixer
     _soundRepeat = (repeat == 0) ? -1: repeat;
 
     for (unsigned int i = 0; i < _soundBufferSize; i++) {
-        _soundBuffer[i] = readMemB(_I + i);
+        _soundBuffer[i] = readMemB(BkpI + i);
     }
 }
 
@@ -1132,7 +1211,7 @@ void Chip8::execute(double frequencyInMs = BASE_CLOCK_MS) {
     unsigned char X;			// 2ème
     unsigned char Y;			// 3ème
 
-    // This need C++11 compilator setting
+    // This need C++11 compilator setting - ATT: In windows, the precision is in milliseconds ! For our timers @60hthat's no big deal...
     static auto t_start = chrono::high_resolution_clock::now();
     auto t_end = chrono::high_resolution_clock::now();
     double t;
@@ -1156,7 +1235,7 @@ void Chip8::execute(double frequencyInMs = BASE_CLOCK_MS) {
     Y = (unsigned char)((_opcode & 0x00F0) >> 4);
 
     // What is going to be executed
-    //printf("PC: %04X - OpCode: %04X - Code: %04X - Current Frequency: %.4f \n", _pc, _opcode, code, frequencyInMs);
+    //printf("PC: %04X - OpCode: %04X - Code: %04X - Current Frequency: %.4f - T: %ld\n", _pc, _opcode, code, frequencyInMs, t_start);
 
     _pc += 2;
 
@@ -1328,18 +1407,20 @@ void Chip8::loadFont() {
 bool Chip8::loadGame(const char *filename) {
     bool res = false;
 
-    std::ifstream file(filename, std::ios::binary);
-    file.seekg(0, std::ios::end);
-    std::streamsize size = file.tellg();
-    file.seekg(0, std::ios::beg);
+    if (filename != "") {
+        std::ifstream file(filename, std::ios::binary);
+        file.seekg(0, std::ios::end);
+        std::streamsize size = file.tellg();
+        file.seekg(0, std::ios::beg);
 
-    char *rom = new char[size];
-    if ( file.read(rom, size) ) {
-        load(rom, size);
-        file.close();
-        res = true;
+        char *rom = new char[size];
+        if ( file.read(rom, size) ) {
+            load(rom, size);
+            file.close();
+            res = true;
+        }
+        delete[] rom;
     }
-    delete[] rom;
     return res;
 }
 

@@ -49,7 +49,7 @@ class Chip8GL : public wxGLCanvas
         bool _Rendering;
         bool _Filtered;
         wxGLContext *_Context;
-        clock_t _startTime;
+        //clock_t _startTime;
         int _FPS;
         vector<T_TEXT> _HUDLines;
         bool _displayHUD;

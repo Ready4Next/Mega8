@@ -9,12 +9,13 @@
 
 #include <fstream>
 #include <stack>
+
 #include <chrono>
 
 using namespace std;
 
-enum Chip8Types { CHIP8, CHIP8_HiRes, CHIP8_HiRes2, SCHIP8, MCHIP8 };
-enum Chip8ColorTheme { DEFAULT, INVERSE, GAMEBOY, C64, RED, GREEN, BLUE };
+enum Chip8Types { CHIP8 = 0, CHIP8_HiRes, CHIP8_HiRes2, SCHIP8, MCHIP8 };
+enum Chip8ColorTheme { DEFAULT = 0, INVERSE, GAMEBOY, C64, RED, GREEN, BLUE };
 enum Chip8BlendModes { BLEND_NORMAL = 0, BLEND_25 = 1, BLEND_50 = 2, BLEND_75 = 3, BLEND_ADD = 4, BLEND_MUL = 5};
 
 struct TCOLOR {
@@ -36,8 +37,9 @@ struct TCOLOR {
 #define getRGBA(R, G, B, Alpha)     (unsigned int)((R << 24) | (G << 16) | (B << 8) | Alpha)
 
 // Original Chip-8 Frequencies according to various docs
-// CPU Frequency (COSMAC VIP)
-const float    BASE_FREQ     = 44;//1760;
+// CPU Frequency (COSMAC VIP 1.76 Khz)
+const float    BASE_FREQ     = 44;      // 1760 div 40;
+
 // Clock Frequency 60Hz
 const float    BASE_CLOCK    = 60;
 const double   BASE_CLOCK_MS = (1/BASE_CLOCK) * 1000;
@@ -141,7 +143,7 @@ class BaseCHIP8 {
                 case MCHIP8:
                     return 640;
                 case SCHIP8:
-                    return 160;
+                    return 80;
                 default:
                     return 40;
             }
@@ -251,9 +253,10 @@ class BaseCHIP8 {
                         _height = 192;
                     } else {
                         /* According to some docs (and SCHIP behavior to switch to a lower resolution when extended mode is off
-                           In fact, it can cause some demos (Megamaze, MegaSirpinsky) not to work
                         _width = 128;
                         _height = 64;
+
+                        In fact, it can cause some demos (Megamaze, MegaSirpinsky) not to work
                         */
                         _width = 256;
                         _height = 192;
@@ -301,6 +304,7 @@ class Chip8: public BaseCHIP8
         // Sound
         unsigned char *getSoundBuffer() { return _soundBuffer; }
         unsigned long getSoundBufferSize() { return _soundBufferSize; }
+        unsigned int getSoundBufferFrequency() { return _soundBufferFrequency; }
         unsigned char getSoundRepeat() { return _soundRepeat; }
 
         // Others
@@ -357,6 +361,7 @@ class Chip8: public BaseCHIP8
         unsigned char *_gfxBuffer;
         unsigned char *_soundBuffer;
         unsigned long _soundBufferSize;
+        unsigned int _soundBufferFrequency;
         unsigned char _soundRepeat;
         // Mega Chip-8 - 255 Color palette + alpha
         unsigned int _palette[256];

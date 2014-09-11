@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/Mega8" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/Mega8" prefix_auto="1" extension_auto="0" />
 				<Option object_output="obj/Debug/" />
 				<Option type="0" />
 				<Option compiler="gcc" />
@@ -15,10 +15,15 @@
 				<Compiler>
 					<Add option="-std=c++11" />
 					<Add option="-g" />
-					<Add option="`wx-config --cflags`" />
+					<Add option="`wx-config --prefix=/usr/local --cflags`" />
 				</Compiler>
 				<Linker>
-					<Add option="`wx-config --libs` -lSDL2" />
+					<Add option="`wx-config --prefix=/usr/local --libs --gl-libs`" />
+					<Add option="-lGL" />
+					<Add option="-lSDL2" />
+					<Add option="-lSDL2_mixer" />
+					<Add option="-lrt" />
+					<Add option="-lftgl" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -30,38 +35,93 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
-					<Add option="`wx-config --cflags --gl-libs`" />
+					<Add option="`wx-config --prefix=/usr/local --cflags --static`" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="`wx-config --libs` -lSDL2" />
+					<Add option="`wx-config --prefix=/usr/local --libs --gl-libs --static`" />
+					<Add option="-lSDL2 -lSDL2_mixer -lrt" />
+					<Add option="-lftgl -lGL" />
+				</Linker>
+			</Target>
+			<Target title="Win32">
+				<Option output="bin/Win32/Mega8_i686.exe" prefix_auto="1" extension_auto="0" />
+				<Option type="0" />
+				<Option compiler="crosswin32" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="`wx-config --prefix=/usr/local/mingw-w64-i686 --host=i686-w64-mingw32 --cflags --static`" />
+					<Add option="`sdl2-config --prefix=/usr/local/mingw-w64-i686 --cflags`" />
+					<Add option="`freetype-config --prefix=/usr/local/mingw-w64-i686 --cflags`" />
+					<Add directory="/usr/local/mingw-w64-i686/include/freetype2" />
+				</Compiler>
+				<Linker>
+					<Add option="-lrt" />
+					<Add option="-lftgl" />
+					<Add option="-lfreetype" />
+					<Add option="-lpng" />
+					<Add option="`wx-config" />
+					<Add option="--prefix=/usr/local/mingw-w64-i686" />
+					<Add option="--host=i686-w64-mingw32" />
+					<Add option="--libs --gl-libs`" />
+					<Add option="`sdl2-config" />
+					<Add option="--libs`" />
+					<Add option="-lSDL2_mixer" />
+					<Add directory="/usr/local/mingw-w64-i686/lib" />
+				</Linker>
+			</Target>
+			<Target title="Win64">
+				<Option output="bin/Win64/Mega8_x86-64.exe" prefix_auto="1" extension_auto="0" />
+				<Option type="0" />
+				<Option compiler="crosswin64" />
+				<Compiler>
+					<Add option="-std=c++11" />
+					<Add option="`wx-config --prefix=/usr/local/mingw-w64-x86_64 --host=x86_64-w64-mingw32 --cflags --static`" />
+					<Add option="`sdl2-config --prefix=/usr/local/mingw-w64-x86_64 --cflags`" />
+					<Add option="`freetype-config --prefix=/usr/local/mingw-w64-x86_64 --cflags`" />
+				</Compiler>
+				<Linker>
+					<Add option="-lrt" />
+					<Add option="-lftgl" />
+					<Add option="-lfreetype" />
+					<Add option="-lpng" />
+					<Add option="`wx-config" />
+					<Add option="--prefix=/usr/local/mingw-w64-x86_64" />
+					<Add option="--host=x86_64-w64-mingw32" />
+					<Add option="--libs --gl-libs`" />
+					<Add option="`sdl2-config" />
+					<Add option="--libs`" />
+					<Add option="-lSDL2_mixer" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++11" />
-			<Add option="-Wall" />
-			<Add option="-g" />
-			<Add option="`wx-config --cflags --gl-libs`" />
 			<Add directory="include" />
 			<Add directory="Chip8" />
+			<Add directory="Config" />
 		</Compiler>
-		<Linker>
-			<Add option="`wx-config --cflags --gl-libs` -lSDL2 -lSDL2_mixer -lrt" />
-			<Add option="-lftgl" />
-			<Add library="GL" />
-		</Linker>
 		<Unit filename="Chip8/Chip8.cpp" />
 		<Unit filename="Chip8/Chip8.h" />
+		<Unit filename="InputDialog.cpp" />
+		<Unit filename="InputDialog.h" />
 		<Unit filename="Mega8App.cpp" />
 		<Unit filename="Mega8App.h" />
+		<Unit filename="Mega8Config.cpp" />
+		<Unit filename="Mega8Config.h" />
 		<Unit filename="Mega8Main.cpp" />
 		<Unit filename="Mega8Main.h" />
 		<Unit filename="README.md" />
 		<Unit filename="include/Chip8GL.h" />
 		<Unit filename="include/bell.h" />
 		<Unit filename="include/game_over.h" />
+		<Unit filename="mega8.ico" />
+		<Unit filename="res.rc">
+			<Option target="Win32" />
+			<Option target="Win64" />
+		</Unit>
 		<Unit filename="src/Chip8GL.cpp" />
+		<Unit filename="wxsmith/InputDialog.wxs" />
 		<Unit filename="wxsmith/Mega8frame.wxs" />
 		<Extensions>
 			<envvars />
@@ -71,6 +131,7 @@
 				<gui name="wxWidgets" src="Mega8App.cpp" main="Mega8Frame" init_handlers="necessary" language="CPP" />
 				<resources>
 					<wxFrame wxs="wxsmith/Mega8frame.wxs" src="Mega8Main.cpp" hdr="Mega8Main.h" fwddecl="0" i18n="1" name="Mega8Frame" language="CPP" />
+					<wxDialog wxs="wxsmith/InputDialog.wxs" src="InputDialog.cpp" hdr="InputDialog.h" fwddecl="0" i18n="1" name="InputDialog" language="CPP" />
 				</resources>
 			</wxsmith>
 		</Extensions>

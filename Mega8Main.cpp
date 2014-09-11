@@ -19,14 +19,14 @@
 #include <wx/image.h>
 #include <wx/thread.h>
 #include <wx/stdpaths.h>
+#include <wx/stopwatch.h>
+#include <wx/cmdline.h>
 
 #ifndef __WIN32__
     #include "mega8.xpm"
 #else
-    #include <wx/wxicon.h>
+   // Already included in res file
 #endif // __WIN32__
-
-#include <chrono>
 
 //(*InternalHeaders(Mega8Frame)
 #include <wx/string.h>
@@ -34,12 +34,11 @@
 //*)
 
 #define APP_TITLE "Mega/Super/HiRes/Chip-8 Emulator"
-#define APP_VERSION "1.1"
+#define APP_VERSION "1.2"
 #define APP_AUTHOR "Ready4Next/Junta"
 
 //helper functions
-enum wxbuildinfoformat {
-    short_f, long_f };
+enum wxbuildinfoformat { short_f, long_f };
 
 wxString wxbuildinfo(wxbuildinfoformat format)
 {
@@ -50,11 +49,20 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 
     if (format == long_f )
     {
+
+// Platform
 #if defined(__WXMSW__)
         wxbuild << _T("\t* Windows");
 #elif defined(__UNIX__)
-        wxbuild << _T("\t* Linux");
+        wxbuild << _T("\t* Unix/Linux");
 #endif
+
+// Architecture
+#if defined(__x86_64__)||defined(__LP64__)
+    wxbuild << _T("-64bits");
+#else
+    wxbuild << _T("-32bits");
+#endif // defined
 
 #if wxUSE_UNICODE
         wxbuild << _T("-Unicode build *");
@@ -63,12 +71,14 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 #endif // wxUSE_UNICODE
     }
 
+    wxbuild << _T("\n\nClock Precision: ")  << ((double) std::chrono::high_resolution_clock::period::num / std::chrono::high_resolution_clock::period::den);
     wxbuild << _T("\n\n\t(C) 2014 ") << APP_AUTHOR;
     wxbuild << _T("\n\nTTF \"Game Over\" by Pedro Muñoz Pastor");
     wxbuild << _T("\nKeypad Test [Hap, 2006]");
     wxbuild << _T("\nChip8 emulator Logo [Garstyciuks]");
     wxbuild << _T("\n\nShortcuts:\n\n");
-    wxbuild << _T("ESC: Quit\t\tO: Open\nF: Fullscreen\tH: Display HUD\nL: Filter\t\tR: Reset\nC: Close\t\tSpace: Pause / Resume\nS: Sync Clock @60 Hz\nCTRL +/-: Increase / Decrease frequency\nChip-8 Keypad (0-F): Numpad (0-9.+-/*ENTER)\nK: Check Keypad Test");
+    wxbuild << _T("ESC: Quit\t\t\t\tCTRL+O: Open\nCTRL+F: Fullscreen\t\tCTRL+H: Display HUD\nCTRL+L: Filter\t\t\tCTRL+R: Reset\nCTRL+C: Close Rom\t\tCTRL+Space: Pause / Resume\nCTRL+Y: Sync Clock @60 Hz");
+    wxbuild << _T("\nCTRL +/-: Increase / Decrease frequency\nChip-8 Keypad (0-F): Default Numpad (0-9.+-/*ENTER)\nCTRL+K: Check Keypad Test");
 
     return wxbuild;
 }
@@ -146,32 +156,32 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     Create(parent, id, _("Chip 8 Emulator"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_FRAME_STYLE|wxWANTS_CHARS, _T("id"));
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
-    MenuItem3 = new wxMenuItem(Menu1, idMenuOpen, _("Open\tO"), _("Open ROM"), wxITEM_NORMAL);
+    MenuItem3 = new wxMenuItem(Menu1, idMenuOpen, _("Open"), _("Open ROM"), wxITEM_NORMAL);
     Menu1->Append(MenuItem3);
-    MenuItem7 = new wxMenuItem(Menu1, idMenuClose, _("Close\tC"), _("Close current ROM"), wxITEM_NORMAL);
+    MenuItem7 = new wxMenuItem(Menu1, idMenuClose, _("Close"), _("Close current ROM"), wxITEM_NORMAL);
     Menu1->Append(MenuItem7);
-    MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tESC"), _("Quit emulator"), wxITEM_NORMAL);
+    MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit"), _("Quit emulator"), wxITEM_NORMAL);
     Menu1->Append(MenuItem1);
     MenuBar1->Append(Menu1, _("&File"));
     Menu3 = new wxMenu();
-    MenuItem4 = new wxMenuItem(Menu3, idMenuReset, _("Reset\tALT-R"), _("Reset Emulator"), wxITEM_NORMAL);
+    MenuItem4 = new wxMenuItem(Menu3, idMenuReset, _("Reset"), _("Reset Emulator"), wxITEM_NORMAL);
     Menu3->Append(MenuItem4);
     MenuItem6 = new wxMenuItem(Menu3, idMenuPause, _("Start / Pause"), _("Start / Pause emulation"), wxITEM_NORMAL);
     Menu3->Append(MenuItem6);
     Menu3->AppendSeparator();
     MenuItem5 = new wxMenu();
-    MenuItem9 = new wxMenuItem(MenuItem5, idMenuCTDefault, _("Default"), wxEmptyString, wxITEM_RADIO);
-    MenuItem5->Append(MenuItem9);
-    MenuItem17 = new wxMenuItem(MenuItem5, idMenuCTC64, _("C64"), wxEmptyString, wxITEM_RADIO);
-    MenuItem5->Append(MenuItem17);
-    MenuItem18 = new wxMenuItem(MenuItem5, idMenuCTGameBoy, _("Game Boy"), wxEmptyString, wxITEM_RADIO);
-    MenuItem5->Append(MenuItem18);
-    MenuItem19 = new wxMenuItem(MenuItem5, idMenuCTRed, _("Red"), wxEmptyString, wxITEM_RADIO);
-    MenuItem5->Append(MenuItem19);
-    MenuItem20 = new wxMenuItem(MenuItem5, idMenuCTGreen, _("Green"), wxEmptyString, wxITEM_RADIO);
-    MenuItem5->Append(MenuItem20);
-    MenuItem21 = new wxMenuItem(MenuItem5, idMenuCTBlue, _("Blue"), wxEmptyString, wxITEM_RADIO);
-    MenuItem5->Append(MenuItem21);
+    MnuCTDefault = new wxMenuItem(MenuItem5, idMenuCTDefault, _("Default"), wxEmptyString, wxITEM_RADIO);
+    MenuItem5->Append(MnuCTDefault);
+    MnuCTC64 = new wxMenuItem(MenuItem5, idMenuCTC64, _("C64"), wxEmptyString, wxITEM_RADIO);
+    MenuItem5->Append(MnuCTC64);
+    MnuCTGameBoy = new wxMenuItem(MenuItem5, idMenuCTGameBoy, _("Game Boy"), wxEmptyString, wxITEM_RADIO);
+    MenuItem5->Append(MnuCTGameBoy);
+    MnuCTRed = new wxMenuItem(MenuItem5, idMenuCTRed, _("Red"), wxEmptyString, wxITEM_RADIO);
+    MenuItem5->Append(MnuCTRed);
+    MnuCTGreen = new wxMenuItem(MenuItem5, idMenuCTGreen, _("Green"), wxEmptyString, wxITEM_RADIO);
+    MenuItem5->Append(MnuCTGreen);
+    MnuCTBlue = new wxMenuItem(MenuItem5, idMenuCTBlue, _("Blue"), wxEmptyString, wxITEM_RADIO);
+    MenuItem5->Append(MnuCTBlue);
     MenuItem5->AppendSeparator();
     MenuItem16 = new wxMenuItem(MenuItem5, idMenuCTInverse, _("Inverse"), wxEmptyString, wxITEM_CHECK);
     MenuItem5->Append(MenuItem16);
@@ -210,7 +220,7 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     MnuSyncClock->Check(true);
     Menu3->Append(idMenuSpeed, _("Speed"), MenuItem8, wxEmptyString);
     Menu4 = new wxMenu();
-    MenuDisplayHUD = new wxMenuItem(Menu4, idMenuDisplayHUD, _("Display HUD\tH"), _("Display on screen informations"), wxITEM_CHECK);
+    MenuDisplayHUD = new wxMenuItem(Menu4, idMenuDisplayHUD, _("Display HUD"), _("Display on screen informations"), wxITEM_CHECK);
     Menu4->Append(MenuDisplayHUD);
     MnuFilter = new wxMenuItem(Menu4, idMenuFiltered, _("Filter Texture"), _("Apply OpenGL linear filtering"), wxITEM_CHECK);
     Menu4->Append(MnuFilter);
@@ -228,8 +238,8 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     MenuItem15 = new wxMenuItem(Menu4, idMenuSize10x10, _("10x10"), wxEmptyString, wxITEM_NORMAL);
     Menu4->Append(MenuItem15);
     Menu4->AppendSeparator();
-    MenuItem14 = new wxMenuItem(Menu4, idMenuFullScreen, _("FullScreen\tF"), _("Set emulator fullscreen"), wxITEM_NORMAL);
-    Menu4->Append(MenuItem14);
+    MnuFullScreen = new wxMenuItem(Menu4, idMenuFullScreen, _("FullScreen"), _("Set emulator fullscreen"), wxITEM_CHECK);
+    Menu4->Append(MnuFullScreen);
     Menu3->Append(ID_MENUITEM1, _("Graphics"), Menu4, wxEmptyString);
     MenuCheckKeypad = new wxMenuItem(Menu3, ID_MENUITEM2, _("Input"), _("Check keypad"), wxITEM_NORMAL);
     Menu3->Append(MenuCheckKeypad);
@@ -285,13 +295,9 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Mega8Frame::OnClose);
     //*)
 
-#ifdef __WIN32__
-    // Application icon
-    SetIcon(wxIcon(AppIcon));
-#else
-    wxIcon AppIcon(mega8_xpm);
-    SetIcon(AppIcon);
-#endif // __WIN32__
+    // Set Application icon
+    wxIcon icon = wxICON(mega8);
+    SetIcon(icon);
 
     // Create Panel
     int GLCanvasAttributes[] = {
@@ -301,8 +307,8 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     	WX_GL_STENCIL_SIZE,    0,
     	0, 0 };
     GLDisplay = new Chip8GL(this, idChipGLCanvas, GLCanvasAttributes);
-    GLDisplay->setFiltered(false);
-    GLDisplay->setDisplayHUD(false);
+    GLDisplay->setFiltered(Mega8Config::getInstance().getFiltered());
+    GLDisplay->setDisplayHUD(Mega8Config::getInstance().getDisplayHUD());
 
     // Update Graphics
     Connect(wxID_ANY,wxEVT_IDLE,(wxObjectEventFunction)&Mega8Frame::onIdle);
@@ -313,8 +319,8 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     // Init SDL
     SDL_Init(SDL_INIT_AUDIO);
     // Init SDL_Mixer
-    if( Mix_OpenAudio( 11025, AUDIO_U8, 1, 1024 ) < 0 ) {
-        printf("Unable to open audio! SDL_mixer Error: %s\n", Mix_GetError());
+    if( Mix_OpenAudio( 44100, AUDIO_U8, 1, 1024 ) < 0 ) {
+        wxPrintf("Unable to open audio! SDL_mixer Error: %s\n", Mix_GetError());
         exit(1);
     }
 
@@ -325,38 +331,46 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     // Get Application Directory
     wxString exePath = wxPathOnly(::wxStandardPaths::Get().GetExecutablePath());
 
-    // Set base clock
-    _frequency = BASE_FREQ;
+    // Set Last Folder to exePath if not set
+    Mega8Config::getInstance().loadConfig("General");
+    if (Mega8Config::getInstance().getLastFolder() == wxEmptyString)
+        Mega8Config::getInstance().setLastFolder(exePath);
+
+    _machine = new Chip8();
+
+    // Set some default settings
+    CurrentRomDir = Mega8Config::getInstance().getLastFolder();
+    CurrentRomPath = CurrentRomName = wxEmptyString;
+    SetSyncClock(Mega8Config::getInstance().getSyncClock());
+    SetFiltered(Mega8Config::getInstance().getFiltered());
+    SetFullScreenMode(Mega8Config::getInstance().getFullScreen());
+    SetColorTheme(Mega8Config::getInstance().getColorTheme());
 
     // Load "BIOS" ;-)
-    CurrentRomDir = exePath;
-    CurrentRomPath = wxEmptyString;
-    _frequency = -1;
-    _machine = new Chip8();
-    SetSyncClock(MnuSyncClock->IsChecked());
-    SetFiltered(MnuFilter->IsChecked());
-    GLDisplay->setFiltered(MnuFilter->IsChecked());
-
     _machine->loadBios();                   // Reminds me Nintendo Logo when power up...
-    updateFrequency(_machine->getFrequencyMultiplicator());
-    SetTitle(APP_TITLE);
 
+    // Set default size
+    if (!Mega8Config::getInstance().getFullScreen()) {
+        wxSize size(_machine->getWidth() * SIZE_MENU_INDEX[5], _machine->getHeight() * SIZE_MENU_INDEX[5]);
+        this->SetClientSize(size);
+    }
+
+    // Set Auto frequency or saved frequency
+    if (Mega8Config::getInstance().getSpeedAuto()) {
+        updateFrequency(_machine->getFrequencyMultiplicator());
+    } else {
+        updateFrequency(FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_machine->getType())]);
+    }
+
+    // Start the whole thing
+    SetTitle(APP_TITLE);
     DoStartCPUThread();
+
+    CenterOnScreen();
 }
 
 Mega8Frame::~Mega8Frame()
 {
-    if (gMusic != NULL) {
-        Mix_FreeChunk(gMusic);
-        gMusic = NULL;
-    }
-
-    if (gSound != NULL) {
-        Mix_FreeChunk(gSound);
-        gMusic = NULL;
-    }
-
-    delete _machine;
     //(*Destroy(Mega8Frame)
     //*)
 }
@@ -375,40 +389,41 @@ void Mega8Frame::DoOpen() {
 	// Creates a "open file" dialog with 4 file types
 	if (OpenDialog->ShowModal() == wxID_OK) // if the user click "Open" instead of "Cancel"
 	{
-	    _frequency = -1;
-		CurrentRomPath = OpenDialog->GetPath();
+	    if (CurrentRomName != wxEmptyString) {
+            // Save configuration
+            Mega8Config::getInstance().saveConfig(CurrentRomName);
+	    }
+
+	    hardReset();
+
+	    CurrentRomPath = OpenDialog->GetPath();
 		CurrentRomDir = OpenDialog->GetDirectory();
+		CurrentRomName = OpenDialog->GetFilename();
 
-        if (gMusic != NULL) {
-            Mix_FreeChunk(gMusic);
-            gMusic = NULL;
-        }
+		// Load config for this ROM (Keyboard)
+	    Mega8Config::getInstance().loadConfig(CurrentRomName);
 
-		// Sets our current document to the file the user selected
-		// Delete CPU Thread
-		if (_CPUThread) {
-            if (_Paused)
-                DoResumeCPUThread();
+		// Save it for future use
+		Mega8Config::getInstance().setLastFolder(CurrentRomDir);
 
-            DeleteCPUThread();
-            delete _CPUThread;
-            _CPUThread = NULL;
+		if (_machine->loadGame(CurrentRomPath.mb_str())) { //Opens that file
+
+            // If the type is MegaChip-8, disable Color Themes
+            if (_machine->getType() == MCHIP8) {
+                SetColorTheme(DEFAULT);
+                SetInverseColor(false);
+            }
+
+            wxString title = APP_TITLE;
+            title << " - " << CurrentRomName;
+            SetTitle(title);
+
+            // Starts it
+            DoStartCPUThread();
 		}
-
-        delete _machine;
-        _machine = new Chip8();
-		_machine->initialize(CHIP8);
-		SetSyncClock(MnuSyncClock->IsChecked());
-		SetFiltered(MnuFilter->IsChecked());
-		_machine->loadGame(CurrentRomPath.mb_str()); //Opens that file
-        wxString title = APP_TITLE;
-        title << " " << OpenDialog->GetFilename();
-		SetTitle(title); // Set the Title to reflect the file open
-
-        DoStartCPUThread();
 	}
 
-	// Clean up after ourselves
+	// Clean up
 	OpenDialog->Destroy();
 }
 
@@ -425,11 +440,41 @@ void Mega8Frame::OnAbout(wxCommandEvent& event)
 
 void Mega8Frame::OnClose(wxCloseEvent&)
 {
-    /* This is the cleaning up part */
-    Mix_CloseAudio();
-	Mix_Quit();
+   exitApplication();
+}
 
-    DeleteCPUThread();
+void Mega8Frame::exitApplication()
+{
+    _exit = true;
+    if (_CPUThread) {
+        DeleteCPUThread();
+        _CPUThread = NULL;
+    }
+
+    // Free Mega Chip-8 Sound Buffer
+    if (gMusic != NULL) {
+        Mix_FreeChunk(gMusic);
+        gMusic = NULL;
+    }
+
+    // Free beep
+    if (gSound != NULL) {
+        Mix_FreeChunk(gSound);
+        gMusic = NULL;
+    }
+
+    // Save Config
+    Mega8Config::getInstance().saveConfig(CurrentRomName);
+
+    if (_machine) {
+        delete _machine;
+    }
+
+     /* This is the cleaning up part */
+    Mix_CloseAudio();
+    Mix_Quit();
+	SDL_Quit();
+
     Destroy();
 }
 
@@ -442,6 +487,7 @@ void Mega8Frame::DoStartCPUThread()
             _CPUThread = new CPUThreadHandler(this);
             // Create the thread
             if ( _CPUThread->Run() != wxTHREAD_NO_ERROR ) {
+                    wxMessageBox("Error", "test");
                 wxLogError("Can't create thread!");
                 delete _CPUThread;
                 _machine = NULL;
@@ -463,6 +509,9 @@ void Mega8Frame::DoPauseCPUThread()
             wxLogError("Can't pause the thread!");
     }
     _Paused = true;
+    if (_MusicIsPlaying) {
+        Mix_Pause(-1);
+    }
 }
 
 // a resume routine would be nearly identic to DoPauseThread()
@@ -479,11 +528,17 @@ void Mega8Frame::DoResumeCPUThread()
             wxLogError("Can't pause the thread!");
     }
     _Paused = false;
+    if (_MusicIsPlaying) {
+        Mix_Resume(-1);
+    }
 }
 
 void Mega8Frame::OnCPUThreadUpdate(wxThreadEvent&)
 {
-    static bool isPlaying;
+    int freq, channels;
+    Uint16 format;
+    int freqRatio;
+    unsigned char *convertedSoundBuffer;
 
     // Check if we must play a sound
     if (_machine->timerSound() != 0 && _machine->getType() != MCHIP8) {
@@ -493,7 +548,7 @@ void Mega8Frame::OnCPUThreadUpdate(wxThreadEvent&)
             gSound = Mix_LoadWAV_RW(chunk, 0);
             if( gSound == NULL )
             {
-                printf( "Failed to load Beep Sound Effect! SDL_mixer Error: %s\n", Mix_GetError() );
+                wxPrintf( "Failed to load Beep Sound Effect! SDL_mixer Error: %s\n", Mix_GetError() );
                 SDL_RWclose(chunk);
                 gSound = NULL;
             }
@@ -503,32 +558,56 @@ void Mega8Frame::OnCPUThreadUpdate(wxThreadEvent&)
         if (gSound != NULL)
             Mix_PlayChannel( -1, gSound, 0 );
     } else {
-        if (_machine->getSoundBuffer() != NULL && !isPlaying) {
-            // Load RAW Data from Chip8 (8bit mono 11025Hz)
-            gMusic = Mix_QuickLoad_RAW(_machine->getSoundBuffer(), _machine->getSoundBufferSize());
+        if (_machine->getSoundBuffer() != NULL && !_MusicIsPlaying) {
+
+            // Get output specs
+            Mix_QuerySpec(&freq, &format, &channels);
+            freqRatio = (freq / _machine->getSoundBufferFrequency());
+
+            // Initialize the buffer
+            convertedSoundBuffer = (unsigned char*) malloc(_machine->getSoundBufferSize() * freqRatio);
+            if (freqRatio == 1) {
+                memcpy(convertedSoundBuffer, _machine->getSoundBuffer(), _machine->getSoundBufferSize());
+            } else {
+                // Convert frequency
+                unsigned char *buf = _machine->getSoundBuffer();
+                for (int i = 0; i < (_machine->getSoundBufferSize() * freqRatio); i++) {
+                    int index = (int)floor(i / freqRatio);
+                    convertedSoundBuffer[i] = buf[index];
+                }
+            }
+
+            // Load our music
+            gMusic = Mix_QuickLoad_RAW(convertedSoundBuffer, _machine->getSoundBufferSize() * freqRatio);
             if( gMusic == NULL )
             {
-                printf( "Failed to load Mega-Chip Music! SDL_mixer Error: %s\n", Mix_GetError() );
+                wxPrintf( "Failed to load Mega-Chip Music! SDL_mixer Error: %s\n", Mix_GetError() );
                 gMusic = NULL;
             }
-            isPlaying = true;
+            _MusicIsPlaying = true;
 
             if (gMusic != NULL)
                 Mix_FadeInChannel( -1, gMusic, _machine->getSoundRepeat(), 3000 );
 
-        } else if (_machine->getSoundBuffer() == NULL && isPlaying) {
-            Mix_FreeChunk(gMusic);
-            gMusic = NULL;
-            isPlaying = false;
+        } else if (_machine->getSoundBuffer() == NULL && _MusicIsPlaying) {
+            if (gMusic) {
+                Mix_FreeChunk(gMusic);
+                gMusic = NULL;
+
+                // Free buffer
+                free(convertedSoundBuffer);
+                convertedSoundBuffer = NULL;
+            }
+            _MusicIsPlaying = false;
         }
     }
 }
 
-string getFrequencyStr(float frequency) {
+string getFrequencyStr(long frequency) {
     string freqStr;
     float fDiv;
     int cnt;
-    char *endStr[] = {"Mhz","Khz","Hz"};
+    static const char *endStr[] = {"Mhz","Khz","Hz"};
 
     fDiv = 1000000;
     cnt = 0;
@@ -556,77 +635,106 @@ void Mega8Frame::updateFrequency(int Multiplicator) {
 
         // If _frequency is not set on automatic
         if (_frequency != -1) {
-            _frequency = BASE_FREQ * FREQ_MENU_INDEX[_freqCoeff];
+            _frequency = BASE_FREQ * FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_machine->getType())];
             baseFrequency = _frequency;
         }
 
         // Adjust Menu's texts { 1, 2, 10, 40, 80, 160, 320, 640 }
         MenuSpeed1024->SetItemLabel(wxString::Format(_("1024x - %s"), getFrequencyStr(BASE_FREQ * 40960).c_str()));
         if (Multiplicator == (40 * 1024)) {
-            _freqCoeff = 10;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 10);
             MenuSpeed1024->Check(true);
         }
 
         MenuSpeed256->SetItemLabel(wxString::Format(_("256x - %s"), getFrequencyStr(BASE_FREQ * 10240).c_str()));
         if (Multiplicator == (40 * 256)) {
-            _freqCoeff = 9;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 9);
             MenuSpeed256->Check(true);
         }
 
         MenuSpeed32->SetItemLabel(wxString::Format(_("32x - %s"), getFrequencyStr(BASE_FREQ * 1280).c_str()));
         if (Multiplicator == (40 * 32)) {
-            _freqCoeff = 8;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 8);
             MenuSpeed32->Check(true);
         }
 
         MenuSpeed16->SetItemLabel(wxString::Format(_("16x - %s"), getFrequencyStr(BASE_FREQ * 640).c_str()));
         if (Multiplicator == (40 * 16)) {
-            _freqCoeff = 7;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 7);
             MenuSpeed16->Check(true);
         }
 
         MenuSpeed8->SetItemLabel(wxString::Format(_("8x - %s"), getFrequencyStr(BASE_FREQ * 320).c_str()));
         if (Multiplicator == (40 * 8)) {
-            _freqCoeff = 6;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 6);
             MenuSpeed8->Check(true);
         }
         MenuSpeed4->SetItemLabel(wxString::Format(_("4x - %s"), getFrequencyStr(BASE_FREQ * 160).c_str()));
         if (Multiplicator == (40 * 4)) {
-            _freqCoeff = 5;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 5);
             MenuSpeed4->Check(true);
         }
         MenuSpeed2->SetItemLabel(wxString::Format(_("2x - %s"), getFrequencyStr(BASE_FREQ * 80).c_str()));
         if (Multiplicator == (40 * 2)) {
-            _freqCoeff = 4;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 4);
             MenuSpeed2->Check(true);
         }
         MenuSpeed1->SetItemLabel(wxString::Format(_("1x - %s"), getFrequencyStr(BASE_FREQ * 40).c_str()));
         if (Multiplicator == 40) {
-            _freqCoeff = 3;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 3);
             MenuSpeed1->Check(true);
         }
 
         MenuSpeedDiv4->SetItemLabel(wxString::Format(_("1/4x - %s"), getFrequencyStr(BASE_FREQ * 10).c_str()));
         if (Multiplicator == (40 / 4)) {
-            _freqCoeff = 2;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 2);
             MenuSpeedDiv4->Check(true);
         }
         MenuSpeedDiv20->SetItemLabel(wxString::Format(_("1/20x - %s"), getFrequencyStr(BASE_FREQ * 2).c_str()));
         if (Multiplicator == (40 / 20)) {
-            _freqCoeff = 1;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 1);
             MenuSpeedDiv20->Check(true);
         }
         MenuSpeedDiv40->SetItemLabel(wxString::Format(_("1/40x - %s"), getFrequencyStr(BASE_FREQ).c_str()));
         if (Multiplicator == (40 / 40)) {
-            _freqCoeff = 0;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 0);
             MenuSpeedDiv40->Check(true);
         }
+
+        // Save
+        if (_frequency != -1) {
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), Mega8Config::getInstance().getFrequencyRatio(_machine->getType()) );
+            SetSpeedAuto(false);
+        }
+        else
+            SetSpeedAuto(true);
+    }
+}
+
+void Mega8Frame::SetSpeedAuto(bool value)
+{
+    Mega8Config::getInstance().setSpeedAuto(value);
+    MenuSpeedAuto->Check(value);
+    if (value) {
+        _frequency = -1;
+        //updateFrequency(FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_machine->getType())]);
+    } else {
+        _frequency = FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_machine->getType())] * BASE_FREQ;
     }
 }
 
 void Mega8Frame::OnCPUThreadCompletion(wxThreadEvent&)
 {
-    // Nothing for now...
+    // Free sound if not already done...
+    if (_machine) {
+        if (_machine->getSoundBuffer() == NULL) {
+            if (gMusic) {
+                Mix_FreeChunk(gMusic);
+                gMusic = NULL;
+            }
+            _MusicIsPlaying = false;
+        }
+    }
 }
 
 void Mega8Frame::DeleteCPUThread()
@@ -638,23 +746,25 @@ void Mega8Frame::DeleteCPUThread()
         wxCriticalSectionLocker enter(_CPUThreadCS);
         if (_CPUThread)         // does the thread still exist?
         {
-            wxMessageOutputDebug().Printf("Chip8CPUFrame: deleting thread");
-            if (_CPUThread->Delete() != wxTHREAD_NO_ERROR )
+            wxPrintf("Chip8CPUFrame: deleting thread");
+            if (_CPUThread->Delete() != wxTHREAD_NO_ERROR ) {
                 wxLogError("Can't delete the thread!");
+            }
         }
     }       // exit from the critical section to give the thread
             // the possibility to enter its destructor
             // (which is guarded with m_pThreadCS critical section!)
+
     while (1)
     {
         { // was the ~MyThread() function executed?
             wxCriticalSectionLocker enter(_CPUThreadCS);
             if (!_CPUThread)
             {
-                //wxThread::This->Kill();
                 break;
             }
-            wxMessageOutputDebug().Printf("Chip8CPUFrame: Waiting thread to delete...");
+            _CPUThread->Delete();
+            wxPrintf("Chip8CPUFrame: Waiting thread to delete...");
         }
         // wait for thread completion
         wxThread::This()->Sleep(1);
@@ -664,9 +774,7 @@ void Mega8Frame::DeleteCPUThread()
 void Mega8Frame::onIdle(wxIdleEvent &event) {
 
     if (_machine) {
-        //
         if (_machine->loaded() ) {
-                // && _machine->needToRefresh()
             if (_machine->getScreen() != NULL) {
                 GLDisplay->Render(_machine->getScreen(), _machine->getWidth(), _machine->getHeight());
                 GLDisplay->Flip();
@@ -683,12 +791,8 @@ void Mega8Frame::OnPaint(wxPaintEvent &event) {
     if (_machine) {
         if (_machine->loaded()) {
             if (_machine->getScreen() != NULL) {
-                unsigned char *buf = (unsigned char*) malloc(_machine->getScreenSizeOf());
-                memcpy(buf, _machine->getScreen(), _machine->getScreenSizeOf());
-
-                GLDisplay->Render(buf, _machine->getWidth(), _machine->getHeight());
+                GLDisplay->Render(_machine->getScreen(), _machine->getWidth(), _machine->getHeight());
                 GLDisplay->Flip();
-                free(buf);
             }
         }
     }
@@ -704,20 +808,23 @@ CPUThreadHandler::~CPUThreadHandler() {
 
 wxThread::ExitCode CPUThreadHandler::Entry()
 {
-    // This need C++11 compilator setting
-    auto t_start = chrono::high_resolution_clock::now();
-    auto t_end = chrono::high_resolution_clock::now();
-    double t;
-    int currentFrequency;
+    wxStopWatch chrono;
 
-    t_start = chrono::high_resolution_clock::now();
+    chrono.Start(0);
+    wxLongLong t_start = chrono.TimeInMicro();
+    wxLongLong t_end = chrono.TimeInMicro();
+    wxLongLong t;
+    unsigned long baseFrequency, currentFrequency;
 
     // TestDestroy is called to ensure that calls Pause(), Delete(),...
     while (!TestDestroy()) {
 
         // Calc elapsed time
-        t_end = chrono::high_resolution_clock::now();
-        t = chrono::duration_cast<chrono::microseconds>(t_end - t_start).count();
+        t_end = chrono.TimeInMicro();
+        t = (t_end - t_start);
+
+        // Base frequency for this type of chip
+        baseFrequency = _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ;
 
         // Get actual frequency
         if (_handler->_frequency != -1)
@@ -728,42 +835,56 @@ wxThread::ExitCode CPUThreadHandler::Entry()
             currentFrequency = _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ;
         }
 
+        /*wxPrintf("Start: %ld - End: %ld - T: %ld - Current frequency: %.5f\n", t_start,
+                                                                                t_end,
+                                                                                t,
+                                                                                getMicroFromHertz(currentFrequency));*/
+
         // Can we execute the next instruction ?
         if (t >= getMicroFromHertz(currentFrequency)) {
             if (_handler->_machine) {
                 if (_handler->_machine->loaded()) {
-                    _handler->_machine->execute(getMilliFromHertz(_handler->_frequency));
+                    // Execute one opcode and give the actual frequency so the chip can know when he must decrease the clocks
+                    _handler->_machine->execute(getMilliFromHertz(currentFrequency));
                 }
             }
 
-            // If frequency is in auto mode and currentFrequency have changed
-            if (_handler->_frequency == -1 && (currentFrequency != _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ)){
-                // Search for frequency new multiplicator
-                for (int i = 0; i < sizeof(FREQ_MENU_INDEX); i++)
-                    if (FREQ_MENU_INDEX[i] == _handler->_machine->getFrequencyMultiplicator())
-                        _handler->_freqCoeff = i;
+            // If base frequency changed, we changed Chip-8's type
+            if (baseFrequency != _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ) {
+                if (Mega8Config::getInstance().getSpeedAuto()) {
+                    // Search for new frequency multiplicator
+                    for (int i = 0; i < sizeof(FREQ_MENU_INDEX) + 1; i++)
+                        if (FREQ_MENU_INDEX[i] == _handler->_machine->getFrequencyMultiplicator()) {
+                            Mega8Config::getInstance().setFrequencyRatio(_handler->_machine->getType(), i);
+                        }
+                }
 
-                // Update CPU Frequency and GUI
-                _handler->updateFrequency(FREQ_MENU_INDEX[_handler->_freqCoeff]);
+                // Adjust frequency with new type of Chip based upon what the user has chosen for it
+                // Or if SpeedAuto is set, it's the Chip that decides
+                _handler->updateFrequency(FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_handler->_machine->getType())]);
             }
 
             wxQueueEvent(_handler, new wxThreadEvent(wxEVT_COMMAND_CPUTHREAD_UPDATE));
 
             // Restart Counter
-            t_start = chrono::high_resolution_clock::now();
+            chrono.Start(0);
+            t_start = chrono.TimeInMicro();
         }
     }
     // signal the event handler that this thread is going to be destroyed
-    // NOTE: here we assume that using the m_pHandler pointer is safe,
-    //       (in this case this is assured by the MyFrame destructor)
-    wxQueueEvent(_handler, new wxThreadEvent(wxEVT_COMMAND_CPUTHREAD_COMPLETED));
+    // NOTE: here we assume that using the Handler pointer is safe,
+    //       (in this case this is assured by the Frame destructor)
+
+    if (_handler && _handler->_machine)
+        if (!_handler->_exit)
+            wxQueueEvent(_handler, new wxThreadEvent(wxEVT_COMMAND_CPUTHREAD_COMPLETED));
 
     return (wxThread::ExitCode)0;    // success
 }
 
 void Mega8Frame::OnFilter(wxCommandEvent& event)
 {
-    GLDisplay->setFiltered(!GLDisplay->getFiltered());
+    SetFiltered(!Mega8Config::getInstance().getFiltered());
 }
 
 void Mega8Frame::OnReset(wxCommandEvent& event)
@@ -773,32 +894,14 @@ void Mega8Frame::OnReset(wxCommandEvent& event)
 
 void Mega8Frame::Reset() {
     if (_machine) {
-        // Hard Reset
-        if (gMusic != NULL) {
-            Mix_FreeChunk(gMusic);
-            gMusic = NULL;
-        }
-
-		/*// Delete CPU Thread
-		if (_CPUThread) {
-            if (_Paused)
-                DoResumeCPUThread();
-
-            DeleteCPUThread();
-            delete _CPUThread;
-            _CPUThread = NULL;
-		}
-
-        delete _machine;
-        _machine = new Chip8();*/
-		_machine->initialize(CHIP8);
-		SetSyncClock(MnuSyncClock->IsChecked());
-		SetFiltered(MnuFilter->IsChecked());
-        _machine->initialize(CHIP8);
+        hardReset();
         if (CurrentRomPath == wxEmptyString)
             _machine->loadBios();
         else
             _machine->loadGame(CurrentRomPath);
+
+        // Restart the thread
+        DoStartCPUThread();
     }
 }
 
@@ -825,12 +928,60 @@ A | 0 | B | F
 
 */
 
-void Mega8Frame::CloseRom() {
+void Mega8Frame::softReset() {
+    // Soft reset
+    DoPauseCPUThread();
+
+    if (gMusic != NULL) {
+        Mix_FreeChunk(gMusic);
+        gMusic = NULL;
+    }
+
+    _machine->initialize(_machine->getType());
+
+    // Initialize machine
+    SetSyncClock(Mega8Config::getInstance().getSyncClock());
+    SetFiltered(Mega8Config::getInstance().getFiltered());
+    SetFullScreenMode(Mega8Config::getInstance().getFullScreen());
+    SetColorTheme(Mega8Config::getInstance().getColorTheme());
+}
+
+void Mega8Frame::hardReset() {
+    // Free some resources
+    // Free music if not already freed
+    if (gMusic != NULL) {
+        Mix_FreeChunk(gMusic);
+        gMusic = NULL;
+    }
+    _MusicIsPlaying = false;
+
+    // Delete CPU Thread
+    if (_CPUThread) {
+        if (_Paused)
+            DoResumeCPUThread();
+
+        DeleteCPUThread();
+        delete _CPUThread;
+        _CPUThread = NULL;
+    }
+
+    // Make a "hard" reset
     delete _machine;
     _machine = new Chip8();
-    SetSyncClock(MnuSyncClock->IsChecked());
-    SetFiltered(MnuFilter->IsChecked());
+    _machine->initialize(CHIP8);
+
+    // Initialize machine
+    SetSyncClock(Mega8Config::getInstance().getSyncClock());
+    SetFiltered(Mega8Config::getInstance().getFiltered());
+    SetFullScreenMode(Mega8Config::getInstance().getFullScreen());
+    SetColorTheme(Mega8Config::getInstance().getColorTheme());
+}
+
+void Mega8Frame::CloseRom() {
+    hardReset();
     _machine->loadBios();
+    //CurrentRomName = CurrentRomPath = wxEmptyString;
+    DoStartCPUThread();
 }
 
 void Mega8Frame::OnMenuClose(wxCommandEvent& event)
@@ -850,70 +1001,71 @@ void Mega8Frame::OnMenuSpeedSelected(wxCommandEvent& event)
 
         if (event.GetId() == Mega8Frame::idMenuSpeedAuto) {
             _frequency = -1;
-            _freqCoeff = 0;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 0);
+            SetSpeedAuto(true);
         } else {
-            _frequency = BASE_FREQ * FREQ_MENU_INDEX[3];
-            _freqCoeff = 3;
-            MenuSpeedAuto->Check(false);
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), Mega8Config::getInstance().getFrequencyRatio(_machine->getType()));
+            _frequency = BASE_FREQ * FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_machine->getType()) ];
+            SetSpeedAuto(false);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeedDiv40) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[0];
-            _freqCoeff = 0;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 0);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeedDiv20) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[1];
-            _freqCoeff = 1;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 1);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeedDiv4) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[2];
-            _freqCoeff = 2;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 2);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeed1) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[3];
-            _freqCoeff = 3;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 3);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeed2) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[4];
-            _freqCoeff = 4;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 4);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeed4) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[5];
-            _freqCoeff = 5;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 5);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeed8) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[6];
-            _freqCoeff = 6;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 6);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeed16) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[7];
-            _freqCoeff = 7;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 7);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeed32) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[8];
-            _freqCoeff = 8;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 8);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeed256) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[9];
-            _freqCoeff = 9;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 9);
         }
 
         if (event.GetId() == Mega8Frame::idMenuSpeed1024) {
             _frequency = BASE_FREQ * FREQ_MENU_INDEX[10];
-            _freqCoeff = 10;
+            Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 10);
         }
 
         // Update CPU Frequency
-        updateFrequency(FREQ_MENU_INDEX[_freqCoeff]);
+        updateFrequency(FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_machine->getType()) ]);
 
         if (_Paused) {
             DoStartCPUThread();
@@ -925,9 +1077,10 @@ void Mega8Frame::OnMenuSpeedSelected(wxCommandEvent& event)
 void Mega8Frame::OnMenuSizeSelected(wxCommandEvent& event)
 {
     if (_machine) {
+
         if (event.GetId() == Mega8Frame::idMenuFullScreen) {
-            _FullScreen = !_FullScreen;
-            ShowFullScreen(_FullScreen);
+            SetFullScreenMode(MnuFullScreen->IsChecked());
+            return;
         }
 
         if (event.GetId() == Mega8Frame::idMenuSize10x10) {
@@ -966,7 +1119,7 @@ void Mega8Frame::OnMenuSizeSelected(wxCommandEvent& event)
 }
 
 void Mega8Frame::updateStatus() {
-    wxString status, mode, resolution, FPS;
+    wxString status, mode, resolution, FPS, frequencyStr;
 
     if (_machine) {
         if (_machine->loaded()) {
@@ -1010,7 +1163,8 @@ void Mega8Frame::updateStatus() {
         if (_frequency != -1)
             baseFrequency = _frequency;
 
-        StatusBar->SetStatusText(wxString(getFrequencyStr(baseFrequency)), StatusBarFieldsFrequency);
+        frequencyStr.Printf("%s", getFrequencyStr(baseFrequency));
+        StatusBar->SetStatusText(frequencyStr, StatusBarFieldsFrequency);
         StatusBar->SetStatusText(status, StatusBarFieldsStatus);
         StatusBar->SetStatusText(resolution, StatusBarFieldsResolution);
         StatusBar->SetStatusText(FPS, StatusBarFieldsFramePerSec);
@@ -1032,229 +1186,137 @@ void Mega8Frame::updateStatus() {
 
 void Mega8Frame::OnKeyDown(wxKeyEvent& event)
 {
-    // Numpad numérics
-    switch (event.GetKeyCode()) {
-    case WXK_NUMPAD0:
-        this->_machine->setKey(0x0, true);
-        break;
+    int *keys;
+    int keyCode = event.GetKeyCode();
 
-    case WXK_NUMPAD1:
-        this->_machine->setKey(0x7, true);
-        break;
-
-    case WXK_NUMPAD2:
-        this->_machine->setKey(0x8, true);
-        break;
-
-    case WXK_NUMPAD3:
-        this->_machine->setKey(0x9, true);
-        break;
-
-    case WXK_NUMPAD4:
-        this->_machine->setKey(0x4, true);
-        break;
-
-    case WXK_NUMPAD5:
-        this->_machine->setKey(0x5, true);
-        break;
-
-    case WXK_NUMPAD6:
-        this->_machine->setKey(0x6, true);
-        break;
-
-    case WXK_NUMPAD7:
-        this->_machine->setKey(0x1, true);
-        break;
-
-    case WXK_NUMPAD8:
-        this->_machine->setKey(0x2, true);
-        break;
-
-    case WXK_NUMPAD9:
-        this->_machine->setKey(0x3, true);
-        break;
-
-    // Other keys
-    case WXK_NUMPAD_ADD:
-        if (wxGetKeyState(WXK_CONTROL)) {
-            // Pause the thread
-            if (!_Paused && _machine->isRunning()) {
-                DoPauseCPUThread();
-                _Paused = true;
+    // Check Machine Keys
+    if (!wxGetKeyState(WXK_CONTROL)) {
+        keys = Mega8Config::getInstance().getKeys();
+        for (int i = 0; i < 16; i++) {
+            // Check lowercase
+            if (keys[i] < 128 && keys[i] > 96) {
+                keys[i] -= 0x20;
             }
-            MenuSpeedAuto->Check(false);
-            _frequency = 0;
-            if (_freqCoeff >= sizeof(FREQ_MENU_INDEX))
-                _freqCoeff = 0;
-            else
-                _freqCoeff++;
-
-            updateFrequency(FREQ_MENU_INDEX[_freqCoeff]);
-            if (_Paused) {
-                DoResumeCPUThread();
-                _Paused = false;
+            if (keys[i] == keyCode) {
+                // We have pushed a key
+                _machine->setKey(i, true);
             }
-        } else
-            this->_machine->setKey(0xD, true);
-        break;
-
-    case WXK_NUMPAD_DECIMAL:
-        this->_machine->setKey(0xC, true);
-        break;
-
-    case WXK_NUMPAD_DIVIDE:
-        this->_machine->setKey(0xF, true);
-        break;
-
-    case WXK_NUMPAD_MULTIPLY:
-        this->_machine->setKey(0xA, true);
-        break;
-
-    case WXK_NUMPAD_SUBTRACT:
-        if (wxGetKeyState(WXK_CONTROL)) {
-            if (!_Paused && _machine->isRunning()) {
-                DoPauseCPUThread();
-                _Paused = true;
-            }
-            MenuSpeedAuto->Check(false);
-            _frequency = 0;
-            if (_freqCoeff == 0)
-                _freqCoeff = sizeof(FREQ_MENU_INDEX) - 1;
-            else
-                _freqCoeff--;
-
-            updateFrequency(FREQ_MENU_INDEX[_freqCoeff]);
-
-            if (_Paused) {
-                DoResumeCPUThread();
-                _Paused = false;
-            }
-        } else
-            this->_machine->setKey(0xE, true);
-        break;
-
-    case WXK_NUMPAD_ENTER:
-        this->_machine->setKey(0xB, true);
-        break;
-
-    // Commands
-    case WXK_SPACE:
-        if (!_Paused) {
-            DoPauseCPUThread();
-            _Paused = true;
-        } else {
-            DoResumeCPUThread();
-            _Paused = false;
         }
-        break;
+    } else {
+        // Mega8 Commands
+        switch (event.GetKeyCode()) {
+            case WXK_NUMPAD_ADD:
+                if (wxGetKeyState(WXK_CONTROL)) {
+                    // Pause the thread
+                    if (!_Paused && _machine->isRunning()) {
+                        DoPauseCPUThread();
+                        _Paused = true;
+                    }
+                    MenuSpeedAuto->Check(false);
+                    _frequency = 0;
+                    if (Mega8Config::getInstance().getFrequencyRatio(_machine->getType()) >= sizeof(FREQ_MENU_INDEX))
+                        Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 0);
+                    else
+                        Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), Mega8Config::getInstance().getFrequencyRatio(_machine->getType()) + 1);
 
-    case wxKeyCode('O'):
-        DoOpen();
-        break;
+                    updateFrequency(FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_machine->getType())]);
+                    if (_Paused) {
+                        DoResumeCPUThread();
+                        _Paused = false;
+                    }
+                }
+                break;
 
-    case wxKeyCode('C'):
-        CloseRom();
-        break;
+            case WXK_NUMPAD_SUBTRACT:
+                if (wxGetKeyState(WXK_CONTROL)) {
+                    if (!_Paused && _machine->isRunning()) {
+                        DoPauseCPUThread();
+                        _Paused = true;
+                    }
+                    MenuSpeedAuto->Check(false);
+                    _frequency = 0;
+                    if (Mega8Config::getInstance().getFrequencyRatio(_machine->getType()) == 0)
+                        Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), sizeof(FREQ_MENU_INDEX) - 1);
+                    else
+                        Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), Mega8Config::getInstance().getFrequencyRatio(_machine->getType()) - 1);
 
-    case wxKeyCode('F'):
-        _FullScreen = !_FullScreen;
-        ShowFullScreen(_FullScreen);
-        break;
+                    updateFrequency(FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_machine->getType())]);
 
-    case WXK_ESCAPE:
-        Close();
-        break;
+                    if (_Paused) {
+                        DoResumeCPUThread();
+                        _Paused = false;
+                    }
+                }
+                break;
 
-    case wxKeyCode('R'):
-        Reset();
-        break;
+            // Commands
+            case WXK_SPACE:
+                if (!_Paused) {
+                    DoPauseCPUThread();
+                    _Paused = true;
+                } else {
+                    DoResumeCPUThread();
+                    _Paused = false;
+                }
+                break;
 
-    case wxKeyCode('L'):
-        SetFiltered(!MnuFilter->IsChecked());
-        break;
+            case wxKeyCode('O'):
+                DoOpen();
+                break;
 
-    case wxKeyCode('S'):
-        SetSyncClock(!MnuSyncClock->IsChecked());
-        break;
+            case wxKeyCode('C'):
+                CloseRom();
+                break;
 
-    case wxKeyCode('K'):
-        _machine->initialize(_machine->getType());
-        _machine->loadKeypad();
-        break;
+            case wxKeyCode('A'):
+                SetSpeedAuto(!Mega8Config::getInstance().getSpeedAuto());
+                break;
 
-    case wxKeyCode('H'):
-        GLDisplay->setDisplayHUD(!GLDisplay->getDisplayHUD());
-        break;
+            case wxKeyCode('F'):
+                SetFullScreenMode(!Mega8Config::getInstance().getFullScreen());
+                break;
+
+            case WXK_ESCAPE:
+                exitApplication();
+                break;
+
+            case wxKeyCode('R'):
+                Reset();
+                break;
+
+            case wxKeyCode('L'):
+                SetFiltered(!Mega8Config::getInstance().getFiltered());
+                break;
+
+            case wxKeyCode('Y'):
+                SetSyncClock(!Mega8Config::getInstance().getSyncClock());
+                break;
+
+            case wxKeyCode('K'):
+                _machine->initialize(_machine->getType());
+                _machine->loadKeypad();
+                break;
+
+            case wxKeyCode('H'):
+                GLDisplay->setDisplayHUD(!GLDisplay->getDisplayHUD());
+                Mega8Config::getInstance().setDisplayHUD(GLDisplay->getDisplayHUD());
+                break;
+        }
     }
 }
 
 void Mega8Frame::OnKeyUp(wxKeyEvent& event)
 {
-    switch (event.GetKeyCode()) {
-    case WXK_NUMPAD0:
-        _machine->setKey(0x0, false);
-        break;
+    int *keys;
 
-    case WXK_NUMPAD1:
-        _machine->setKey(0x7, false);
-        break;
-
-    case WXK_NUMPAD2:
-        _machine->setKey(0x8, false);
-        break;
-
-    case WXK_NUMPAD3:
-        _machine->setKey(0x9, false);
-        break;
-
-    case WXK_NUMPAD4:
-        _machine->setKey(0x4, false);
-        break;
-
-    case WXK_NUMPAD5:
-        _machine->setKey(0x5, false);
-        break;
-
-    case WXK_NUMPAD6:
-        _machine->setKey(0x6, false);
-        break;
-
-    case WXK_NUMPAD7:
-        _machine->setKey(0x1, false);
-        break;
-
-    case WXK_NUMPAD8:
-        _machine->setKey(0x2, false);
-        break;
-
-    case WXK_NUMPAD9:
-        _machine->setKey(0x3, false);
-        break;
-
-    // Other keys
-    case WXK_NUMPAD_ADD:
-        _machine->setKey(0xD, false);
-        break;
-
-    case WXK_NUMPAD_DECIMAL:
-        _machine->setKey(0xC, false);
-        break;
-
-    case WXK_NUMPAD_DIVIDE:
-        _machine->setKey(0xF, false);
-        break;
-
-    case WXK_NUMPAD_MULTIPLY:
-        _machine->setKey(0xA, false);
-        break;
-
-    case WXK_NUMPAD_SUBTRACT:
-        _machine->setKey(0xE, false);
-        break;
-
-    case WXK_NUMPAD_ENTER:
-        _machine->setKey(0xB, false);
-        break;
+    if (!wxGetKeyState(WXK_CONTROL)) {
+        keys = Mega8Config::getInstance().getKeys();
+        for (int i = 0; i < 16; i++) {
+            if (keys[i] == event.GetKeyCode()) {
+                // We have pushed a key
+                _machine->setKey(i, false);
+            }
+        }
     }
 }
 
@@ -1262,6 +1324,7 @@ void Mega8Frame::SetFiltered(bool value) {
     if (_machine) {
         GLDisplay->setFiltered(value);
         MnuFilter->Check(value);
+        Mega8Config::getInstance().setFiltered(value);
     }
 }
 
@@ -1269,6 +1332,52 @@ void Mega8Frame::SetSyncClock(bool value) {
     if (_machine) {
         _machine->SetSyncClockToOriginal(value);
         MnuSyncClock->Check(value);
+        Mega8Config::getInstance().setSyncClock(value);
+    }
+}
+
+void Mega8Frame::SetFullScreenMode(bool value) {
+    if (_machine) {
+        MnuFullScreen->Check(value);
+        ShowFullScreen(value);
+        Mega8Config::getInstance().setFullScreen(value);
+    }
+}
+
+void Mega8Frame::SetColorTheme(Chip8ColorTheme value)
+{
+    if (_machine) {
+        _machine->setColorTheme(value);
+        switch (value) {
+            case BLUE:
+                MnuCTBlue->Check(true);
+                break;
+            case RED:
+                MnuCTRed->Check(true);
+                break;
+            case GREEN:
+                MnuCTGreen->Check(true);
+                break;
+            case C64:
+                MnuCTC64->Check(true);
+                break;
+            case GAMEBOY:
+                MnuCTGameBoy->Check(true);
+                break;
+            case DEFAULT:
+            default:
+                MnuCTDefault->Check(true);
+                break;
+        }
+        Mega8Config::getInstance().setColorTheme(value);
+    }
+}
+
+void Mega8Frame::SetInverseColor(bool value)
+{
+    if (_machine) {
+        _machine->setInverseColor(value);
+        Mega8Config::getInstance().setInverseColor(value);
     }
 }
 
@@ -1281,49 +1390,58 @@ void Mega8Frame::OnChooseColorTheme(wxCommandEvent& event)
 {
     if (_machine) {
         if (event.GetId() == Mega8Frame::idMenuCTInverse) {
-            _machine->setColorTheme(INVERSE);
+            SetColorTheme(INVERSE);
         }
 
         if (event.GetId() == Mega8Frame::idMenuCTC64) {
-                _machine->setColorTheme(C64);
+            SetColorTheme(C64);
         }
 
         if (event.GetId() == Mega8Frame::idMenuCTGameBoy) {
-                _machine->setColorTheme(GAMEBOY);
+            SetColorTheme(GAMEBOY);
         }
 
         if (event.GetId() == Mega8Frame::idMenuCTDefault) {
-            _machine->setColorTheme(DEFAULT);
+            SetColorTheme(DEFAULT);
         }
 
         if (event.GetId() == Mega8Frame::idMenuCTRed) {
-            _machine->setColorTheme(RED);
+            SetColorTheme(RED);
         }
 
         if (event.GetId() == Mega8Frame::idMenuCTGreen) {
-            _machine->setColorTheme(GREEN);
+            SetColorTheme(GREEN);
         }
 
         if (event.GetId() == Mega8Frame::idMenuCTBlue) {
-            _machine->setColorTheme(BLUE);
+            SetColorTheme(BLUE);
         }
     }
 }
 
 void Mega8Frame::OnMenuColorInverse(wxCommandEvent& event)
 {
-    if (_machine) {
-        _machine->setInverseColor(event.IsChecked());
-    }
+    SetInverseColor(event.IsChecked());
 }
 
 void Mega8Frame::OnMenuDisplayHUDSelected(wxCommandEvent& event)
 {
     GLDisplay->setDisplayHUD(!GLDisplay->getDisplayHUD());
+    Mega8Config::getInstance().setDisplayHUD(GLDisplay->getDisplayHUD());
 }
 
 void Mega8Frame::OnMenuCheckKeypadSelected(wxCommandEvent& event)
 {
-    _machine->initialize(_machine->getType());
-    _machine->loadKeypad();
+    if (CurrentRomName != wxEmptyString)
+        dlgInput = new InputDialog(CurrentRomName, this);
+    else
+        dlgInput = new InputDialog(wxT("General"), this);
+
+    wxTheApp->SetTopWindow(dlgInput);
+
+    if (dlgInput->ShowModal() == wxID_OK) {
+        // Reload Config - Just to be sure we're up to date
+        Mega8Config::getInstance().reloadConfig(CurrentRomName);
+    }
+    dlgInput->Destroy();
 }

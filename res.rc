@@ -1,0 +1,2 @@
+mega8 ICON "/home/junta/Devel/C++/Mega8/mega8.ico"
+#include "wx/msw/wx.rc"

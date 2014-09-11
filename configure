@@ -3358,6 +3358,46 @@ _ACEOF
 
 fi
 
+# FIXME: Replace `main' with a function in `-lfreetype':
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lfreetype" >&5
+$as_echo_n "checking for main in -lfreetype... " >&6; }
+if ${ac_cv_lib_freetype_main+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lfreetype  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+
+int
+main ()
+{
+return main ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_freetype_main=yes
+else
+  ac_cv_lib_freetype_main=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_freetype_main" >&5
+$as_echo "$ac_cv_lib_freetype_main" >&6; }
+if test "x$ac_cv_lib_freetype_main" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBFREETYPE 1
+_ACEOF
+
+  LIBS="-lfreetype $LIBS"
+
+fi
+
 # FIXME: Replace `main' with a function in `-lftgl':
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lftgl" >&5
 $as_echo_n "checking for main in -lftgl... " >&6; }
@@ -3395,6 +3435,46 @@ if test "x$ac_cv_lib_ftgl_main" = xyes; then :
 _ACEOF
 
   LIBS="-lftgl $LIBS"
+
+fi
+
+# FIXME: Replace `main' with a function in `-lpng':
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for main in -lpng" >&5
+$as_echo_n "checking for main in -lpng... " >&6; }
+if ${ac_cv_lib_png_main+:} false; then :
+  $as_echo_n "(cached) " >&6
+else
+  ac_check_lib_save_LIBS=$LIBS
+LIBS="-lpng  $LIBS"
+cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+
+int
+main ()
+{
+return main ();
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_c_try_link "$LINENO"; then :
+  ac_cv_lib_png_main=yes
+else
+  ac_cv_lib_png_main=no
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+LIBS=$ac_check_lib_save_LIBS
+fi
+{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $ac_cv_lib_png_main" >&5
+$as_echo "$ac_cv_lib_png_main" >&6; }
+if test "x$ac_cv_lib_png_main" = xyes; then :
+  cat >>confdefs.h <<_ACEOF
+#define HAVE_LIBPNG 1
+_ACEOF
+
+  LIBS="-lpng $LIBS"
 
 fi
 

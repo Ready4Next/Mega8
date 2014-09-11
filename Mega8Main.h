@@ -20,11 +20,14 @@
 #include <SDL2/SDL_mixer.h>
 #include <wx/wx.h>
 #include <wx/string.h>
-#include "Chip8/Chip8.h"
-#include "include/Chip8GL.h"
 #include <iostream>     // std::cout, std::fixed
 #include <iomanip>      // std::setprecision
 #include <math.h>
+
+#include "Chip8.h"
+#include "Chip8GL.h"
+#include "Mega8Config.h"
+#include "InputDialog.h"
 
 // declare a new type of event, to be used by our CpuThread class:
 wxDECLARE_EVENT(wxEVT_COMMAND_CPUTHREAD_COMPLETED, wxThreadEvent);
@@ -58,12 +61,13 @@ class Mega8Frame: public wxFrame
         void OnKeyUp(wxKeyEvent& event);
 
     protected:
-
+        bool _exit;
+        bool _MusicIsPlaying;
         Chip8 *_machine;
         long _frequency;
-        int _freqCoeff;
         CPUThreadHandler *_CPUThread;
         wxCriticalSection _CPUThreadCS;       // Protect the thread
+        InputDialog *dlgInput;                 // Input Configuration
 
         void DoStartCPUThread();
         void DoPauseCPUThread();
@@ -75,20 +79,27 @@ class Mega8Frame: public wxFrame
 
         void DoOpen();
         void Reset();
+        void softReset();
+        void hardReset();
         void CloseRom();
         void updateStatus();
         void SetSyncClock(bool value);
         void SetFiltered(bool value);
+        void SetSpeedAuto(bool value);
+        void SetFullScreenMode(bool value);
+        void SetColorTheme(Chip8ColorTheme value);
+        void SetInverseColor(bool value);
 
         void onIdle(wxIdleEvent &event);
         void OnPaint(wxPaintEvent &event);
+        void exitApplication();
 
     private:
 
         wxString CurrentRomPath;
         wxString CurrentRomDir;
+        wxString CurrentRomName;
         bool _Paused;
-        bool _FullScreen;
         wxWindow *_parent;
 
         //(*Handlers(Mega8Frame)
@@ -166,22 +177,22 @@ class Mega8Frame: public wxFrame
 
         //(*Declarations(Mega8Frame)
         wxMenuItem* MenuSpeed256;
+        wxMenuItem* MnuCTC64;
         wxMenuItem* MenuSpeed1024;
         wxMenuItem* MenuSpeedDiv20;
         wxMenuItem* MenuItem16;
         wxMenuItem* MenuItem12;
         wxMenuItem* MenuSpeedDiv4;
         wxMenu* Menu3;
-        wxMenuItem* MenuItem19;
-        wxMenuItem* MenuItem20;
+        wxMenuItem* MnuFullScreen;
         wxMenuItem* MenuSpeedDiv40;
+        wxMenuItem* MnuCTDefault;
         wxMenuItem* MenuItem15;
         wxMenuItem* MnuSyncClock;
-        wxMenuItem* MenuItem21;
-        wxMenuItem* MenuItem17;
+        wxMenuItem* MnuCTRed;
         wxMenuItem* MenuSpeed2;
         wxMenuItem* MenuItem3;
-        wxMenuItem* MenuItem9;
+        wxMenuItem* MnuCTBlue;
         wxMenu* Menu4;
         wxMenu* MenuItem5;
         wxMenuItem* MenuSpeed8;
@@ -192,18 +203,18 @@ class Mega8Frame: public wxFrame
         wxMenuItem* MenuDisplayHUD;
         wxMenuBar* MenuBar1;
         wxMenuItem* MenuItem10;
-        wxMenuItem* MenuItem18;
         wxMenuItem* MenuItem6;
         wxMenuItem* MenuItem4;
         wxMenuItem* MenuItem7;
         wxMenuItem* MenuSpeed32;
         wxStatusBar* StatusBar;
         wxMenuItem* MenuItem13;
+        wxMenuItem* MnuCTGameBoy;
         wxMenuItem* MenuCheckKeypad;
         wxMenuItem* MenuSpeed1;
+        wxMenuItem* MnuCTGreen;
         wxMenu* MenuItem8;
         wxMenuItem* MenuSpeed4;
-        wxMenuItem* MenuItem14;
         wxMenuItem* MenuSpeed16;
         //*)
 

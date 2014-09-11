@@ -9,19 +9,16 @@
 				<label>&amp;File</label>
 				<object class="wxMenuItem" name="idMenuOpen" variable="MenuItem3" member="yes">
 					<label>Open</label>
-					<accel>O</accel>
 					<help>Open ROM</help>
 					<handler function="OnOpen" entry="EVT_MENU" />
 				</object>
 				<object class="wxMenuItem" name="idMenuClose" variable="MenuItem7" member="yes">
 					<label>Close</label>
-					<accel>C</accel>
 					<help>Close current ROM</help>
 					<handler function="OnMenuClose" entry="EVT_MENU" />
 				</object>
 				<object class="wxMenuItem" name="idMenuQuit" variable="MenuItem1" member="no">
 					<label>Quit</label>
-					<accel>ESC</accel>
 					<help>Quit emulator</help>
 					<handler function="OnQuit" entry="EVT_MENU" />
 				</object>
@@ -30,7 +27,6 @@
 				<label>&amp;Emulation</label>
 				<object class="wxMenuItem" name="idMenuReset" variable="MenuItem4" member="yes">
 					<label>Reset</label>
-					<accel>ALT-R</accel>
 					<help>Reset Emulator</help>
 					<handler function="OnReset" entry="EVT_MENU" />
 				</object>
@@ -42,32 +38,32 @@
 				<object class="separator" />
 				<object class="wxMenu" name="ID_MENUITEM3" variable="MenuItem5" member="yes">
 					<label>Color Theme</label>
-					<object class="wxMenuItem" name="idMenuCTDefault" variable="MenuItem9" member="yes">
+					<object class="wxMenuItem" name="idMenuCTDefault" variable="MnuCTDefault" member="yes">
 						<label>Default</label>
 						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
 						<radio>1</radio>
 					</object>
-					<object class="wxMenuItem" name="idMenuCTC64" variable="MenuItem17" member="yes">
+					<object class="wxMenuItem" name="idMenuCTC64" variable="MnuCTC64" member="yes">
 						<label>C64</label>
 						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
 						<radio>1</radio>
 					</object>
-					<object class="wxMenuItem" name="idMenuCTGameBoy" variable="MenuItem18" member="yes">
+					<object class="wxMenuItem" name="idMenuCTGameBoy" variable="MnuCTGameBoy" member="yes">
 						<label>Game Boy</label>
 						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
 						<radio>1</radio>
 					</object>
-					<object class="wxMenuItem" name="idMenuCTRed" variable="MenuItem19" member="yes">
+					<object class="wxMenuItem" name="idMenuCTRed" variable="MnuCTRed" member="yes">
 						<label>Red</label>
 						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
 						<radio>1</radio>
 					</object>
-					<object class="wxMenuItem" name="idMenuCTGreen" variable="MenuItem20" member="yes">
+					<object class="wxMenuItem" name="idMenuCTGreen" variable="MnuCTGreen" member="yes">
 						<label>Green</label>
 						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
 						<radio>1</radio>
 					</object>
-					<object class="wxMenuItem" name="idMenuCTBlue" variable="MenuItem21" member="yes">
+					<object class="wxMenuItem" name="idMenuCTBlue" variable="MnuCTBlue" member="yes">
 						<label>Blue</label>
 						<handler function="OnChooseColorTheme" entry="EVT_MENU" />
 						<radio>1</radio>
@@ -156,7 +152,6 @@
 					<label>Graphics</label>
 					<object class="wxMenuItem" name="idMenuDisplayHUD" variable="MenuDisplayHUD" member="yes">
 						<label>Display HUD</label>
-						<accel>H</accel>
 						<help>Display on screen informations</help>
 						<handler function="OnMenuDisplayHUDSelected" entry="EVT_MENU" />
 						<checkable>1</checkable>
@@ -194,11 +189,11 @@
 						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
 					</object>
 					<object class="separator" />
-					<object class="wxMenuItem" name="idMenuFullScreen" variable="MenuItem14" member="yes">
+					<object class="wxMenuItem" name="idMenuFullScreen" variable="MnuFullScreen" member="yes">
 						<label>FullScreen</label>
-						<accel>F</accel>
 						<help>Set emulator fullscreen</help>
 						<handler function="OnMenuSizeSelected" entry="EVT_MENU" />
+						<checkable>1</checkable>
 					</object>
 				</object>
 				<object class="wxMenuItem" name="ID_MENUITEM2" variable="MenuCheckKeypad" member="yes">

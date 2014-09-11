@@ -41,14 +41,16 @@ bool Mega8App::OnInit()
 
 int Mega8App::FilterEvent(wxEvent& event)
 {
-    if (event.GetEventType() == wxEVT_KEY_DOWN) {
-        Frame->OnKeyDown( (wxKeyEvent&)event );
-        return true;
-    }
+    if (GetTopWindow() == Frame) {
+        if (event.GetEventType() == wxEVT_KEY_DOWN) {
+            Frame->OnKeyDown( (wxKeyEvent&)event );
+            return true;
+        }
 
-    if (event.GetEventType() == wxEVT_KEY_UP) {
-        Frame->OnKeyUp( (wxKeyEvent&)event );
-        return true;
+        if (event.GetEventType() == wxEVT_KEY_UP) {
+            Frame->OnKeyUp( (wxKeyEvent&)event );
+            return true;
+        }
     }
 
     return -1;

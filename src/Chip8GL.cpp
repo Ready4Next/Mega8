@@ -12,6 +12,7 @@ Chip8GL::Chip8GL(wxWindow *parent, wxWindowID id, int GLCanvasAttributes[])
     //ctor
     _Context = new wxGLContext(this);
     _font = new FTPixmapFont(game_over_ttf, game_over_ttf_len);
+    _FPS = 0;
 }
 
 Chip8GL::~Chip8GL()
@@ -184,13 +185,14 @@ void Chip8GL::prepare2DViewport(int topleft_x, int topleft_y, int bottomright_x,
 }
 
 void Chip8GL::updateGfx(unsigned char *pixels, int sourceW, int sourceH) {
-    static int sFPS = 0;
-    static wxString textFPS;
-    clock_t currentTime;
+    static clock_t startTime = clock();
+    static int incFPS = 0;
+    clock_t elapsedTime;
+    //wxString textFPS;
 
     GLuint texture;
 
-    sFPS++;
+    incFPS++;
 
     _Rendering = true;
 
@@ -233,14 +235,18 @@ void Chip8GL::updateGfx(unsigned char *pixels, int sourceW, int sourceH) {
     if (_displayHUD)
         PrintGLHUD();
 
-    currentTime = clock() - _startTime;
-    if (((float)currentTime/CLOCKS_PER_SEC) >= 1.0) {
-        _FPS = sFPS;
-        sFPS = 0;
-        _startTime = clock();
+    // Calc how many time has passed since clock init
+    elapsedTime = clock() - startTime;
+    if (((float)elapsedTime/CLOCKS_PER_SEC) >= 1.0) {
+        // Restart Clock
+        startTime = clock();
+        // Set current FPS counter to property and reset counter
+        _FPS = incFPS;
+        incFPS = 0;
 
-        textFPS.Printf("%d FPS", getFPS());
-        PrintGLInfos(0, 0xFF0000, textFPS.mb_str());
+        //textFPS.Printf("%d FPS", getFPS());
+        //PrintGLInfos(0, 0xFF0000, textFPS.mb_str());
+        //_FPS = 0;
     }
 }
 
