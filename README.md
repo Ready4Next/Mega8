@@ -22,36 +22,25 @@ HOW TO USE
 
 ### Shortcuts
 
-`
-`
-`
-CTRL+O: Open a ROM (File | Open)
-CTRL+C: Close a ROM (File | Close)
-CTRL+R: Reset ROM (Emulation | Reset)
-CTRL+SPACE: Starts / Pause (Emulation | Start / Pause)
-ESC: Exit application (File | Quit)
-CTRL+F: Set fullscreen mode (Emulation | Graphics | Fullscreen)
-CTRL+L: Set opengl filter (Emulation | Graphics | Filter Texture)
-CTRL+H: Display some informations on screen (Emulation | Graphics | Display HUD)
-CTRL+A: Set automatic mode frequency  (Emulation | Speed | Automatic)
-CTRL+Y: Set clock timer to 60 Hz, else follow current frequency
-`
-`
-`
+- CTRL+O: Open a ROM (File | Open)
+- CTRL+C: Close a ROM (File | Close)
+- CTRL+R: Reset ROM (Emulation | Reset)
+- CTRL+SPACE: Starts / Pause (Emulation | Start / Pause)
+- ESC: Exit application (File | Quit)
+- CTRL+F: Set fullscreen mode (Emulation | Graphics | Fullscreen)
+- CTRL+L: Set opengl filter (Emulation | Graphics | Filter Texture)
+- CTRL+H: Display some informations on screen (Emulation | Graphics | Display HUD)
+- CTRL+A: Set automatic mode frequency  (Emulation | Speed | Automatic)
+- CTRL+Y: Set clock timer to 60 Hz, else follow current frequency
+
 
 ### Other Menus
 
-`
-`
-`
-File | Color Themes: Replace black / white colors with some funny ones
-File | Graphics: You can also change here the size of the window regarding the original resolution
-File | Speed: You can choose from 1/40x to 1024x the original COSMAC VIP base frequency (1760 Hz), useful for debugging purpose and smoothness of Twisterbar Demo ;-)
-File | Input: There you can change the keyboard mapping in relation to the ROM you play
-File | About: Some build infos, shortcuts list and some credits
-`
-`
-`
+- File | Color Themes: Replace black / white colors with some funny ones
+- File | Graphics: You can also change here the size of the window regarding the original resolution
+- File | Speed: You can choose from 1/40x to 1024x the original COSMAC VIP base frequency (1760 Hz), useful for debugging purpose and smoothness of Twisterbar Demo ;-)
+- File | Input: There you can change the keyboard mapping in relation to the ROM you play
+- File | About: Some build infos, shortcuts list and some credits
 
 ## Changes
 
