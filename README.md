@@ -20,7 +20,7 @@ HOW TO USE
 
 ## Quick Manual
 
-# Shortcuts
+### Shortcuts
 
 CTRL+O: Open a ROM (File | Open)
 CTRL+C: Close a ROM (File | Close)
@@ -33,7 +33,7 @@ CTRL+H: Display some informations on screen (Emulation | Graphics | Display HUD)
 CTRL+A: Set automatic mode frequency  (Emulation | Speed | Automatic)
 CTRL+Y: Set clock timer to 60 Hz, else follow current frequency
 
-# Other Menus
+### Other Menus
 
 File | Color Themes: Replace black / white colors with some funny ones
 File | Graphics: You can also change here the size of the window regarding the original resolution
@@ -43,10 +43,9 @@ File | About: Some build infos, shortcuts list and some credits
 
 ## Changes
 
-Mega8 1.2
----------
+### Mega8 1.2
 
-Windows / Linux
+#### Windows / Linux
 - Added key configuration editor (Can be set by profile/ROM)
 - Corrected big mistake in sound !!! (length and frequency)
 - It supports from 11025 Hz up to 44100 Hz (still in 8bits mono)
@@ -62,11 +61,11 @@ Windows / Linux
 - Correction when calculating FPS
 - ...
 
-Windows Only
+#### Windows Only
 - Binaries finally released !!
 - Both in 32 and 64 bits
 
-Linux Only:
+#### Linux Only:
 - Binaries are in 64bits mode only
 - Command line compilation broken :-(
 
