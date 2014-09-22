@@ -23,7 +23,8 @@ Chip8GL::~Chip8GL()
 }
 
 void Chip8GL::Render(unsigned char *screen, int w, int h) {
-    updateGfx(screen, w, h);
+    if (!_stopRender)
+        updateGfx(screen, w, h);
 }
 
 void Chip8GL::PrintGL(float x, float y, float fontSize, int fontColor, const char *text, ...) {
@@ -283,4 +284,21 @@ GLuint Chip8GL::GenerateGLTextureFromChip8(unsigned char *pixels, int w, int h)
                       GL_RGBA, GL_UNSIGNED_BYTE, pixels );
 
     return texture;
+}
+
+wxBitmap Chip8GL::getScreenshot()
+{
+    // Read the OpenGL image into a pixel array
+    GLint view[4];
+    glGetIntegerv(GL_VIEWPORT, view);
+    void* pixels = malloc(3 * view[2] * view[3]); // must use malloc
+    glPixelStorei(GL_PACK_ALIGNMENT, 1);
+    glReadBuffer( GL_BACK_LEFT );
+    glReadPixels(0, 0, view[2], view[3], GL_RGB, GL_UNSIGNED_BYTE, pixels);
+
+    // Put the image into a wxImage
+    wxImage image((int) view[2], (int) view[3]);
+    image.SetData((unsigned char*) pixels);
+    image = image.Mirror(false);
+    return wxBitmap(image);
 }

@@ -32,17 +32,38 @@ HOW TO USE
 - CTRL+H: Display some informations on screen (Emulation | Graphics | Display HUD)
 - CTRL+A: Set automatic mode frequency  (Emulation | Speed | Automatic)
 - CTRL+Y: Set clock timer to 60 Hz, else follow current frequency
+- NEW: CTRL+M: Mute sound
+- NEW: CTR+S: Take screenshot (PNG, JPEG or BMP)
 
 
 ### Other Menus
 
-- File | Color Themes: Replace black / white colors with some funny ones
-- File | Graphics: You can also change here the size of the window regarding the original resolution
-- File | Speed: You can choose from 1/40x to 1024x the original COSMAC VIP base frequency (1760 Hz), useful for debugging purpose and smoothness of Twisterbar Demo ;-)
-- File | Input: There you can change the keyboard mapping in relation to the ROM you play
-- File | About: Some build infos, shortcuts list and some credits
+- Emulation | Color Themes: Replace black / white colors with some funny ones
+- Emulation | Use Sleep: Give priority to OS half of the waiting time (may the CPU be less requested, but can slow down emulation...) 
+- Emulation | Graphics: You can also change here the size of the window regarding the original resolution
+- Emulation | Speed: You can choose from 1/40x to 256x the original COSMAC VIP base frequency (1760 Hz), useful for debugging purpose and smoothness of Twisterbar Demo ;-)
+- Emulation | Input: There you can change the keyboard mapping in relation to the ROM you play
+- Emulation | About: Some build infos, shortcuts list and some credits
 
 ## Changes
+
+### Mega 1.3
+
+- Correction crash on exit
+- Multiple corrections for Windows builds (less crashes i hope...)
+- Correction on Pause (Music wasn't paused :-/ my bad lol)
+- New Mega8 "Mega 8 Test Demo": Testing / Debugging Draw Modes (Blending Modes)
+- New Mega8 "Mega 8 Test Demo": Testing / Debugging Transparent Colors
+- New Mega8 "Mega 8 Test Demo": Testing / Debugging internal index register jumps (high)
+- New Mega8 "Mega 8 Test Demo": Testing / Debugging all scroll directions (even transparent)
+- New Mega8 "Mega 8 Test Demo": Testing / Debugging Correction in setting the length of Music
+- New Mega8 "Mega 8 Test Demo": Testing / Debugging more than one sound at 44100 Hz
+- Possibility to use 2 Joysticks maximum along with the keyboard
+- Removed speed 1024x (crashes on Windows)
+- FPS Limit to ~300
+- New shortcut to mute the sound: CTRL+'M' (Remember to activate the sound on first run !)
+- New shortcut to take a screenshot: CTRL+'S'
+- Finally made the width corrections on wxStatusBar panels !
 
 ### Mega8 1.2
 
@@ -80,7 +101,7 @@ After adding the required libs to your system, you can compile with Code::Blocks
 - SDL_Mixer 2
 - Freetype 2
 
-Command line compilation (Using Makefile) is broken with 1.2 due to added Windows (i686 and x86_64) builds. 
+Command line compilation (Using Makefile) is broken since 1.2 due to added Windows (i686 and x86_64) builds. 
 I'll fix that soon.
 
 ## KEYBOARD
@@ -100,6 +121,10 @@ Keyboard is binded like this by default :
 This can be changed with 1.2 simply go to Emulation | Input and set the keys you want. 
 It is saved by profile / game.
 
+## JOYSTICKS
+
+Yes, you can ! 2 joysticks may be used at the same time, to configure, just go to Emulation | Input ;-)
+
 ## GRAPHICS
 
 It uses OpenGL for rendering, it's quite fast. It supports texture filtering
@@ -113,12 +138,12 @@ Since all documents I've found are unclear about the real frequency of the chip,
 I'm basing on the clock speed from the COSMAC VIP, about 1.76 Khz.
 But you can press CTRL+/- to change the speed from 44 Hz to 1.8 Mhz (from 1/20x up to 1024x).
 When you change the frequency, the base clock stays still @60Hz (Delay and sound),
-but you can make it follow the actual frequency you've set by pressing 'S'.
+but you can make it follow the actual frequency you've set by going to Emulation | Set Sync Clock.
 
 ## SOUND
 
-**Chip-8/SChip-8**: SDL_Mixer is used to play a simple beep at 440Hz
-**MChip8**: Full support for sound, check Twister Demo ;-)
+- Chip-8/SChip-8: SDL_Mixer is used to play a simple beep at 440Hz
+- MChip8: Full support for sound, check Twister Demo or mine ;-)
 
 ## NOTES
 
@@ -133,7 +158,7 @@ more features to it, like:
     - ~~Better sound support (actually a wav file is played for beep)~~ Done !;
     - Internationalization support;
     - Load/Save State;
-    - Screenshot or video.
+    - ~~Screenshot~~ Done ! or video.
 
 ## NOTES 2
 

@@ -4135,10 +4135,11 @@
 	<fstream>
 	<string.h>
 
-1410265779 source:/home/junta/Devel/C++/Mega8/Chip8/Chip8.cpp
+1411366799 source:/home/junta/Devel/C++/Mega8/Chip8/Chip8.cpp
 	"Chip8.h"
+	<unistd.h>
 
-1410177010 /home/junta/Devel/C++/Mega8/Chip8/Chip8.h
+1411159060 /home/junta/Devel/C++/Mega8/Chip8/Chip8.h
 	<stdlib.h>
 	<sys/time.h>
 	<cstdio>
@@ -4164,7 +4165,7 @@
 	<wx/app.h>
 	"Mega8Main.h"
 
-1410270247 /home/junta/Devel/C++/Mega8/Mega8Main.h
+1411291122 /home/junta/Devel/C++/Mega8/Mega8Main.h
 	<wx/menu.h>
 	<wx/statusbr.h>
 	<wx/frame.h>
@@ -4180,7 +4181,7 @@
 	"Mega8Config.h"
 	"InputDialog.h"
 
-1410291838 /home/junta/Devel/C++/Mega8/include/Chip8GL.h
+1411118957 /home/junta/Devel/C++/Mega8/include/Chip8GL.h
 	<wx/wx.h>
 	<wx/glcanvas.h>
 	<time.h>
@@ -4192,7 +4193,7 @@
 
 1409199401 /home/junta/Devel/C++/Mega8/include/bell.h
 
-1410363036 source:/home/junta/Devel/C++/Mega8/Mega8Main.cpp
+1411296770 source:/home/junta/Devel/C++/Mega8/Mega8Main.cpp
 	"Mega8Main.h"
 	"include/bell.h"
 	<wx/msgdlg.h>
@@ -4206,11 +4207,12 @@
 	<wx/stdpaths.h>
 	<wx/stopwatch.h>
 	<wx/cmdline.h>
+	<unistd.h>
 	"mega8.xpm"
 	<wx/string.h>
 	<wx/intl.h>
 
-1410292238 source:/home/junta/Devel/C++/Mega8/src/Chip8GL.cpp
+1411118654 source:/home/junta/Devel/C++/Mega8/src/Chip8GL.cpp
 	<wx/dcclient.h>
 	<vector>
 	<sstream>
@@ -18897,7 +18899,7 @@
 
 1383234163 /usr/include/wx-2.8/wx/unix/stdpaths.h
 
-1409841334 /usr/local/include/wx-3.0/wx/app.h
+1410413551 /usr/local/include/wx-3.0/wx/app.h
 	"wx/event.h"
 	"wx/eventfilter.h"
 	"wx/build.h"
@@ -18917,7 +18919,7 @@
 	"wx/os2/app.h"
 	"wx/univ/theme.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/event.h
+1410413552 /usr/local/include/wx-3.0/wx/event.h
 	"wx/defs.h"
 	"wx/cpp.h"
 	"wx/object.h"
@@ -18933,7 +18935,7 @@
 	"wx/meta/convertible.h"
 	"wx/meta/removeref.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/defs.h
+1410413552 /usr/local/include/wx-3.0/wx/defs.h
 	"wx/platform.h"
 	"wx/version.h"
 	"wx/dlimpexp.h"
@@ -18946,7 +18948,7 @@
 	"wx/msw/winundef.h"
 	"wx/features.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/platform.h
+1410413552 /usr/local/include/wx-3.0/wx/platform.h
 	<unistd.h>
 	<TargetConditionals.h>
 	<AvailabilityMacros.h>
@@ -18961,11 +18963,11 @@
 	<AvailabilityMacros.h>
 	"wx/chkconf.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/compiler.h
+1410413551 /usr/local/include/wx-3.0/wx/compiler.h
 
-1409387964 /usr/local/lib/wx/include/gtk2-unicode-3.0/wx/setup.h
+1410413551 /usr/local/lib/wx/include/gtk2-unicode-3.0/wx/setup.h
 
-1409841334 /usr/local/include/wx-3.0/wx/chkconf.h
+1410413551 /usr/local/include/wx-3.0/wx/chkconf.h
 	"wx/msw/wince/chkconf.h"
 	"wx/msw/chkconf.h"
 	"wx/gtk/chkconf.h"
@@ -18980,26 +18982,26 @@
 	"wx/unix/chkconf.h"
 	"wx/univ/chkconf.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/chkconf.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/chkconf.h
 
-1409841335 /usr/local/include/wx-3.0/wx/unix/chkconf.h
+1410413553 /usr/local/include/wx-3.0/wx/unix/chkconf.h
 
-1409841335 /usr/local/include/wx-3.0/wx/version.h
+1410413552 /usr/local/include/wx-3.0/wx/version.h
 	"wx/cpp.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/cpp.h
+1410413552 /usr/local/include/wx-3.0/wx/cpp.h
 	"wx/compiler.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/dlimpexp.h
+1410413552 /usr/local/include/wx-3.0/wx/dlimpexp.h
 
-1409841334 /usr/local/include/wx-3.0/wx/debug.h
+1410413552 /usr/local/include/wx-3.0/wx/debug.h
 	<assert.h>
 	<limits.h>
 	"wx/chartype.h"
 	"wx/cpp.h"
 	"wx/dlimpexp.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/chartype.h
+1410413551 /usr/local/include/wx-3.0/wx/chartype.h
 	"wx/platform.h"
 	<sys/types.h>
 	<wchar.h>
@@ -19013,24 +19015,24 @@
 	<tchar.h>
 	<ctype.h>
 
-1409841337 /usr/local/include/wx-3.0/wx/windowid.h
+1410413554 /usr/local/include/wx-3.0/wx/windowid.h
 
-1409841334 /usr/local/include/wx-3.0/wx/features.h
+1410413552 /usr/local/include/wx-3.0/wx/features.h
 
-1409841334 /usr/local/include/wx-3.0/wx/object.h
+1410413552 /usr/local/include/wx-3.0/wx/object.h
 	"wx/memory.h"
 	"wx/xti.h"
 	"wx/rtti.h"
 	"wx/xti2.h"
 	"wx/msw/msvcrt.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/memory.h
+1410413552 /usr/local/include/wx-3.0/wx/memory.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/msgout.h"
 	<stddef.h>
 
-1409841335 /usr/local/include/wx-3.0/wx/string.h
+1410413552 /usr/local/include/wx-3.0/wx/string.h
 	"wx/defs.h"
 	<ctype.h>
 	<stdio.h>
@@ -19053,7 +19055,7 @@
 	"wx/iosfwrap.h"
 	"wx/crt.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/wxcrtbase.h
+1410413552 /usr/local/include/wx-3.0/wx/wxcrtbase.h
 	"wx/chartype.h"
 	<stdio.h>
 	<string.h>
@@ -19062,7 +19064,7 @@
 	<time.h>
 	<io.h>
 
-1409841335 /usr/local/include/wx-3.0/wx/strvararg.h
+1410413552 /usr/local/include/wx-3.0/wx/strvararg.h
 	"wx/platform.h"
 	"wx/cpp.h"
 	"wx/chartype.h"
@@ -19074,7 +19076,7 @@
 	<tr1/type_traits>
 	"wx/stringimpl.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/strconv.h
+1410413552 /usr/local/include/wx-3.0/wx/strconv.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/buffer.h"
@@ -19082,24 +19084,24 @@
 	<stdlib.h>
 	"wx/fontenc.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/buffer.h
+1410413551 /usr/local/include/wx-3.0/wx/buffer.h
 	"wx/chartype.h"
 	"wx/wxcrtbase.h"
 	<stdlib.h>
 
-1409841335 /usr/local/include/wx-3.0/wx/typeinfo.h
+1410413552 /usr/local/include/wx-3.0/wx/typeinfo.h
 	"wx/defs.h"
 	<typeinfo>
 	<string.h>
 
-1409841334 /usr/local/include/wx-3.0/wx/fontenc.h
+1410413552 /usr/local/include/wx-3.0/wx/fontenc.h
 
-1409841335 /usr/local/include/wx-3.0/wx/unichar.h
+1410413552 /usr/local/include/wx-3.0/wx/unichar.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/stringimpl.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/stringimpl.h
+1410413552 /usr/local/include/wx-3.0/wx/stringimpl.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/wxcrtbase.h"
@@ -19108,60 +19110,60 @@
 	<string>
 	"wx/afterstd.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/beforestd.h
+1410413551 /usr/local/include/wx-3.0/wx/beforestd.h
 
-1409841334 /usr/local/include/wx-3.0/wx/afterstd.h
+1410413551 /usr/local/include/wx-3.0/wx/afterstd.h
 	"wx/msw/winundef.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/stringops.h
+1410413552 /usr/local/include/wx-3.0/wx/stringops.h
 	"wx/chartype.h"
 	"wx/stringimpl.h"
 	"wx/unichar.h"
 	"wx/buffer.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/tls.h
+1410413552 /usr/local/include/wx-3.0/wx/tls.h
 	"wx/defs.h"
 	"wx/msw/tls.h"
 	"wx/os2/tls.h"
 	"wx/unix/tls.h"
 	<stdlib.h>
 
-1409841335 /usr/local/include/wx-3.0/wx/unix/tls.h
+1410413553 /usr/local/include/wx-3.0/wx/unix/tls.h
 	<pthread.h>
 
-1409841334 /usr/local/include/wx-3.0/wx/iosfwrap.h
+1410413552 /usr/local/include/wx-3.0/wx/iosfwrap.h
 	<iostream.h>
 	<iosfwd>
 	"wx/msw/winundef.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/crt.h
+1410413552 /usr/local/include/wx-3.0/wx/crt.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/wxcrt.h"
 	"wx/wxcrtvararg.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/wxcrt.h
+1410413552 /usr/local/include/wx-3.0/wx/wxcrt.h
 	"wx/wxcrtbase.h"
 	"wx/string.h"
 	<string.h>
 
-1409841335 /usr/local/include/wx-3.0/wx/wxcrtvararg.h
+1410413552 /usr/local/include/wx-3.0/wx/wxcrtvararg.h
 	"wx/wxcrt.h"
 	"wx/strvararg.h"
 	"wx/string.h"
 	<stdarg.h>
 
-1409841334 /usr/local/include/wx-3.0/wx/msgout.h
+1410413552 /usr/local/include/wx-3.0/wx/msgout.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/strvararg.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/xti.h
+1410413552 /usr/local/include/wx-3.0/wx/xti.h
 	"wx/defs.h"
 	"wx/xtitypes.h"
 	"wx/xtihandler.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/xtitypes.h
+1410413553 /usr/local/include/wx-3.0/wx/xtitypes.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/hashmap.h"
@@ -19171,7 +19173,7 @@
 	"wx/log.h"
 	<typeinfo>
 
-1409841334 /usr/local/include/wx-3.0/wx/hashmap.h
+1410413552 /usr/local/include/wx-3.0/wx/hashmap.h
 	"wx/string.h"
 	"wx/wxcrt.h"
 	<unordered_map>
@@ -19180,7 +19182,7 @@
 	<hash_map>
 	<stddef.h>
 
-1409841334 /usr/local/include/wx-3.0/wx/arrstr.h
+1410413551 /usr/local/include/wx-3.0/wx/arrstr.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/dynarray.h"
@@ -19188,23 +19190,23 @@
 	<iterator>
 	"wx/afterstd.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/dynarray.h
+1410413552 /usr/local/include/wx-3.0/wx/dynarray.h
 	"wx/defs.h"
 	"wx/beforestd.h"
 	<vector>
 	<algorithm>
 	"wx/afterstd.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/flags.h
+1410413552 /usr/local/include/wx-3.0/wx/flags.h
 
-1409841334 /usr/local/include/wx-3.0/wx/intl.h
+1410413552 /usr/local/include/wx-3.0/wx/intl.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/translation.h"
 	"wx/fontenc.h"
 	"wx/language.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/translation.h
+1410413552 /usr/local/include/wx-3.0/wx/translation.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/buffer.h"
@@ -19213,17 +19215,17 @@
 	"wx/strconv.h"
 	"wx/scopedptr.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/language.h
+1410413552 /usr/local/include/wx-3.0/wx/language.h
 	"wx/defs.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/scopedptr.h
+1410413552 /usr/local/include/wx-3.0/wx/scopedptr.h
 	"wx/defs.h"
 	"wx/checkeddelete.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/checkeddelete.h
+1410413551 /usr/local/include/wx-3.0/wx/checkeddelete.h
 	"wx/cpp.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/log.h
+1410413552 /usr/local/include/wx-3.0/wx/log.h
 	"wx/defs.h"
 	"wx/cpp.h"
 	"wx/string.h"
@@ -19237,29 +19239,29 @@
 	"wx/generic/logg.h"
 	"wx/cocoa/log.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/thread.h
+1410413552 /usr/local/include/wx-3.0/wx/thread.h
 	"wx/defs.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/generic/logg.h
+1410413553 /usr/local/include/wx-3.0/wx/generic/logg.h
 
-1409841335 /usr/local/include/wx-3.0/wx/xtihandler.h
+1410413553 /usr/local/include/wx-3.0/wx/xtihandler.h
 	"wx/defs.h"
 	"wx/xti.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/rtti.h
+1410413552 /usr/local/include/wx-3.0/wx/rtti.h
 	"wx/memory.h"
 	"wx/flags.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/xti2.h
+1410413552 /usr/local/include/wx-3.0/wx/xti2.h
 	"wx/xtiprop.h"
 	"wx/xtictor.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/xtiprop.h
+1410413553 /usr/local/include/wx-3.0/wx/xtiprop.h
 	"wx/defs.h"
 	"wx/xti.h"
 	"wx/any.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/any.h
+1410413551 /usr/local/include/wx-3.0/wx/any.h
 	"wx/defs.h"
 	<new>
 	"wx/string.h"
@@ -19269,10 +19271,10 @@
 	"wx/datetime.h"
 	"wx/variant.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/meta/if.h
+1410413553 /usr/local/include/wx-3.0/wx/meta/if.h
 	"wx/defs.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/list.h
+1410413552 /usr/local/include/wx-3.0/wx/list.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -19283,7 +19285,7 @@
 	<list>
 	"wx/afterstd.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/vector.h
+1410413552 /usr/local/include/wx-3.0/wx/vector.h
 	"wx/defs.h"
 	<vector>
 	<algorithm>
@@ -19294,21 +19296,21 @@
 	<new>
 	"wx/afterstd.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/scopeguard.h
+1410413555 /usr/local/include/wx-3.0/wx/scopeguard.h
 	"wx/defs.h"
 	"wx/except.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/except.h
+1410413552 /usr/local/include/wx-3.0/wx/except.h
 	"wx/defs.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/meta/movable.h
+1410413553 /usr/local/include/wx-3.0/wx/meta/movable.h
 	"wx/meta/pod.h"
 	"wx/string.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/meta/pod.h
+1410413553 /usr/local/include/wx-3.0/wx/meta/pod.h
 	"wx/defs.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/datetime.h
+1410413552 /usr/local/include/wx-3.0/wx/datetime.h
 	"wx/defs.h"
 	"wx/msw/wince/time.h"
 	<time.h>
@@ -19317,7 +19319,7 @@
 	"wx/anystr.h"
 	"wx/dynarray.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/longlong.h
+1410413552 /usr/local/include/wx-3.0/wx/longlong.h
 	"wx/defs.h"
 	"wx/string.h"
 	<limits.h>
@@ -19325,10 +19327,10 @@
 	<limits>
 	"wx/strvararg.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/anystr.h
+1410413551 /usr/local/include/wx-3.0/wx/anystr.h
 	"wx/string.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/variant.h
+1410413552 /usr/local/include/wx-3.0/wx/variant.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -19340,16 +19342,16 @@
 	"wx/iosfwrap.h"
 	"wx/any.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/xtictor.h
+1410413552 /usr/local/include/wx-3.0/wx/xtictor.h
 	"wx/defs.h"
 	"wx/xti.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/clntdata.h
+1410413551 /usr/local/include/wx-3.0/wx/clntdata.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/hashmap.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/gdicmn.h
+1410413553 /usr/local/include/wx-3.0/wx/gdicmn.h
 	"wx/defs.h"
 	"wx/list.h"
 	"wx/string.h"
@@ -19357,14 +19359,14 @@
 	"wx/hashmap.h"
 	"wx/math.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/math.h
+1410413552 /usr/local/include/wx-3.0/wx/math.h
 	"wx/defs.h"
 	<math.h>
 	<cmath>
 	<float.h>
 	<ieeefp.h>
 
-1409841336 /usr/local/include/wx-3.0/wx/cursor.h
+1410413553 /usr/local/include/wx-3.0/wx/cursor.h
 	"wx/defs.h"
 	"wx/msw/cursor.h"
 	"wx/motif/cursor.h"
@@ -19377,14 +19379,14 @@
 	"wx/os2/cursor.h"
 	"wx/utils.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/cursor.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/cursor.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/gdiobj.h
+1410413555 /usr/local/include/wx-3.0/wx/gdiobj.h
 	"wx/object.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/utils.h
+1410413552 /usr/local/include/wx-3.0/wx/utils.h
 	"wx/object.h"
 	"wx/list.h"
 	"wx/filefn.h"
@@ -19400,7 +19402,7 @@
 	<unistd.h>
 	<stdio.h>
 
-1409841334 /usr/local/include/wx-3.0/wx/filefn.h
+1410413552 /usr/local/include/wx-3.0/wx/filefn.h
 	"wx/list.h"
 	"wx/arrstr.h"
 	"wx/msw/wince/time.h"
@@ -19427,50 +19429,50 @@
 	<fcntl.h>
 	<sys/types.h>
 
-1409841335 /usr/local/include/wx-3.0/wx/versioninfo.h
+1410413552 /usr/local/include/wx-3.0/wx/versioninfo.h
 	"wx/string.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/meta/implicitconversion.h
+1410413553 /usr/local/include/wx-3.0/wx/meta/implicitconversion.h
 	"wx/defs.h"
 	"wx/meta/if.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/mousestate.h
+1410413552 /usr/local/include/wx-3.0/wx/mousestate.h
 	"wx/gdicmn.h"
 	"wx/kbdstate.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/kbdstate.h
+1410413552 /usr/local/include/wx-3.0/wx/kbdstate.h
 	"wx/defs.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/platinfo.h
+1410413552 /usr/local/include/wx-3.0/wx/platinfo.h
 	"wx/string.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/tracker.h
+1410413552 /usr/local/include/wx-3.0/wx/tracker.h
 	"wx/defs.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/meta/convertible.h
+1410413553 /usr/local/include/wx-3.0/wx/meta/convertible.h
 
-1409841335 /usr/local/include/wx-3.0/wx/meta/removeref.h
+1410413553 /usr/local/include/wx-3.0/wx/meta/removeref.h
 
-1409841334 /usr/local/include/wx-3.0/wx/eventfilter.h
+1410413552 /usr/local/include/wx-3.0/wx/eventfilter.h
 	"wx/defs.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/build.h
+1410413551 /usr/local/include/wx-3.0/wx/build.h
 	"wx/version.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/cmdargs.h
+1410413551 /usr/local/include/wx-3.0/wx/cmdargs.h
 	"wx/arrstr.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/init.h
+1410413552 /usr/local/include/wx-3.0/wx/init.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/msw/init.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/unix/app.h
+1410413553 /usr/local/include/wx-3.0/wx/unix/app.h
 	<signal.h>
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/app.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/app.h
 
-1409841336 /usr/local/include/wx-3.0/wx/menu.h
+1410413554 /usr/local/include/wx-3.0/wx/menu.h
 	"wx/defs.h"
 	"wx/list.h"
 	"wx/window.h"
@@ -19484,7 +19486,7 @@
 	"wx/cocoa/menu.h"
 	"wx/os2/menu.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/window.h
+1410413554 /usr/local/include/wx-3.0/wx/window.h
 	"wx/event.h"
 	"wx/list.h"
 	"wx/cursor.h"
@@ -19508,7 +19510,7 @@
 	"wx/os2/window.h"
 	"wx/univ/window.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/font.h
+1410413555 /usr/local/include/wx-3.0/wx/font.h
 	"wx/defs.h"
 	"wx/fontenc.h"
 	"wx/gdiobj.h"
@@ -19523,9 +19525,9 @@
 	"wx/cocoa/font.h"
 	"wx/os2/font.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/font.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/font.h
 
-1409841337 /usr/local/include/wx-3.0/wx/colour.h
+1410413554 /usr/local/include/wx-3.0/wx/colour.h
 	"wx/defs.h"
 	"wx/gdiobj.h"
 	"wx/variant.h"
@@ -19539,9 +19541,9 @@
 	"wx/cocoa/colour.h"
 	"wx/os2/colour.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/colour.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/colour.h
 
-1409841338 /usr/local/include/wx-3.0/wx/region.h
+1410413555 /usr/local/include/wx-3.0/wx/region.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 	"wx/msw/region.h"
@@ -19553,13 +19555,13 @@
 	"wx/cocoa/region.h"
 	"wx/os2/region.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/region.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/region.h
 
-1409841337 /usr/local/include/wx-3.0/wx/validate.h
+1410413554 /usr/local/include/wx-3.0/wx/validate.h
 	"wx/defs.h"
 	"wx/event.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/palette.h
+1410413554 /usr/local/include/wx-3.0/wx/palette.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/gdiobj.h"
@@ -19569,13 +19571,13 @@
 	"wx/osx/palette.h"
 	"wx/os2/palette.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/generic/paletteg.h
+1410413555 /usr/local/include/wx-3.0/wx/generic/paletteg.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/accel.h
+1410413554 /usr/local/include/wx-3.0/wx/accel.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/generic/accel.h"
@@ -19587,20 +19589,20 @@
 	"wx/generic/accel.h"
 	"wx/os2/accel.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/generic/accel.h
+1410413553 /usr/local/include/wx-3.0/wx/generic/accel.h
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/accel.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/accel.h
 	"wx/generic/accel.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/access.h
+1410413554 /usr/local/include/wx-3.0/wx/access.h
 	"wx/defs.h"
 	"wx/variant.h"
 	"wx/msw/ole/access.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/window.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/window.h
 	"wx/dynarray.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/menuitem.h
+1410413555 /usr/local/include/wx-3.0/wx/menuitem.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/univ/menuitem.h"
@@ -19612,10 +19614,10 @@
 	"wx/cocoa/menuitem.h"
 	"wx/os2/menuitem.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/menuitem.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/menuitem.h
 	"wx/bitmap.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/bitmap.h
+1410413554 /usr/local/include/wx-3.0/wx/bitmap.h
 	"wx/string.h"
 	"wx/gdicmn.h"
 	"wx/colour.h"
@@ -19632,7 +19634,7 @@
 	"wx/os2/bitmap.h"
 	"wx/generic/mask.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/image.h
+1410413555 /usr/local/include/wx-3.0/wx/image.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -19652,54 +19654,54 @@
 	"wx/imagxpm.h"
 	"wx/imagiff.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/stream.h
+1410413552 /usr/local/include/wx-3.0/wx/stream.h
 	"wx/defs.h"
 	<stdio.h>
 	"wx/object.h"
 	"wx/string.h"
 	"wx/filefn.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagbmp.h
+1410413555 /usr/local/include/wx-3.0/wx/imagbmp.h
 	"wx/image.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagpng.h
+1410413555 /usr/local/include/wx-3.0/wx/imagpng.h
 	"wx/defs.h"
 	"wx/image.h"
 	"wx/versioninfo.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imaggif.h
+1410413555 /usr/local/include/wx-3.0/wx/imaggif.h
 	"wx/image.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagpcx.h
+1410413555 /usr/local/include/wx-3.0/wx/imagpcx.h
 	"wx/image.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagjpeg.h
+1410413555 /usr/local/include/wx-3.0/wx/imagjpeg.h
 	"wx/defs.h"
 	"wx/image.h"
 	"wx/versioninfo.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagtga.h
+1410413555 /usr/local/include/wx-3.0/wx/imagtga.h
 	"wx/image.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagtiff.h
+1410413555 /usr/local/include/wx-3.0/wx/imagtiff.h
 	"wx/defs.h"
 	"wx/image.h"
 	"wx/versioninfo.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagpnm.h
+1410413555 /usr/local/include/wx-3.0/wx/imagpnm.h
 	"wx/image.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagxpm.h
+1410413555 /usr/local/include/wx-3.0/wx/imagxpm.h
 	"wx/image.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/imagiff.h
+1410413555 /usr/local/include/wx-3.0/wx/imagiff.h
 	"wx/image.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/bitmap.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/bitmap.h
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/menu.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/menu.h
 
-1409841337 /usr/local/include/wx-3.0/wx/statusbr.h
+1410413554 /usr/local/include/wx-3.0/wx/statusbr.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/list.h"
@@ -19710,7 +19712,7 @@
 	"wx/osx/statusbr.h"
 	"wx/generic/statusbr.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/control.h
+1410413553 /usr/local/include/wx-3.0/wx/control.h
 	"wx/defs.h"
 	"wx/window.h"
 	"wx/univ/control.h"
@@ -19722,14 +19724,14 @@
 	"wx/cocoa/control.h"
 	"wx/os2/control.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/control.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/control.h
 
-1409841338 /usr/local/include/wx-3.0/wx/generic/statusbr.h
+1410413556 /usr/local/include/wx-3.0/wx/generic/statusbr.h
 	"wx/defs.h"
 	"wx/pen.h"
 	"wx/arrstr.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/pen.h
+1410413554 /usr/local/include/wx-3.0/wx/pen.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 	"wx/msw/pen.h"
@@ -19741,9 +19743,9 @@
 	"wx/cocoa/pen.h"
 	"wx/os2/pen.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/pen.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/pen.h
 
-1409841336 /usr/local/include/wx-3.0/wx/frame.h
+1410413553 /usr/local/include/wx-3.0/wx/frame.h
 	"wx/toplevel.h"
 	"wx/statusbr.h"
 	"wx/univ/frame.h"
@@ -19755,7 +19757,7 @@
 	"wx/cocoa/frame.h"
 	"wx/os2/frame.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/toplevel.h
+1410413555 /usr/local/include/wx-3.0/wx/toplevel.h
 	"wx/nonownedwnd.h"
 	"wx/iconbndl.h"
 	"wx/weakref.h"
@@ -19770,22 +19772,22 @@
 	"wx/motif/toplevel.h"
 	"wx/univ/toplevel.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/nonownedwnd.h
+1410413555 /usr/local/include/wx-3.0/wx/nonownedwnd.h
 	"wx/window.h"
 	"wx/dfb/nonownedwnd.h"
 	"wx/gtk/nonownedwnd.h"
 	"wx/osx/nonownedwnd.h"
 	"wx/msw/nonownedwnd.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/nonownedwnd.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/nonownedwnd.h
 
-1409841337 /usr/local/include/wx-3.0/wx/iconbndl.h
+1410413555 /usr/local/include/wx-3.0/wx/iconbndl.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 	"wx/icon.h"
 	"wx/dynarray.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/icon.h
+1410413554 /usr/local/include/wx-3.0/wx/icon.h
 	"wx/iconloc.h"
 	"wx/msw/icon.h"
 	"wx/motif/icon.h"
@@ -19799,24 +19801,24 @@
 	"wx/os2/icon.h"
 	"wx/variant.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/iconloc.h
+1410413552 /usr/local/include/wx-3.0/wx/iconloc.h
 	"wx/string.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/generic/icon.h
+1410413555 /usr/local/include/wx-3.0/wx/generic/icon.h
 	"wx/bitmap.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/weakref.h
+1410413552 /usr/local/include/wx-3.0/wx/weakref.h
 	"wx/tracker.h"
 	"wx/meta/convertible.h"
 	"wx/meta/int2type.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/meta/int2type.h
+1410413553 /usr/local/include/wx-3.0/wx/meta/int2type.h
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/toplevel.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/toplevel.h
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/frame.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/frame.h
 
-1409841335 /usr/local/include/wx-3.0/wx/wx.h
+1410413552 /usr/local/include/wx-3.0/wx/wx.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/dynarray.h"
@@ -19897,20 +19899,20 @@
 	"wx/validate.h"
 	"wx/valtext.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/hash.h
+1410413552 /usr/local/include/wx-3.0/wx/hash.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/object.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/stopwatch.h
+1410413552 /usr/local/include/wx-3.0/wx/stopwatch.h
 	"wx/defs.h"
 	"wx/longlong.h"
 	"wx/time.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/time.h
+1410413552 /usr/local/include/wx-3.0/wx/time.h
 	"wx/longlong.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/timer.h
+1410413552 /usr/local/include/wx-3.0/wx/timer.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/longlong.h"
@@ -19918,27 +19920,27 @@
 	"wx/stopwatch.h"
 	"wx/utils.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/module.h
+1410413552 /usr/local/include/wx-3.0/wx/module.h
 	"wx/object.h"
 	"wx/list.h"
 	"wx/arrstr.h"
 	"wx/dynarray.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/containr.h
+1410413552 /usr/local/include/wx-3.0/wx/containr.h
 	"wx/defs.h"
 	"wx/event.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/panel.h
+1410413554 /usr/local/include/wx-3.0/wx/panel.h
 	"wx/window.h"
 	"wx/containr.h"
 	"wx/univ/panel.h"
 	"wx/msw/panel.h"
 	"wx/generic/panelg.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/generic/panelg.h
+1410413553 /usr/local/include/wx-3.0/wx/generic/panelg.h
 	"wx/bitmap.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/dc.h
+1410413553 /usr/local/include/wx-3.0/wx/dc.h
 	"wx/object.h"
 	"wx/intl.h"
 	"wx/cursor.h"
@@ -19954,7 +19956,7 @@
 	"wx/region.h"
 	"wx/affinematrix2d.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/brush.h
+1410413553 /usr/local/include/wx-3.0/wx/brush.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/gdiobj.h"
@@ -19968,38 +19970,38 @@
 	"wx/cocoa/brush.h"
 	"wx/os2/brush.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/brush.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/brush.h
 
-1409841336 /usr/local/include/wx-3.0/wx/affinematrix2d.h
+1410413553 /usr/local/include/wx-3.0/wx/affinematrix2d.h
 	"wx/defs.h"
 	"wx/affinematrix2dbase.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/affinematrix2dbase.h
+1410413553 /usr/local/include/wx-3.0/wx/affinematrix2dbase.h
 	"wx/defs.h"
 	"wx/geometry.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/geometry.h
+1410413555 /usr/local/include/wx-3.0/wx/geometry.h
 	"wx/defs.h"
 	"wx/utils.h"
 	"wx/gdicmn.h"
 	"wx/math.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/dcclient.h
+1410413553 /usr/local/include/wx-3.0/wx/dcclient.h
 	"wx/dc.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/dcmemory.h
+1410413553 /usr/local/include/wx-3.0/wx/dcmemory.h
 	"wx/dc.h"
 	"wx/bitmap.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/dcprint.h
+1410413553 /usr/local/include/wx-3.0/wx/dcprint.h
 	"wx/defs.h"
 	"wx/dc.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/dcscreen.h
+1410413553 /usr/local/include/wx-3.0/wx/dcscreen.h
 	"wx/defs.h"
 	"wx/dc.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/button.h
+1410413553 /usr/local/include/wx-3.0/wx/button.h
 	"wx/defs.h"
 	"wx/anybutton.h"
 	"wx/univ/button.h"
@@ -20011,7 +20013,7 @@
 	"wx/cocoa/button.h"
 	"wx/os2/button.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/anybutton.h
+1410413553 /usr/local/include/wx-3.0/wx/anybutton.h
 	"wx/defs.h"
 	"wx/bitmap.h"
 	"wx/control.h"
@@ -20020,11 +20022,11 @@
 	"wx/gtk/anybutton.h"
 	"wx/osx/anybutton.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/anybutton.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/anybutton.h
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/button.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/button.h
 
-1409841336 /usr/local/include/wx-3.0/wx/dialog.h
+1410413553 /usr/local/include/wx-3.0/wx/dialog.h
 	"wx/toplevel.h"
 	"wx/containr.h"
 	"wx/sharedptr.h"
@@ -20037,24 +20039,24 @@
 	"wx/cocoa/dialog.h"
 	"wx/os2/dialog.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/sharedptr.h
+1410413552 /usr/local/include/wx-3.0/wx/sharedptr.h
 	"wx/defs.h"
 	"wx/atomic.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/atomic.h
+1410413551 /usr/local/include/wx-3.0/wx/atomic.h
 	"wx/defs.h"
 	"wx/msw/wrapwin.h"
 	"libkern/OSAtomic.h"
 	<atomic.h>
 	"wx/thread.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/dialog.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/dialog.h
 
-1409841337 /usr/local/include/wx-3.0/wx/settings.h
+1410413554 /usr/local/include/wx-3.0/wx/settings.h
 	"wx/colour.h"
 	"wx/font.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/msgdlg.h
+1410413554 /usr/local/include/wx-3.0/wx/msgdlg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 	"wx/stockitem.h"
@@ -20066,17 +20068,17 @@
 	"wx/osx/msgdlg.h"
 	"wx/os2/msgdlg.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/stockitem.h
+1410413552 /usr/local/include/wx-3.0/wx/stockitem.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/string.h"
 	"wx/accel.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/generic/msgdlgg.h
+1410413553 /usr/local/include/wx-3.0/wx/generic/msgdlgg.h
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/msgdlg.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/msgdlg.h
 
-1409841337 /usr/local/include/wx-3.0/wx/dataobj.h
+1410413554 /usr/local/include/wx-3.0/wx/dataobj.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/bitmap.h"
@@ -20107,20 +20109,20 @@
 	"wx/cocoa/dataobj2.h"
 	"wx/os2/dataobj2.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/dataform.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/dataform.h
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/dataobj.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/dataobj.h
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/dataobj2.h
+1410413555 /usr/local/include/wx-3.0/wx/gtk/dataobj2.h
 
-1409841336 /usr/local/include/wx-3.0/wx/ctrlsub.h
+1410413553 /usr/local/include/wx-3.0/wx/ctrlsub.h
 	"wx/defs.h"
 	"wx/arrstr.h"
 	"wx/control.h"
 	"wx/msw/ctrlsub.h"
 	"wx/motif/ctrlsub.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/bmpbuttn.h
+1410413553 /usr/local/include/wx-3.0/wx/bmpbuttn.h
 	"wx/defs.h"
 	"wx/button.h"
 	"wx/univ/bmpbuttn.h"
@@ -20132,9 +20134,9 @@
 	"wx/cocoa/bmpbuttn.h"
 	"wx/os2/bmpbuttn.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/bmpbuttn.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/bmpbuttn.h
 
-1409841336 /usr/local/include/wx-3.0/wx/checkbox.h
+1410413553 /usr/local/include/wx-3.0/wx/checkbox.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/checkbox.h"
@@ -20146,9 +20148,9 @@
 	"wx/cocoa/checkbox.h"
 	"wx/os2/checkbox.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/checkbox.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/checkbox.h
 
-1409841336 /usr/local/include/wx-3.0/wx/checklst.h
+1410413553 /usr/local/include/wx-3.0/wx/checklst.h
 	"wx/defs.h"
 	"wx/listbox.h"
 	"wx/univ/checklst.h"
@@ -20161,7 +20163,7 @@
 	"wx/cocoa/checklst.h"
 	"wx/os2/checklst.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/listbox.h
+1410413554 /usr/local/include/wx-3.0/wx/listbox.h
 	"wx/defs.h"
 	"wx/ctrlsub.h"
 	"wx/univ/listbox.h"
@@ -20173,11 +20175,11 @@
 	"wx/os2/listbox.h"
 	"wx/cocoa/listbox.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/listbox.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/listbox.h
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/checklst.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/checklst.h
 
-1409841336 /usr/local/include/wx-3.0/wx/choice.h
+1410413553 /usr/local/include/wx-3.0/wx/choice.h
 	"wx/defs.h"
 	"wx/ctrlsub.h"
 	"wx/univ/choice.h"
@@ -20190,9 +20192,9 @@
 	"wx/cocoa/choice.h"
 	"wx/os2/choice.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/choice.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/choice.h
 
-1409841337 /usr/local/include/wx-3.0/wx/scrolbar.h
+1410413554 /usr/local/include/wx-3.0/wx/scrolbar.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/scrolbar.h"
@@ -20204,9 +20206,9 @@
 	"wx/cocoa/scrolbar.h"
 	"wx/os2/scrolbar.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/scrolbar.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/scrolbar.h
 
-1409841337 /usr/local/include/wx-3.0/wx/stattext.h
+1410413554 /usr/local/include/wx-3.0/wx/stattext.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/stattext.h"
@@ -20218,9 +20220,9 @@
 	"wx/cocoa/stattext.h"
 	"wx/os2/stattext.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/stattext.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/stattext.h
 
-1409841337 /usr/local/include/wx-3.0/wx/statbmp.h
+1410413554 /usr/local/include/wx-3.0/wx/statbmp.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/bitmap.h"
@@ -20234,10 +20236,10 @@
 	"wx/cocoa/statbmp.h"
 	"wx/os2/statbmp.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/statbmp.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/statbmp.h
 	"wx/icon.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/statbox.h
+1410413554 /usr/local/include/wx-3.0/wx/statbox.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/containr.h"
@@ -20250,9 +20252,9 @@
 	"wx/cocoa/statbox.h"
 	"wx/os2/statbox.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/statbox.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/statbox.h
 
-1409841336 /usr/local/include/wx-3.0/wx/radiobox.h
+1410413554 /usr/local/include/wx-3.0/wx/radiobox.h
 	"wx/defs.h"
 	"wx/ctrlsub.h"
 	"wx/dynarray.h"
@@ -20265,11 +20267,11 @@
 	"wx/cocoa/radiobox.h"
 	"wx/os2/radiobox.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/radiobox.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/radiobox.h
 	"wx/bitmap.h"
 	"wx/list.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/radiobut.h
+1410413554 /usr/local/include/wx-3.0/wx/radiobut.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/radiobut.h"
@@ -20281,9 +20283,9 @@
 	"wx/cocoa/radiobut.h"
 	"wx/os2/radiobut.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/radiobut.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/radiobut.h
 
-1409841337 /usr/local/include/wx-3.0/wx/textctrl.h
+1410413554 /usr/local/include/wx-3.0/wx/textctrl.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/textentry.h"
@@ -20301,7 +20303,7 @@
 	"wx/cocoa/textctrl.h"
 	"wx/os2/textctrl.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/textentry.h
+1410413554 /usr/local/include/wx-3.0/wx/textentry.h
 	"wx/filefn.h"
 	"wx/gdicmn.h"
 	"wx/gtk/textentry.h"
@@ -20310,18 +20312,18 @@
 	"wx/motif/textentry.h"
 	"wx/os2/textentry.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/textentry.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/textentry.h
 
-1409841334 /usr/local/include/wx-3.0/wx/ioswrap.h
+1410413552 /usr/local/include/wx-3.0/wx/ioswrap.h
 	"wx/beforestd.h"
 	<iostream.h>
 	<iostream>
 	"wx/afterstd.h"
 	"wx/msw/winundef.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/textctrl.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/textctrl.h
 
-1409841337 /usr/local/include/wx-3.0/wx/slider.h
+1410413554 /usr/local/include/wx-3.0/wx/slider.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/slider.h"
@@ -20333,9 +20335,9 @@
 	"wx/cocoa/slider.h"
 	"wx/os2/slider.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/slider.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/slider.h
 
-1409841336 /usr/local/include/wx-3.0/wx/gauge.h
+1410413553 /usr/local/include/wx-3.0/wx/gauge.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/gauge.h"
@@ -20347,19 +20349,19 @@
 	"wx/cocoa/gauge.h"
 	"wx/os2/gauge.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/gauge.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/gauge.h
 
-1409841337 /usr/local/include/wx-3.0/wx/scrolwin.h
+1410413554 /usr/local/include/wx-3.0/wx/scrolwin.h
 	"wx/panel.h"
 	"wx/gtk/scrolwin.h"
 	"wx/gtk1/scrolwin.h"
 	"wx/generic/scrolwin.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/scrolwin.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/scrolwin.h
 
-1409841336 /usr/local/include/wx-3.0/wx/generic/scrolwin.h
+1410413553 /usr/local/include/wx-3.0/wx/generic/scrolwin.h
 
-1409841336 /usr/local/include/wx-3.0/wx/dirdlg.h
+1410413553 /usr/local/include/wx-3.0/wx/dirdlg.h
 	"wx/dialog.h"
 	"wx/generic/dirdlgg.h"
 	"wx/generic/dirdlgg.h"
@@ -20371,9 +20373,9 @@
 	"wx/cocoa/dirdlg.h"
 	"wx/generic/dirdlgg.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/dirdlg.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/dirdlg.h
 
-1409841337 /usr/local/include/wx-3.0/wx/toolbar.h
+1410413554 /usr/local/include/wx-3.0/wx/toolbar.h
 	"wx/defs.h"
 	"wx/tbarbase.h"
 	"wx/univ/toolbar.h"
@@ -20386,15 +20388,15 @@
 	"wx/cocoa/toolbar.h"
 	"wx/os2/toolbar.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/tbarbase.h
+1410413555 /usr/local/include/wx-3.0/wx/tbarbase.h
 	"wx/defs.h"
 	"wx/bitmap.h"
 	"wx/list.h"
 	"wx/control.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/toolbar.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/toolbar.h
 
-1409841336 /usr/local/include/wx-3.0/wx/combobox.h
+1410413553 /usr/local/include/wx-3.0/wx/combobox.h
 	"wx/defs.h"
 	"wx/textctrl.h"
 	"wx/ctrlsub.h"
@@ -20408,38 +20410,38 @@
 	"wx/cocoa/combobox.h"
 	"wx/os2/combobox.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/gtk/combobox.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/combobox.h
 	"wx/choice.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/layout.h
+1410413554 /usr/local/include/wx-3.0/wx/layout.h
 	"wx/object.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/sizer.h
+1410413554 /usr/local/include/wx-3.0/wx/sizer.h
 	"wx/defs.h"
 	"wx/window.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/choicdlg.h
+1410413553 /usr/local/include/wx-3.0/wx/choicdlg.h
 	"wx/defs.h"
 	"wx/generic/choicdgg.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/generic/choicdgg.h
+1410413553 /usr/local/include/wx-3.0/wx/generic/choicdgg.h
 	"wx/dynarray.h"
 	"wx/dialog.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/textdlg.h
+1410413554 /usr/local/include/wx-3.0/wx/textdlg.h
 	"wx/generic/textdlgg.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/generic/textdlgg.h
+1410413554 /usr/local/include/wx-3.0/wx/generic/textdlgg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 	"wx/valtext.h"
 	"wx/textctrl.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/valtext.h
+1410413554 /usr/local/include/wx-3.0/wx/valtext.h
 	"wx/defs.h"
 	"wx/validate.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/filedlg.h
+1410413553 /usr/local/include/wx-3.0/wx/filedlg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 	"wx/arrstr.h"
@@ -20452,46 +20454,46 @@
 	"wx/cocoa/filedlg.h"
 	"wx/os2/filedlg.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/filedlg.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/filedlg.h
 	"wx/gtk/filectrl.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/filectrl.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/filectrl.h
 	"wx/control.h"
 	"wx/filectrl.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/filectrl.h
+1410413555 /usr/local/include/wx-3.0/wx/filectrl.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/event.h"
 	"wx/gtk/filectrl.h"
 	"wx/generic/filectrlg.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/generic/filectrlg.h
+1410413553 /usr/local/include/wx-3.0/wx/generic/filectrlg.h
 	"wx/containr.h"
 	"wx/listctrl.h"
 	"wx/filectrl.h"
 	"wx/filename.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/listctrl.h
+1410413555 /usr/local/include/wx-3.0/wx/listctrl.h
 	"wx/defs.h"
 	"wx/listbase.h"
 	"wx/msw/listctrl.h"
 	"wx/osx/listctrl.h"
 	"wx/generic/listctrl.h"
 
-1409841337 /usr/local/include/wx-3.0/wx/listbase.h
+1410413555 /usr/local/include/wx-3.0/wx/listbase.h
 	"wx/colour.h"
 	"wx/font.h"
 	"wx/gdicmn.h"
 	"wx/event.h"
 	"wx/control.h"
 
-1409841338 /usr/local/include/wx-3.0/wx/generic/listctrl.h
+1410413556 /usr/local/include/wx-3.0/wx/generic/listctrl.h
 	"wx/containr.h"
 	"wx/scrolwin.h"
 	"wx/textctrl.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/filename.h
+1410413552 /usr/local/include/wx-3.0/wx/filename.h
 	"wx/arrstr.h"
 	"wx/filefn.h"
 	"wx/datetime.h"
@@ -20499,17 +20501,17 @@
 	"wx/longlong.h"
 	"wx/file.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/file.h
+1410413552 /usr/local/include/wx-3.0/wx/file.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/filefn.h"
 	"wx/convauto.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/convauto.h
+1410413551 /usr/local/include/wx-3.0/wx/convauto.h
 	"wx/strconv.h"
 	"wx/fontenc.h"
 
-1409841336 /usr/local/include/wx-3.0/wx/mdi.h
+1410413554 /usr/local/include/wx-3.0/wx/mdi.h
 	"wx/defs.h"
 	"wx/frame.h"
 	"wx/menu.h"
@@ -20520,10 +20522,10 @@
 	"wx/osx/mdi.h"
 	"wx/cocoa/mdi.h"
 
-1409841339 /usr/local/include/wx-3.0/wx/gtk/mdi.h
+1410413556 /usr/local/include/wx-3.0/wx/gtk/mdi.h
 	"wx/frame.h"
 
-1409841340 /usr/local/include/wx-3.0/wx/glcanvas.h
+1410413557 /usr/local/include/wx-3.0/wx/glcanvas.h
 	"wx/defs.h"
 	"wx/app.h"
 	"wx/palette.h"
@@ -20535,10 +20537,10 @@
 	"wx/osx/glcanvas.h"
 	"wx/cocoa/glcanvas.h"
 
-1409841340 /usr/local/include/wx-3.0/wx/gtk/glcanvas.h
+1410413557 /usr/local/include/wx-3.0/wx/gtk/glcanvas.h
 	"wx/unix/glx11.h"
 
-1409841340 /usr/local/include/wx-3.0/wx/unix/glx11.h
+1410413557 /usr/local/include/wx-3.0/wx/unix/glx11.h
 	<GL/glx.h>
 
 1409852440 /home/junta/Devel/C++/Mega8/Config/Mega8Config.h
@@ -20546,35 +20548,35 @@
 	<wx/config.h>
 	<wx/string.h>
 
-1409841334 /usr/local/include/wx-3.0/wx/config.h
+1410413551 /usr/local/include/wx-3.0/wx/config.h
 	"wx/confbase.h"
 	"wx/msw/regconf.h"
 	"wx/os2/iniconf.h"
 	"wx/fileconf.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/confbase.h
+1410413551 /usr/local/include/wx-3.0/wx/confbase.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/object.h"
 	"wx/base64.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/base64.h
+1410413551 /usr/local/include/wx-3.0/wx/base64.h
 	"wx/string.h"
 	"wx/buffer.h"
 
-1409841334 /usr/local/include/wx-3.0/wx/fileconf.h
+1410413552 /usr/local/include/wx-3.0/wx/fileconf.h
 	"wx/defs.h"
 	"wx/textfile.h"
 	"wx/string.h"
 	"wx/confbase.h"
 	"wx/filename.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/textfile.h
+1410413552 /usr/local/include/wx-3.0/wx/textfile.h
 	"wx/defs.h"
 	"wx/textbuf.h"
 	"wx/file.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/textbuf.h
+1410413552 /usr/local/include/wx-3.0/wx/textbuf.h
 	"wx/defs.h"
 	"wx/arrstr.h"
 	"wx/convauto.h"
@@ -20585,12 +20587,12 @@
 	"Mega8Config.h"
 	<wx/defs.h>
 
-1409841339 /usr/local/include/wx-3.0/wx/dcbuffer.h
+1410413556 /usr/local/include/wx-3.0/wx/dcbuffer.h
 	"wx/dcmemory.h"
 	"wx/dcclient.h"
 	"wx/window.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/stdpaths.h
+1410413552 /usr/local/include/wx-3.0/wx/stdpaths.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/filefn.h"
@@ -20599,7 +20601,7 @@
 	"wx/os2/stdpaths.h"
 	"wx/unix/stdpaths.h"
 
-1409841335 /usr/local/include/wx-3.0/wx/unix/stdpaths.h
+1410413553 /usr/local/include/wx-3.0/wx/unix/stdpaths.h
 
 1409841334 /usr/local/lib/wx/include/gtk2-unicode-static-3.0/wx/setup.h
 
@@ -22348,7 +22350,7 @@
 
 1409391439 /usr/local/mingw-w64-i686/include/wx-3.0/wx/msw/stdpaths.h
 
-1410339820 source:/home/junta/Devel/C++/Mega8/res.rc
+1410354452 source:/home/junta/Devel/C++/Mega8/res.rc
 	"wx/msw/wx.rc"
 
 1409391444 /usr/local/mingw-w64-i686/include/wx-3.0/wx/msw/wx.rc
@@ -22440,19 +22442,19 @@
 1409373535 /usr/local/mingw-w64-x86_64/include/math.h
 	<crtdefs.h>
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/config.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/config.h
 	"wx/confbase.h"
 	"wx/msw/regconf.h"
 	"wx/os2/iniconf.h"
 	"wx/fileconf.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/confbase.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/confbase.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/object.h"
 	"wx/base64.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/defs.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/defs.h
 	"wx/platform.h"
 	"wx/version.h"
 	"wx/dlimpexp.h"
@@ -22465,7 +22467,7 @@
 	"wx/msw/winundef.h"
 	"wx/features.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/platform.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/platform.h
 	<unistd.h>
 	<TargetConditionals.h>
 	<AvailabilityMacros.h>
@@ -22512,19 +22514,19 @@
 
 1409373535 /usr/local/mingw-w64-x86_64/include/pthread_unistd.h
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/compiler.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/compiler.h
 
-1409837669 /usr/local/mingw-w64-x86_64/lib/wx/include/x86_64-w64-mingw32-msw-unicode-static-3.0/wx/setup.h
+1410419995 /usr/local/mingw-w64-x86_64/lib/wx/include/x86_64-w64-mingw32-msw-unicode-static-3.0/wx/setup.h
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/libraries.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/libraries.h
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/gccpriv.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/gccpriv.h
 	<_mingw.h>
 	<w32api.h>
 
 1409373535 /usr/local/mingw-w64-x86_64/include/w32api.h
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/chkconf.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/chkconf.h
 	"wx/msw/wince/chkconf.h"
 	"wx/msw/chkconf.h"
 	"wx/gtk/chkconf.h"
@@ -22539,17 +22541,17 @@
 	"wx/unix/chkconf.h"
 	"wx/univ/chkconf.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/chkconf.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/chkconf.h
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/version.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/version.h
 	"wx/cpp.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/cpp.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/cpp.h
 	"wx/compiler.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dlimpexp.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dlimpexp.h
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/debug.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/debug.h
 	<assert.h>
 	<limits.h>
 	"wx/chartype.h"
@@ -22560,7 +22562,7 @@
 	<crtdefs.h>
 	<stdlib.h>
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/chartype.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/chartype.h
 	"wx/platform.h"
 	<sys/types.h>
 	<wchar.h>
@@ -22615,13 +22617,13 @@
 1409373536 /usr/local/mingw-w64-x86_64/include/sec_api/tchar_s.h
 	<tchar.h>
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/windowid.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/windowid.h
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/winundef.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/winundef.h
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/features.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/features.h
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/string.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/string.h
 	"wx/defs.h"
 	<ctype.h>
 	<stdio.h>
@@ -22661,7 +22663,7 @@
 1409373535 /usr/local/mingw-w64-x86_64/include/_mingw_stdarg.h
 	<vadefs.h>
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/wxcrtbase.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/wxcrtbase.h
 	"wx/chartype.h"
 	<stdio.h>
 	<string.h>
@@ -22673,7 +22675,7 @@
 1409373535 /usr/local/mingw-w64-x86_64/include/wctype.h
 	<crtdefs.h>
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/strvararg.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/strvararg.h
 	"wx/platform.h"
 	"wx/cpp.h"
 	"wx/chartype.h"
@@ -22685,7 +22687,7 @@
 	<tr1/type_traits>
 	"wx/stringimpl.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/strconv.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/strconv.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/buffer.h"
@@ -22693,24 +22695,24 @@
 	<stdlib.h>
 	"wx/fontenc.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/buffer.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/buffer.h
 	"wx/chartype.h"
 	"wx/wxcrtbase.h"
 	<stdlib.h>
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/typeinfo.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/typeinfo.h
 	"wx/defs.h"
 	<typeinfo>
 	<string.h>
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/fontenc.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/fontenc.h
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/unichar.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/unichar.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/stringimpl.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stringimpl.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stringimpl.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/wxcrtbase.h"
@@ -22719,70 +22721,70 @@
 	<string>
 	"wx/afterstd.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/beforestd.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/beforestd.h
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/afterstd.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/afterstd.h
 	"wx/msw/winundef.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stringops.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stringops.h
 	"wx/chartype.h"
 	"wx/stringimpl.h"
 	"wx/unichar.h"
 	"wx/buffer.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tls.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tls.h
 	"wx/defs.h"
 	"wx/msw/tls.h"
 	"wx/os2/tls.h"
 	"wx/unix/tls.h"
 	<stdlib.h>
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/iosfwrap.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/iosfwrap.h
 	<iostream.h>
 	<iosfwd>
 	"wx/msw/winundef.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/crt.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/crt.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/wxcrt.h"
 	"wx/wxcrtvararg.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/wxcrt.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/wxcrt.h
 	"wx/wxcrtbase.h"
 	"wx/string.h"
 	<string.h>
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/wxcrtvararg.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/wxcrtvararg.h
 	"wx/wxcrt.h"
 	"wx/strvararg.h"
 	"wx/string.h"
 	<stdarg.h>
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/object.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/object.h
 	"wx/memory.h"
 	"wx/xti.h"
 	"wx/rtti.h"
 	"wx/xti2.h"
 	"wx/msw/msvcrt.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/memory.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/memory.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/msgout.h"
 	<stddef.h>
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msgout.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msgout.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/strvararg.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xti.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xti.h
 	"wx/defs.h"
 	"wx/xtitypes.h"
 	"wx/xtihandler.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xtitypes.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xtitypes.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/hashmap.h"
@@ -22792,7 +22794,7 @@
 	"wx/log.h"
 	<typeinfo>
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/hashmap.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/hashmap.h
 	"wx/string.h"
 	"wx/wxcrt.h"
 	<unordered_map>
@@ -22801,7 +22803,7 @@
 	<hash_map>
 	<stddef.h>
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/arrstr.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/arrstr.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/dynarray.h"
@@ -22809,23 +22811,23 @@
 	<iterator>
 	"wx/afterstd.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dynarray.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dynarray.h
 	"wx/defs.h"
 	"wx/beforestd.h"
 	<vector>
 	<algorithm>
 	"wx/afterstd.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/flags.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/flags.h
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/intl.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/intl.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/translation.h"
 	"wx/fontenc.h"
 	"wx/language.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/translation.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/translation.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/buffer.h"
@@ -22834,17 +22836,17 @@
 	"wx/strconv.h"
 	"wx/scopedptr.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/language.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/language.h
 	"wx/defs.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/scopedptr.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/scopedptr.h
 	"wx/defs.h"
 	"wx/checkeddelete.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/checkeddelete.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/checkeddelete.h
 	"wx/cpp.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/log.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/log.h
 	"wx/defs.h"
 	"wx/cpp.h"
 	"wx/string.h"
@@ -22858,29 +22860,29 @@
 	"wx/generic/logg.h"
 	"wx/cocoa/log.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/thread.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/thread.h
 	"wx/defs.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/logg.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/logg.h
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xtihandler.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xtihandler.h
 	"wx/defs.h"
 	"wx/xti.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/rtti.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/rtti.h
 	"wx/memory.h"
 	"wx/flags.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xti2.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xti2.h
 	"wx/xtiprop.h"
 	"wx/xtictor.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xtiprop.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xtiprop.h
 	"wx/defs.h"
 	"wx/xti.h"
 	"wx/any.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/any.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/any.h
 	"wx/defs.h"
 	<new>
 	"wx/string.h"
@@ -22890,10 +22892,10 @@
 	"wx/datetime.h"
 	"wx/variant.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/if.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/if.h
 	"wx/defs.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/list.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/list.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -22904,7 +22906,7 @@
 	<list>
 	"wx/afterstd.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/vector.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/vector.h
 	"wx/defs.h"
 	<vector>
 	<algorithm>
@@ -22915,21 +22917,21 @@
 	<new>
 	"wx/afterstd.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/scopeguard.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/scopeguard.h
 	"wx/defs.h"
 	"wx/except.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/except.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/except.h
 	"wx/defs.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/movable.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/movable.h
 	"wx/meta/pod.h"
 	"wx/string.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/pod.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/pod.h
 	"wx/defs.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/datetime.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/datetime.h
 	"wx/defs.h"
 	"wx/msw/wince/time.h"
 	<time.h>
@@ -22938,7 +22940,7 @@
 	"wx/anystr.h"
 	"wx/dynarray.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/longlong.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/longlong.h
 	"wx/defs.h"
 	"wx/string.h"
 	<limits.h>
@@ -22946,10 +22948,10 @@
 	<limits>
 	"wx/strvararg.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/anystr.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/anystr.h
 	"wx/string.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/variant.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/variant.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -22961,11 +22963,11 @@
 	"wx/iosfwrap.h"
 	"wx/any.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xtictor.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/xtictor.h
 	"wx/defs.h"
 	"wx/xti.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/msvcrt.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/msvcrt.h
 	<stdlib.h>
 	<crtdbg.h>
 
@@ -22976,50 +22978,50 @@
 1409373536 /usr/local/mingw-w64-x86_64/include/sec_api/crtdbg_s.h
 	<crtdbg.h>
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/base64.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/base64.h
 	"wx/string.h"
 	"wx/buffer.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/regconf.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/regconf.h
 	"wx/defs.h"
 	"wx/msw/registry.h"
 	"wx/object.h"
 	"wx/confbase.h"
 	"wx/buffer.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/registry.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/registry.h
 	"wx/defs.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/fileconf.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/fileconf.h
 	"wx/defs.h"
 	"wx/textfile.h"
 	"wx/string.h"
 	"wx/confbase.h"
 	"wx/filename.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textfile.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textfile.h
 	"wx/defs.h"
 	"wx/textbuf.h"
 	"wx/file.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textbuf.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textbuf.h
 	"wx/defs.h"
 	"wx/arrstr.h"
 	"wx/convauto.h"
 	"wx/string.h"
 	"wx/dynarray.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/convauto.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/convauto.h
 	"wx/strconv.h"
 	"wx/fontenc.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/file.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/file.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/filefn.h"
 	"wx/convauto.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/filefn.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/filefn.h
 	"wx/list.h"
 	"wx/arrstr.h"
 	"wx/msw/wince/time.h"
@@ -23046,7 +23048,7 @@
 	<fcntl.h>
 	<sys/types.h>
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/private.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/private.h
 	"wx/msw/wrapwin.h"
 	"wx/msw/microwin.h"
 	"wx/log.h"
@@ -23054,7 +23056,7 @@
 	"wx/gdicmn.h"
 	"wx/colour.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/wrapwin.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/wrapwin.h
 	"wx/platform.h"
 	<winsock2.h>
 	<windows.h>
@@ -23914,7 +23916,7 @@
 	<_mingw_print_push.h>
 	<_mingw_print_pop.h>
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/window.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/window.h
 	"wx/event.h"
 	"wx/list.h"
 	"wx/cursor.h"
@@ -23938,7 +23940,7 @@
 	"wx/os2/window.h"
 	"wx/univ/window.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/event.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/event.h
 	"wx/defs.h"
 	"wx/cpp.h"
 	"wx/object.h"
@@ -23954,12 +23956,12 @@
 	"wx/meta/convertible.h"
 	"wx/meta/removeref.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/clntdata.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/clntdata.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/hashmap.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/gdicmn.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/gdicmn.h
 	"wx/defs.h"
 	"wx/list.h"
 	"wx/string.h"
@@ -23967,7 +23969,7 @@
 	"wx/hashmap.h"
 	"wx/math.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/math.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/math.h
 	"wx/defs.h"
 	<math.h>
 	<cmath>
@@ -23982,7 +23984,7 @@
 	<math.h>
 	<ansidecl.h>
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/cursor.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/cursor.h
 	"wx/defs.h"
 	"wx/msw/cursor.h"
 	"wx/motif/cursor.h"
@@ -23995,18 +23997,18 @@
 	"wx/os2/cursor.h"
 	"wx/utils.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/cursor.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/cursor.h
 	"wx/msw/gdiimage.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/gdiimage.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/gdiimage.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 	"wx/list.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/gdiobj.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/gdiobj.h
 	"wx/object.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/utils.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/utils.h
 	"wx/object.h"
 	"wx/list.h"
 	"wx/filefn.h"
@@ -24022,21 +24024,21 @@
 	<unistd.h>
 	<stdio.h>
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/versioninfo.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/versioninfo.h
 	"wx/string.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/implicitconversion.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/implicitconversion.h
 	"wx/defs.h"
 	"wx/meta/if.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/mousestate.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/mousestate.h
 	"wx/gdicmn.h"
 	"wx/kbdstate.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/kbdstate.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/kbdstate.h
 	"wx/defs.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/platinfo.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/platinfo.h
 	"wx/string.h"
 
 1409373535 /usr/local/mingw-w64-x86_64/include/direct.h
@@ -24047,14 +24049,14 @@
 	<crtdefs.h>
 	<io.h>
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tracker.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tracker.h
 	"wx/defs.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/convertible.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/convertible.h
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/removeref.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/removeref.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/font.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/font.h
 	"wx/defs.h"
 	"wx/fontenc.h"
 	"wx/gdiobj.h"
@@ -24069,10 +24071,10 @@
 	"wx/cocoa/font.h"
 	"wx/os2/font.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/font.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/font.h
 	"wx/gdicmn.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/colour.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/colour.h
 	"wx/defs.h"
 	"wx/gdiobj.h"
 	"wx/variant.h"
@@ -24086,10 +24088,10 @@
 	"wx/cocoa/colour.h"
 	"wx/os2/colour.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/colour.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/colour.h
 	"wx/object.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/region.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/region.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 	"wx/msw/region.h"
@@ -24101,13 +24103,13 @@
 	"wx/cocoa/region.h"
 	"wx/os2/region.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/region.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/region.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/validate.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/validate.h
 	"wx/defs.h"
 	"wx/event.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/palette.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/palette.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/gdiobj.h"
@@ -24117,10 +24119,10 @@
 	"wx/osx/palette.h"
 	"wx/os2/palette.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/palette.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/palette.h
 	"wx/gdiobj.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/accel.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/accel.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/generic/accel.h"
@@ -24132,21 +24134,21 @@
 	"wx/generic/accel.h"
 	"wx/os2/accel.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/accel.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/accel.h
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/accel.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/accel.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/access.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/access.h
 	"wx/defs.h"
 	"wx/variant.h"
 	"wx/msw/ole/access.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ole/access.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ole/access.h
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/window.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/window.h
 	"wx/settings.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/settings.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/settings.h
 	"wx/colour.h"
 	"wx/font.h"
 
@@ -24167,7 +24169,7 @@
 	<crtdefs.h>
 	<io.h>
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/filename.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/filename.h
 	"wx/arrstr.h"
 	"wx/filefn.h"
 	"wx/datetime.h"
@@ -24175,7 +24177,7 @@
 	"wx/longlong.h"
 	"wx/file.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/app.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/app.h
 	"wx/event.h"
 	"wx/eventfilter.h"
 	"wx/build.h"
@@ -24195,28 +24197,28 @@
 	"wx/os2/app.h"
 	"wx/univ/theme.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/eventfilter.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/eventfilter.h
 	"wx/defs.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/build.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/build.h
 	"wx/version.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/cmdargs.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/cmdargs.h
 	"wx/arrstr.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/init.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/init.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/msw/init.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/init.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/init.h
 	"wx/msw/wrapwin.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/app.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/app.h
 	"wx/event.h"
 	"wx/icon.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/icon.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/icon.h
 	"wx/iconloc.h"
 	"wx/msw/icon.h"
 	"wx/motif/icon.h"
@@ -24230,13 +24232,13 @@
 	"wx/os2/icon.h"
 	"wx/variant.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/iconloc.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/iconloc.h
 	"wx/string.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/icon.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/icon.h
 	"wx/msw/gdiimage.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/menu.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/menu.h
 	"wx/defs.h"
 	"wx/list.h"
 	"wx/window.h"
@@ -24250,7 +24252,7 @@
 	"wx/cocoa/menu.h"
 	"wx/os2/menu.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/menuitem.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/menuitem.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/univ/menuitem.h"
@@ -24262,20 +24264,20 @@
 	"wx/cocoa/menuitem.h"
 	"wx/os2/menuitem.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/menuitem.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/menuitem.h
 	"wx/ownerdrw.h"
 	"wx/bitmap.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/ownerdrw.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/ownerdrw.h
 	"wx/defs.h"
 	"wx/font.h"
 	"wx/colour.h"
 	"wx/msw/ownerdrw.h"
 	"wx/os2/ownerdrw.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ownerdrw.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ownerdrw.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/bitmap.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/bitmap.h
 	"wx/string.h"
 	"wx/gdicmn.h"
 	"wx/colour.h"
@@ -24292,7 +24294,7 @@
 	"wx/os2/bitmap.h"
 	"wx/generic/mask.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/image.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/image.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/string.h"
@@ -24312,60 +24314,60 @@
 	"wx/imagxpm.h"
 	"wx/imagiff.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stream.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stream.h
 	"wx/defs.h"
 	<stdio.h>
 	"wx/object.h"
 	"wx/string.h"
 	"wx/filefn.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagbmp.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagbmp.h
 	"wx/image.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagpng.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagpng.h
 	"wx/defs.h"
 	"wx/image.h"
 	"wx/versioninfo.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imaggif.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imaggif.h
 	"wx/image.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagpcx.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagpcx.h
 	"wx/image.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagjpeg.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagjpeg.h
 	"wx/defs.h"
 	"wx/image.h"
 	"wx/versioninfo.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagtga.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagtga.h
 	"wx/image.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagtiff.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagtiff.h
 	"wx/defs.h"
 	"wx/image.h"
 	"wx/versioninfo.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagpnm.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagpnm.h
 	"wx/image.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagxpm.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagxpm.h
 	"wx/image.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagiff.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imagiff.h
 	"wx/image.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/bitmap.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/bitmap.h
 	"wx/msw/gdiimage.h"
 	"wx/math.h"
 	"wx/palette.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/menu.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/menu.h
 	"wx/accel.h"
 	"wx/dynarray.h"
 	"wx/arrstr.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/statusbr.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/statusbr.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/list.h"
@@ -24376,7 +24378,7 @@
 	"wx/osx/statusbr.h"
 	"wx/generic/statusbr.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/control.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/control.h
 	"wx/defs.h"
 	"wx/window.h"
 	"wx/univ/control.h"
@@ -24388,14 +24390,14 @@
 	"wx/cocoa/control.h"
 	"wx/os2/control.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/control.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/control.h
 	"wx/dynarray.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/statusbar.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/statusbar.h
 	"wx/vector.h"
 	"wx/tooltip.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tooltip.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tooltip.h
 	"wx/defs.h"
 	"wx/msw/tooltip.h"
 	"wx/gtk/tooltip.h"
@@ -24404,11 +24406,11 @@
 	"wx/cocoa/tooltip.h"
 	"wx/os2/tooltip.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/tooltip.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/tooltip.h
 	"wx/object.h"
 	"wx/gdicmn.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/frame.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/frame.h
 	"wx/toplevel.h"
 	"wx/statusbr.h"
 	"wx/univ/frame.h"
@@ -24420,7 +24422,7 @@
 	"wx/cocoa/frame.h"
 	"wx/os2/frame.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/toplevel.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/toplevel.h
 	"wx/nonownedwnd.h"
 	"wx/iconbndl.h"
 	"wx/weakref.h"
@@ -24435,31 +24437,31 @@
 	"wx/motif/toplevel.h"
 	"wx/univ/toplevel.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/nonownedwnd.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/nonownedwnd.h
 	"wx/window.h"
 	"wx/dfb/nonownedwnd.h"
 	"wx/gtk/nonownedwnd.h"
 	"wx/osx/nonownedwnd.h"
 	"wx/msw/nonownedwnd.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/nonownedwnd.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/nonownedwnd.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/iconbndl.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/iconbndl.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 	"wx/icon.h"
 	"wx/dynarray.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/weakref.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/weakref.h
 	"wx/tracker.h"
 	"wx/meta/convertible.h"
 	"wx/meta/int2type.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/int2type.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/meta/int2type.h
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/toplevel.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/toplevel.h
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/frame.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/frame.h
 
 1409567516 /usr/local/mingw-w64-x86_64/include/SDL2/SDL.h
 	"SDL_main.h"
@@ -24816,7 +24818,7 @@
 	"begin_code.h"
 	"close_code.h"
 
-1409837671 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/wx.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/wx.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/dynarray.h"
@@ -24897,20 +24899,20 @@
 	"wx/validate.h"
 	"wx/valtext.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/hash.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/hash.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/object.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stopwatch.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stopwatch.h
 	"wx/defs.h"
 	"wx/longlong.h"
 	"wx/time.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/time.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/time.h
 	"wx/longlong.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/timer.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/timer.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/longlong.h"
@@ -24918,29 +24920,29 @@
 	"wx/stopwatch.h"
 	"wx/utils.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/module.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/module.h
 	"wx/object.h"
 	"wx/list.h"
 	"wx/arrstr.h"
 	"wx/dynarray.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/containr.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/containr.h
 	"wx/defs.h"
 	"wx/event.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/panel.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/panel.h
 	"wx/window.h"
 	"wx/containr.h"
 	"wx/univ/panel.h"
 	"wx/msw/panel.h"
 	"wx/generic/panelg.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/panel.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/panel.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/panelg.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/panelg.h
 	"wx/bitmap.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dc.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dc.h
 	"wx/object.h"
 	"wx/intl.h"
 	"wx/cursor.h"
@@ -24956,7 +24958,7 @@
 	"wx/region.h"
 	"wx/affinematrix2d.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/brush.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/brush.h
 	"wx/defs.h"
 	"wx/object.h"
 	"wx/gdiobj.h"
@@ -24970,9 +24972,9 @@
 	"wx/cocoa/brush.h"
 	"wx/os2/brush.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/brush.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/brush.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/pen.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/pen.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 	"wx/msw/pen.h"
@@ -24984,40 +24986,40 @@
 	"wx/cocoa/pen.h"
 	"wx/os2/pen.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/pen.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/pen.h
 	"wx/gdiobj.h"
 	"wx/gdicmn.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/affinematrix2d.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/affinematrix2d.h
 	"wx/defs.h"
 	"wx/affinematrix2dbase.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/affinematrix2dbase.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/affinematrix2dbase.h
 	"wx/defs.h"
 	"wx/geometry.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/geometry.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/geometry.h
 	"wx/defs.h"
 	"wx/utils.h"
 	"wx/gdicmn.h"
 	"wx/math.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcclient.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcclient.h
 	"wx/dc.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcmemory.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcmemory.h
 	"wx/dc.h"
 	"wx/bitmap.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcprint.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcprint.h
 	"wx/defs.h"
 	"wx/dc.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcscreen.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcscreen.h
 	"wx/defs.h"
 	"wx/dc.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/button.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/button.h
 	"wx/defs.h"
 	"wx/anybutton.h"
 	"wx/univ/button.h"
@@ -25029,7 +25031,7 @@
 	"wx/cocoa/button.h"
 	"wx/os2/button.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/anybutton.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/anybutton.h
 	"wx/defs.h"
 	"wx/bitmap.h"
 	"wx/control.h"
@@ -25038,11 +25040,11 @@
 	"wx/gtk/anybutton.h"
 	"wx/osx/anybutton.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/anybutton.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/anybutton.h
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/button.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/button.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dialog.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dialog.h
 	"wx/toplevel.h"
 	"wx/containr.h"
 	"wx/sharedptr.h"
@@ -25055,21 +25057,21 @@
 	"wx/cocoa/dialog.h"
 	"wx/os2/dialog.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/sharedptr.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/sharedptr.h
 	"wx/defs.h"
 	"wx/atomic.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/atomic.h
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/atomic.h
 	"wx/defs.h"
 	"wx/msw/wrapwin.h"
 	"libkern/OSAtomic.h"
 	<atomic.h>
 	"wx/thread.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/dialog.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/dialog.h
 	"wx/panel.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msgdlg.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msgdlg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 	"wx/stockitem.h"
@@ -25081,17 +25083,17 @@
 	"wx/osx/msgdlg.h"
 	"wx/os2/msgdlg.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stockitem.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stockitem.h
 	"wx/defs.h"
 	"wx/chartype.h"
 	"wx/string.h"
 	"wx/accel.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/msgdlgg.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/msgdlgg.h
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/msgdlg.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/msgdlg.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dataobj.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dataobj.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/bitmap.h"
@@ -25122,22 +25124,22 @@
 	"wx/cocoa/dataobj2.h"
 	"wx/os2/dataobj2.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ole/dataform.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ole/dataform.h
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ole/dataobj.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ole/dataobj.h
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ole/dataobj2.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ole/dataobj2.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/ctrlsub.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/ctrlsub.h
 	"wx/defs.h"
 	"wx/arrstr.h"
 	"wx/control.h"
 	"wx/msw/ctrlsub.h"
 	"wx/motif/ctrlsub.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ctrlsub.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/ctrlsub.h
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/bmpbuttn.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/bmpbuttn.h
 	"wx/defs.h"
 	"wx/button.h"
 	"wx/univ/bmpbuttn.h"
@@ -25149,12 +25151,12 @@
 	"wx/cocoa/bmpbuttn.h"
 	"wx/os2/bmpbuttn.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/bmpbuttn.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/bmpbuttn.h
 	"wx/button.h"
 	"wx/bitmap.h"
 	"wx/brush.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/checkbox.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/checkbox.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/checkbox.h"
@@ -25166,9 +25168,9 @@
 	"wx/cocoa/checkbox.h"
 	"wx/os2/checkbox.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/checkbox.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/checkbox.h
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/checklst.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/checklst.h
 	"wx/defs.h"
 	"wx/listbox.h"
 	"wx/univ/checklst.h"
@@ -25181,7 +25183,7 @@
 	"wx/cocoa/checklst.h"
 	"wx/os2/checklst.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/listbox.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/listbox.h
 	"wx/defs.h"
 	"wx/ctrlsub.h"
 	"wx/univ/listbox.h"
@@ -25193,12 +25195,12 @@
 	"wx/os2/listbox.h"
 	"wx/cocoa/listbox.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/listbox.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/listbox.h
 	"wx/dynarray.h"
 
-1409837677 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/checklst.h
+1410420001 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/checklst.h
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/choice.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/choice.h
 	"wx/defs.h"
 	"wx/ctrlsub.h"
 	"wx/univ/choice.h"
@@ -25211,9 +25213,9 @@
 	"wx/cocoa/choice.h"
 	"wx/os2/choice.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/choice.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/choice.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/scrolbar.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/scrolbar.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/scrolbar.h"
@@ -25225,9 +25227,9 @@
 	"wx/cocoa/scrolbar.h"
 	"wx/os2/scrolbar.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/scrolbar.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/scrolbar.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stattext.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stattext.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/stattext.h"
@@ -25239,9 +25241,9 @@
 	"wx/cocoa/stattext.h"
 	"wx/os2/stattext.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/stattext.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/stattext.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/statbmp.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/statbmp.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/bitmap.h"
@@ -25255,12 +25257,12 @@
 	"wx/cocoa/statbmp.h"
 	"wx/os2/statbmp.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/statbmp.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/statbmp.h
 	"wx/control.h"
 	"wx/icon.h"
 	"wx/bitmap.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/statbox.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/statbox.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/containr.h"
@@ -25273,9 +25275,9 @@
 	"wx/cocoa/statbox.h"
 	"wx/os2/statbox.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/statbox.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/statbox.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/radiobox.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/radiobox.h
 	"wx/defs.h"
 	"wx/ctrlsub.h"
 	"wx/dynarray.h"
@@ -25288,10 +25290,10 @@
 	"wx/cocoa/radiobox.h"
 	"wx/os2/radiobox.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/radiobox.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/radiobox.h
 	"wx/statbox.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/radiobut.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/radiobut.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/radiobut.h"
@@ -25303,9 +25305,9 @@
 	"wx/cocoa/radiobut.h"
 	"wx/os2/radiobut.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/radiobut.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/radiobut.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textctrl.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textctrl.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/textentry.h"
@@ -25323,7 +25325,7 @@
 	"wx/cocoa/textctrl.h"
 	"wx/os2/textctrl.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textentry.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textentry.h
 	"wx/filefn.h"
 	"wx/gdicmn.h"
 	"wx/gtk/textentry.h"
@@ -25332,18 +25334,18 @@
 	"wx/motif/textentry.h"
 	"wx/os2/textentry.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/textentry.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/textentry.h
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/ioswrap.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/ioswrap.h
 	"wx/beforestd.h"
 	<iostream.h>
 	<iostream>
 	"wx/afterstd.h"
 	"wx/msw/winundef.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/textctrl.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/textctrl.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/slider.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/slider.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/slider.h"
@@ -25355,9 +25357,9 @@
 	"wx/cocoa/slider.h"
 	"wx/os2/slider.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/slider.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/slider.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/gauge.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/gauge.h
 	"wx/defs.h"
 	"wx/control.h"
 	"wx/univ/gauge.h"
@@ -25369,17 +25371,17 @@
 	"wx/cocoa/gauge.h"
 	"wx/os2/gauge.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/gauge.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/gauge.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/scrolwin.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/scrolwin.h
 	"wx/panel.h"
 	"wx/gtk/scrolwin.h"
 	"wx/gtk1/scrolwin.h"
 	"wx/generic/scrolwin.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/scrolwin.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/scrolwin.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dirdlg.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dirdlg.h
 	"wx/dialog.h"
 	"wx/generic/dirdlgg.h"
 	"wx/generic/dirdlgg.h"
@@ -25391,9 +25393,9 @@
 	"wx/cocoa/dirdlg.h"
 	"wx/generic/dirdlgg.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/dirdlg.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/dirdlg.h
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/toolbar.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/toolbar.h
 	"wx/defs.h"
 	"wx/tbarbase.h"
 	"wx/univ/toolbar.h"
@@ -25406,26 +25408,26 @@
 	"wx/cocoa/toolbar.h"
 	"wx/os2/toolbar.h"
 
-1409837675 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tbarbase.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tbarbase.h
 	"wx/defs.h"
 	"wx/bitmap.h"
 	"wx/list.h"
 	"wx/control.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/toolbar.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/toolbar.h
 	"wx/dynarray.h"
 	"wx/imaglist.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imaglist.h
+1410419999 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/imaglist.h
 	"wx/defs.h"
 	"wx/generic/imaglist.h"
 	"wx/msw/imaglist.h"
 	"wx/osx/imaglist.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/imaglist.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/imaglist.h
 	"wx/bitmap.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/combobox.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/combobox.h
 	"wx/defs.h"
 	"wx/textctrl.h"
 	"wx/ctrlsub.h"
@@ -25439,39 +25441,39 @@
 	"wx/cocoa/combobox.h"
 	"wx/os2/combobox.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/combobox.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/combobox.h
 	"wx/choice.h"
 	"wx/textentry.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/layout.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/layout.h
 	"wx/object.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/sizer.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/sizer.h
 	"wx/defs.h"
 	"wx/window.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/choicdlg.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/choicdlg.h
 	"wx/defs.h"
 	"wx/generic/choicdgg.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/choicdgg.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/choicdgg.h
 	"wx/dynarray.h"
 	"wx/dialog.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textdlg.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/textdlg.h
 	"wx/generic/textdlgg.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/textdlgg.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/generic/textdlgg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 	"wx/valtext.h"
 	"wx/textctrl.h"
 
-1409837674 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/valtext.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/valtext.h
 	"wx/defs.h"
 	"wx/validate.h"
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/filedlg.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/filedlg.h
 	"wx/defs.h"
 	"wx/dialog.h"
 	"wx/arrstr.h"
@@ -25484,9 +25486,9 @@
 	"wx/cocoa/filedlg.h"
 	"wx/os2/filedlg.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/filedlg.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/filedlg.h
 
-1409837673 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/mdi.h
+1410419998 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/mdi.h
 	"wx/defs.h"
 	"wx/frame.h"
 	"wx/menu.h"
@@ -25497,10 +25499,10 @@
 	"wx/osx/mdi.h"
 	"wx/cocoa/mdi.h"
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/mdi.h
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/mdi.h
 	"wx/frame.h"
 
-1409837678 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/glcanvas.h
+1410420001 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/glcanvas.h
 	"wx/defs.h"
 	"wx/app.h"
 	"wx/palette.h"
@@ -25512,7 +25514,7 @@
 	"wx/osx/glcanvas.h"
 	"wx/cocoa/glcanvas.h"
 
-1409837678 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/glcanvas.h
+1410420001 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/glcanvas.h
 	"wx/palette.h"
 	"wx/msw/wrapwin.h"
 	<GL/gl.h>
@@ -25521,12 +25523,12 @@
 	<windows.h>
 	<stddef.h>
 
-1409837677 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcbuffer.h
+1410420001 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/dcbuffer.h
 	"wx/dcmemory.h"
 	"wx/dcclient.h"
 	"wx/window.h"
 
-1409837670 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stdpaths.h
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/stdpaths.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/filefn.h"
@@ -25535,14 +25537,14 @@
 	"wx/os2/stdpaths.h"
 	"wx/unix/stdpaths.h"
 
-1409837672 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/stdpaths.h
+1410419997 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/stdpaths.h
 
-1409837676 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/wx.rc
+1410420000 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/msw/wx.rc
 	<windows.h>
 	"wx/msw/wince/wince.rc"
 	"wx/msw/rcdefs.h"
 
-1409837669 /usr/local/mingw-w64-x86_64/lib/wx/include/x86_64-w64-mingw32-msw-unicode-static-3.0/wx/msw/rcdefs.h
+1410419995 /usr/local/mingw-w64-x86_64/lib/wx/include/x86_64-w64-mingw32-msw-unicode-static-3.0/wx/msw/rcdefs.h
 
 1409641517 /usr/local/mingw-w64-x86_64/include/FTGL/ftgl.h
 	<ft2build.h>
@@ -27174,13 +27176,14 @@
 1409853249 source:/home/junta/Devel/C++/Mega8/TestString.cpp
 	"TestString.h"
 
-1410361576 /home/junta/Devel/C++/Mega8/Mega8Config.h
+1411120636 /home/junta/Devel/C++/Mega8/Mega8Config.h
 	<wx/config.h>
 	<wx/string.h>
 	<wx/defs.h>
+	"Joysticks.h"
 	"Chip8.h"
 
-1410361710 source:/home/junta/Devel/C++/Mega8/Mega8Config.cpp
+1411289232 source:/home/junta/Devel/C++/Mega8/Mega8Config.cpp
 	"Mega8Config.h"
 	<wx/accel.h>
 	<wx/msgdlg.h>
@@ -27268,7 +27271,7 @@
 	"wx/grid.h"
 	"wx/datetime.h"
 
-1410369982 /home/junta/Devel/C++/Mega8/InputDialog.h
+1411023771 /home/junta/Devel/C++/Mega8/InputDialog.h
 	<wx/dialog.h>
 	<wx/button.h>
 	<wx/panel.h>
@@ -27277,8 +27280,9 @@
 	<wx/statbmp.h>
 	<wx/textctrl.h>
 	<wx/wx.h>
+	"Joysticks.h"
 
-1410346813 source:/home/junta/Devel/C++/Mega8/InputDialog.cpp
+1411370121 source:/home/junta/Devel/C++/Mega8/InputDialog.cpp
 	"InputDialog.h"
 	<wx/string.h>
 	<wx/intl.h>
@@ -27291,9 +27295,298 @@
 
 1410334738 /home/junta/Devel/C++/Mega8/Icons/icons.h
 
-1409841334 /usr/local/include/wx-3.0/wx/cmdline.h
+1410265779 source:/home/junta/Devel/C++/Mega8 1.2/Chip8/Chip8.cpp
+	"Chip8.h"
+
+1410177010 /home/junta/Devel/C++/Mega8 1.2/Chip8/Chip8.h
+	<stdlib.h>
+	<sys/time.h>
+	<cstdio>
+	<string.h>
+	<math.h>
+	<fstream>
+	<stack>
+	<chrono>
+
+1410356042 source:/home/junta/Devel/C++/Mega8 1.2/InputDialog.cpp
+	"InputDialog.h"
+	<wx/string.h>
+	<wx/intl.h>
+	<wx/accel.h>
+	"Mega8Config.h"
+	"kb-layout.xpm"
+	<wx/defs.h>
+
+1410346813 /home/junta/Devel/C++/Mega8 1.2/InputDialog.h
+	<wx/dialog.h>
+	<wx/button.h>
+	<wx/panel.h>
+	<wx/statbox.h>
+	<wx/stattext.h>
+	<wx/statbmp.h>
+	<wx/textctrl.h>
+	<wx/wx.h>
+
+1410337547 /home/junta/Devel/C++/Mega8 1.2/Mega8Config.h
+	<wx/config.h>
+	<wx/string.h>
+	<wx/defs.h>
+	"Chip8.h"
+
+1410275457 /home/junta/Devel/C++/Mega8 1.2/kb-layout.xpm
+
+1410335133 source:/home/junta/Devel/C++/Mega8 1.2/Mega8App.cpp
+	"Mega8App.h"
+	"Mega8Main.h"
+	<wx/image.h>
+
+1409553016 /home/junta/Devel/C++/Mega8 1.2/Mega8App.h
+	<wx/app.h>
+	"Mega8Main.h"
+
+1410270247 /home/junta/Devel/C++/Mega8 1.2/Mega8Main.h
+	<wx/menu.h>
+	<wx/statusbr.h>
+	<wx/frame.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_mixer.h>
+	<wx/wx.h>
+	<wx/string.h>
+	<iostream>
+	<iomanip>
+	<math.h>
+	"Chip8.h"
+	"Chip8GL.h"
+	"Mega8Config.h"
+	"InputDialog.h"
+
+1410291838 /home/junta/Devel/C++/Mega8 1.2/include/Chip8GL.h
+	<wx/wx.h>
+	<wx/glcanvas.h>
+	<time.h>
+	<FTGL/ftgl.h>
+	<cstdarg>
+	"../Chip8/Chip8.h"
+	<vector>
+	<string>
+
+1410337602 source:/home/junta/Devel/C++/Mega8 1.2/Mega8Config.cpp
+	"Mega8Config.h"
+	<wx/accel.h>
+	<wx/msgdlg.h>
+
+1410356135 source:/home/junta/Devel/C++/Mega8 1.2/Mega8Main.cpp
+	"Mega8Main.h"
+	"include/bell.h"
+	<wx/msgdlg.h>
+	<wx/dcmemory.h>
+	<wx/dcclient.h>
+	<wx/dcbuffer.h>
+	<wx/bitmap.h>
+	<wx/filedlg.h>
+	<wx/image.h>
+	<wx/thread.h>
+	<wx/stdpaths.h>
+	<wx/stopwatch.h>
+	"mega8.xpm"
+	<wx/string.h>
+	<wx/intl.h>
+
+1409199401 /home/junta/Devel/C++/Mega8 1.2/include/bell.h
+
+1409405742 /home/junta/Devel/C++/Mega8 1.2/mega8.xpm
+
+1410292238 source:/home/junta/Devel/C++/Mega8 1.2/src/Chip8GL.cpp
+	<wx/dcclient.h>
+	<vector>
+	<sstream>
+	"Chip8GL.h"
+	"game_over.h"
+
+1407840514 /home/junta/Devel/C++/Mega8 1.2/include/game_over.h
+
+1410354452 source:/home/junta/Devel/C++/Mega8 1.2/res.rc
+	"wx/msw/wx.rc"
+
+1411051445 source:/home/junta/Devel/C++/Mega8-1.2-src/Chip8/Chip8.cpp
+	"Chip8.h"
+	<unistd.h>
+
+1411159060 /home/junta/Devel/C++/Mega8-1.2-src/Chip8/Chip8.h
+	<stdlib.h>
+	<sys/time.h>
+	<cstdio>
+	<string.h>
+	<math.h>
+	<fstream>
+	<stack>
+	<chrono>
+
+1411160801 source:/home/junta/Devel/C++/Mega8-1.2-src/InputDialog.cpp
+	"InputDialog.h"
+	<wx/string.h>
+	<wx/intl.h>
+	<wx/accel.h>
+	"Mega8Config.h"
+	"kb-layout.xpm"
+	<wx/defs.h>
+
+1411023771 /home/junta/Devel/C++/Mega8-1.2-src/InputDialog.h
+	<wx/dialog.h>
+	<wx/button.h>
+	<wx/panel.h>
+	<wx/statbox.h>
+	<wx/stattext.h>
+	<wx/statbmp.h>
+	<wx/textctrl.h>
+	<wx/wx.h>
+	"Joysticks.h"
+
+1411120636 /home/junta/Devel/C++/Mega8-1.2-src/Mega8Config.h
+	<wx/config.h>
+	<wx/string.h>
+	<wx/defs.h>
+	"Joysticks.h"
+	"Chip8.h"
+
+1410275457 /home/junta/Devel/C++/Mega8-1.2-src/kb-layout.xpm
+
+1410335133 source:/home/junta/Devel/C++/Mega8-1.2-src/Mega8App.cpp
+	"Mega8App.h"
+	"Mega8Main.h"
+	<wx/image.h>
+
+1409553016 /home/junta/Devel/C++/Mega8-1.2-src/Mega8App.h
+	<wx/app.h>
+	"Mega8Main.h"
+
+1411291122 /home/junta/Devel/C++/Mega8-1.2-src/Mega8Main.h
+	<wx/menu.h>
+	<wx/statusbr.h>
+	<wx/frame.h>
+	<SDL2/SDL.h>
+	<SDL2/SDL_mixer.h>
+	<wx/wx.h>
+	<wx/string.h>
+	<iostream>
+	<iomanip>
+	<math.h>
+	"Chip8.h"
+	"Chip8GL.h"
+	"Mega8Config.h"
+	"InputDialog.h"
+
+1411118957 /home/junta/Devel/C++/Mega8-1.2-src/include/Chip8GL.h
+	<wx/wx.h>
+	<wx/glcanvas.h>
+	<time.h>
+	<FTGL/ftgl.h>
+	<cstdarg>
+	"../Chip8/Chip8.h"
+	<vector>
+	<string>
+
+1411289232 source:/home/junta/Devel/C++/Mega8-1.2-src/Mega8Config.cpp
+	"Mega8Config.h"
+	<wx/accel.h>
+	<wx/msgdlg.h>
+
+1411290910 source:/home/junta/Devel/C++/Mega8-1.2-src/Mega8Main.cpp
+	"Mega8Main.h"
+	"include/bell.h"
+	<wx/msgdlg.h>
+	<wx/dcmemory.h>
+	<wx/dcclient.h>
+	<wx/dcbuffer.h>
+	<wx/bitmap.h>
+	<wx/filedlg.h>
+	<wx/image.h>
+	<wx/thread.h>
+	<wx/stdpaths.h>
+	<wx/stopwatch.h>
+	<wx/cmdline.h>
+	<unistd.h>
+	"mega8.xpm"
+	<wx/string.h>
+	<wx/intl.h>
+
+1409199401 /home/junta/Devel/C++/Mega8-1.2-src/include/bell.h
+
+1410413551 /usr/local/include/wx-3.0/wx/cmdline.h
 	"wx/defs.h"
 	"wx/string.h"
 	"wx/arrstr.h"
 	"wx/cmdargs.h"
+
+1409405742 /home/junta/Devel/C++/Mega8-1.2-src/mega8.xpm
+
+1411118654 source:/home/junta/Devel/C++/Mega8-1.2-src/src/Chip8GL.cpp
+	<wx/dcclient.h>
+	<vector>
+	<sstream>
+	"Chip8GL.h"
+	"game_over.h"
+
+1407840514 /home/junta/Devel/C++/Mega8-1.2-src/include/game_over.h
+
+1410354452 source:/home/junta/Devel/C++/Mega8-1.2-src/res.rc
+	"wx/msw/wx.rc"
+
+1410419995 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/cmdline.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/arrstr.h"
+	"wx/cmdargs.h"
+
+1410413556 /usr/local/include/wx-3.0/wx/joystick.h
+	"wx/defs.h"
+	"wx/msw/joystick.h"
+	"wx/unix/joystick.h"
+	"wx/unix/joystick.h"
+	"wx/unix/joystick.h"
+	"wx/osx/core/joystick.h"
+	"wx/osx/joystick.h"
+	"wx/os2/joystick.h"
+
+1410413556 /usr/local/include/wx-3.0/wx/unix/joystick.h
+	"wx/event.h"
+
+1411108306 /home/junta/Devel/C++/Mega8-1.2-src/include/Joysticks.h
+	<wx/string.h>
+	<SDL2/SDL.h>
+	<map>
+
+1411145956 source:/home/junta/Devel/C++/Mega8-1.2-src/src/Joysticks.cpp
+	"Joysticks.h"
+	<wx/tokenzr.h>
+
+1410413552 /usr/local/include/wx-3.0/wx/tokenzr.h
+	"wx/object.h"
+	"wx/string.h"
+	"wx/arrstr.h"
+
+1410419996 /usr/local/mingw-w64-x86_64/include/wx-3.0/wx/tokenzr.h
+	"wx/object.h"
+	"wx/string.h"
+	"wx/arrstr.h"
+
+1411108306 /home/junta/Devel/C++/Mega8/include/Joysticks.h
+	<wx/string.h>
+	<SDL2/SDL.h>
+	<map>
+
+1409391437 /usr/local/mingw-w64-i686/include/wx-3.0/wx/cmdline.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/arrstr.h"
+	"wx/cmdargs.h"
+
+1411145956 source:/home/junta/Devel/C++/Mega8/src/Joysticks.cpp
+	"Joysticks.h"
+	<wx/tokenzr.h>
+
+1409391438 /usr/local/mingw-w64-i686/include/wx-3.0/wx/tokenzr.h
+	"wx/object.h"
+	"wx/string.h"
+	"wx/arrstr.h"
 

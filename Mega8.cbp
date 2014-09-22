@@ -16,6 +16,7 @@
 					<Add option="-std=c++11" />
 					<Add option="-g" />
 					<Add option="`wx-config --prefix=/usr/local --cflags`" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="`wx-config --prefix=/usr/local --libs --gl-libs`" />
@@ -35,13 +36,17 @@
 				<Compiler>
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
-					<Add option="`wx-config --prefix=/usr/local --cflags --static`" />
+					<Add option="`wx-config --prefix=/usr/local --cflags`" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="`wx-config --prefix=/usr/local --libs --gl-libs --static`" />
-					<Add option="-lSDL2 -lSDL2_mixer -lrt" />
-					<Add option="-lftgl -lGL" />
+					<Add option="`wx-config --prefix=/usr/local --libs --gl-libs`" />
+					<Add option="-lGL" />
+					<Add option="-lSDL2" />
+					<Add option="-lSDL2_mixer" />
+					<Add option="-lrt" />
+					<Add option="-lftgl" />
 				</Linker>
 			</Target>
 			<Target title="Win32">
@@ -54,6 +59,7 @@
 					<Add option="`sdl2-config --prefix=/usr/local/mingw-w64-i686 --cflags`" />
 					<Add option="`freetype-config --prefix=/usr/local/mingw-w64-i686 --cflags`" />
 					<Add directory="/usr/local/mingw-w64-i686/include/freetype2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-lrt" />
@@ -79,6 +85,7 @@
 					<Add option="`wx-config --prefix=/usr/local/mingw-w64-x86_64 --host=x86_64-w64-mingw32 --cflags --static`" />
 					<Add option="`sdl2-config --prefix=/usr/local/mingw-w64-x86_64 --cflags`" />
 					<Add option="`freetype-config --prefix=/usr/local/mingw-w64-x86_64 --cflags`" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-lrt" />
@@ -113,6 +120,7 @@
 		<Unit filename="Mega8Main.h" />
 		<Unit filename="README.md" />
 		<Unit filename="include/Chip8GL.h" />
+		<Unit filename="include/Joysticks.h" />
 		<Unit filename="include/bell.h" />
 		<Unit filename="include/game_over.h" />
 		<Unit filename="mega8.ico" />
@@ -121,6 +129,7 @@
 			<Option target="Win64" />
 		</Unit>
 		<Unit filename="src/Chip8GL.cpp" />
+		<Unit filename="src/Joysticks.cpp" />
 		<Unit filename="wxsmith/InputDialog.wxs" />
 		<Unit filename="wxsmith/Mega8frame.wxs" />
 		<Extensions>

@@ -1,4 +1,5 @@
 #include "Chip8.h"
+#include <unistd.h>
 
 Chip8::Chip8(): BaseCHIP8()
 {
@@ -69,6 +70,10 @@ void Chip8::reset() {
         free(_gfxBuffer);
     _gfxBuffer = (unsigned char *)malloc(getScreenSizeOf());
 
+    // Clear screen & gfx
+    clearScreen();
+    clearGfx();
+
     _loaded = false;
     _pc = 0x200;
     _timerDelay = 0;
@@ -80,7 +85,6 @@ void Chip8::reset() {
         _V[i] = 0;
     }
 
-    clearGfx();
     _isRunning = false;
 }
 
@@ -234,18 +238,31 @@ unsigned int BlendAlpha(unsigned int color, unsigned int newColor, float alpha) 
     return getRGBA(R, G, B, 255);
 }
 
+// Not used but can be cool
+/*
+unsigned int BlendAverage(unsigned int color, unsigned int newColor, float alpha) {
+    byte R = (byte)((getR(color) + getR(newColor)) / 2);
+    byte G = (byte)((getG(color) + getG(newColor)) / 2);
+    byte B = (byte)((getB(color) + getB(newColor)) / 2);
+
+    return getRGBA(R, G, B, 255);
+}*/
+
 unsigned int BlendAdd(unsigned int color, unsigned int newColor, float alpha) {
-    byte R = (byte)((alpha * getR(color)) + getR(newColor)) % 0xFF;
-    byte G = (byte)((alpha * getG(color)) + getG(newColor)) % 0xFF;
-    byte B = (byte)((alpha * getB(color)) + getB(newColor)) % 0xFF;
+    byte R = (byte)min((int)(getR(color) + getR(newColor)), 255);
+    byte G = (byte)min((int)(getG(color) + getG(newColor)), 255);
+    byte B = (byte)min((int)(getB(color) + getB(newColor)), 255);
 
     return getRGBA(R, G, B, 255);
 }
 
 unsigned int BlendMul(unsigned int color, unsigned int newColor) {
-    byte R = (byte)(getR(color) * getR(newColor)) % 0xFF;
-    byte G = (byte)(getG(color) * getG(newColor)) % 0xFF;
-    byte B = (byte)(getB(color) * getB(newColor)) % 0xFF;
+    int RMul = (getR(color) * getR(newColor));
+    int GMul = (getG(color) * getG(newColor));
+    int BMul = (getB(color) * getB(newColor));
+    byte R = (byte)(RMul / 0xFF);
+    byte G = (byte)(GMul / 0xFF);
+    byte B = (byte)(BMul / 0xFF);
 
     return getRGBA(R, G, B, 255);
 }
@@ -266,7 +283,7 @@ void Chip8::setScreenAlpha(float alpha) {
             color = BlendAlpha(getPixel(i), color, alpha);
 
             // Set the new pixel directly on screen
-            _gfx[i % 4      ] = (byte) getR(color) % 0xFF;
+            _gfx[ i % 4     ] = (byte) getR(color) % 0xFF;
             _gfx[(i % 4) + 1] = (byte) getB(color) % 0xFF;
             _gfx[(i % 4) + 2] = (byte) getG(color) % 0xFF;
             _gfx[(i % 4) + 3] = (byte) getAlpha(color) % 0xFF;
@@ -281,7 +298,8 @@ unsigned int Chip8::getMegaColor(int spriteX, int spriteY, int destX, int destY)
 
     // if color == 0, draw transparent
     if ((color >> 8) == 0) {
-        color = oldColor;
+        //color = oldColor;
+        return oldColor;
     } else if (getAlpha(color) != 255) {
         // Draw Alpha
         int alpha = getAlpha(color) / 255.0;
@@ -301,7 +319,7 @@ unsigned int Chip8::getMegaColor(int spriteX, int spriteY, int destX, int destY)
             break;
 
         case BLEND_25:
-            color = BlendAlpha(color, oldColor, 0.75);
+            color = BlendAlpha(color, oldColor, 0.25);
             break;
 
         case BLEND_50:
@@ -309,7 +327,7 @@ unsigned int Chip8::getMegaColor(int spriteX, int spriteY, int destX, int destY)
             break;
 
         case BLEND_75:
-            color = BlendAlpha(color, oldColor, 0.25);
+            color = BlendAlpha(color, oldColor, 0.75);
             break;
 
         case BLEND_NORMAL:
@@ -332,6 +350,21 @@ void Chip8::clearGfx() {
         for (unsigned int i = 0; i < getScreenSizeOf(); i += getBytesPerPixel()) {
             color = getColor(getColorTheme()).backColor;
             setPixel(i, color);
+        }
+    }
+}
+
+// Private set all pixel to black non transparent
+void Chip8::clearScreen() {
+    int color;
+
+    if (_gfx != NULL) {
+        for (unsigned int i = 0; i < getScreenSizeOf(); i += getBytesPerPixel()) {
+            color = getColor(getColorTheme()).backColor;
+            _gfx[i    ] = 0;
+            _gfx[i + 1] = 0;
+            _gfx[i + 2] = 0;
+            _gfx[i + 3] = 255;
         }
     }
 }
@@ -488,48 +521,59 @@ void Chip8::scrollDown(byte lines) {
 
     start = getScreenSizeOf() - nbBytesToMove;
 
-    for (int i = getScreenSizeOf(); i >= 0; i--) {
+    for (int i = getScreenSizeOf(); i >= 0; i -= 4) {
         // On bouge nos bytes
         if (start > 0) {
-            _gfx[i] = _gfx[start];
+            // If it's transparent Color
+            color = getRGB(_gfx[start    ], _gfx[start + 1], _gfx[start + 2]);
+
+            if ((_gfx[start + 3] == 254 && getType() == MCHIP8) || color == 0) {
+                _gfx[i    ] = _gfxBuffer[i    ];
+                _gfx[i + 1] = _gfxBuffer[i + 1];
+                _gfx[i + 2] = _gfxBuffer[i + 2];
+                _gfx[i + 3] = 254; //_gfxBuffer[i + 3];
+            } else {
+                // else we take pixel on the screen
+                _gfx[i    ] = _gfx[start    ];
+                _gfx[i + 1] = _gfx[start + 1];
+                _gfx[i + 2] = _gfx[start + 2];
+                _gfx[i + 3] = _gfx[start + 3];
+            }
 
             // Do the same in buffer if we're not in Mega Mode
             if (getType() != MCHIP8) {
-                _gfxBuffer[i] = _gfxBuffer[start];
+                setPixel(i, getPixel(start));
             }
         } else {
-            // Place the missing color
-            int colorPos = i % 4;
-            if (colorPos == 0) {
-                if (getType() == MCHIP8) {
-                    // New: Get pixel color on buffer
-                    color = getPixel(i);
-                } else {
-                    color = getColor(getColorTheme()).backColor;
-                }
+            // We replace the missing pixels by
+            if (getType() == MCHIP8) {
+                // Transparent color in MChip mode
+                color = getPixel(i) & 0xFFFFFF00;
+            } else {
+                // Selected background color in theme
+                color = getColor(getColorTheme()).backColor;
+            }
 
-                _gfx[i    ] = getR(color);
-                _gfx[i + 1] = getG(color);
-                _gfx[i + 2] = getB(color);
-                _gfx[i + 3] = getAlpha(color);
+            // not buffer anymore
+            _gfx[i    ] = getR(color);
+            _gfx[i + 1] = getG(color);
+            _gfx[i + 2] = getB(color);
+            _gfx[i + 3] = 254; //getAlpha(color);
 
-                // Do the same in buffer if we're not in Mega Mode
-                if (getType() != MCHIP8) {
-                    setPixel(i, color);
-                }
+            // Do the same in buffer if we're not in Mega Mode
+            if (getType() != MCHIP8) {
+                setPixel(i, color);
             }
         }
 
-        start--;
+        start -= 4;
     }
-
-    // Refresh when done - Not needed anymore
-    // flip();
 }
 
 void Chip8::scrollUp(byte lines) {
     int nbBytesToMove, start;
     unsigned int color;
+    int colorPos;
 
     if (getType() == SCHIP8 || getType() == MCHIP8)
         nbBytesToMove = (getWidth() * getBytesPerPixel()) * lines;
@@ -538,42 +582,52 @@ void Chip8::scrollUp(byte lines) {
 
     start = nbBytesToMove;
 
-    for (unsigned int i = 0; i < getScreenSizeOf(); i++) {
-        // On bouge nos bytes
+    for (unsigned int i = 0; i < getScreenSizeOf(); i += 4) {
+        // We move the color on the screen
         if (start < (int)(getScreenSizeOf() - nbBytesToMove)) {
-            _gfx[i] = _gfx[start];
+            // If it's transparent Color
+            color = getRGB(_gfx[start    ], _gfx[start + 1], _gfx[start + 2]);
+            if ((_gfx[start + 3] == 254 && getType() == MCHIP8) || color == 0) {
+                _gfx[i    ] = _gfxBuffer[i    ];
+                _gfx[i + 1] = _gfxBuffer[i + 1];
+                _gfx[i + 2] = _gfxBuffer[i + 2];
+                _gfx[i + 3] = 254; //_gfxBuffer[i + 3];
+            } else {
+                // else we take pixel on the screen
+                _gfx[i    ] = _gfx[start    ];
+                _gfx[i + 1] = _gfx[start + 1];
+                _gfx[i + 2] = _gfx[start + 2];
+                _gfx[i + 3] = _gfx[start + 3];
+            }
 
             // Do the same in buffer if we're not in Mega Mode
             if (getType() != MCHIP8) {
-                _gfxBuffer[i] = _gfxBuffer[start];
+                setPixel(i, getPixel(start));
             }
         } else {
-            // Place the missing color
-            int colorPos = i % 4;
-            if (colorPos == 0) {
-                if (getType() == MCHIP8) {
-                    // New: Get pixel color on buffer
-                    color = getPixel(i);
-                } else {
-                    color = getColor(getColorTheme()).backColor;
-                }
+            // We replace the missing pixels by
+            if (getType() == MCHIP8) {
+                // Transparent color in MChip mode
+                color = getPixel(i) & 0xFFFFFF00;
+            } else {
+                // Selected background color in theme
+                color = getColor(getColorTheme()).backColor;
+            }
 
-                // not buffer anymore
-                _gfx[i    ] = getR(color);
-                _gfx[i + 1] = getG(color);
-                _gfx[i + 2] = getB(color);
-                _gfx[i + 3] = getAlpha(color);
+            // not buffer anymore
+            _gfx[i    ] = getR(color);
+            _gfx[i + 1] = getG(color);
+            _gfx[i + 2] = getB(color);
+            _gfx[i + 3] = 254; //getAlpha(color);
 
-                // Do the same in buffer if we're not in Mega Mode
-                if (getType() != MCHIP8) {
-                    setPixel(i, color);
-                }
+            // Do the same in buffer if we're not in Mega Mode
+            if (getType() != MCHIP8) {
+                setPixel(i, color);
             }
         }
 
-        start++;
+        start += 4;
     }
-    //flip();
 }
 
 /*
@@ -593,51 +647,51 @@ void Chip8::scrollRight() {
     // For each lines
     for (int i = 0; i < getHeight(); i++) {
         // For each col
-        for (int j = (realWidth - shift); j >= 0  ; j-- ) {
+        for (int j = (realWidth - shift); j >= 0  ; j -= 4 ) {
             // Ce byte
             int current =  (i * realWidth) + j ;
+            int newPosition = current + shift;
 
             if (getType() == MCHIP8) {
-                // Sera décalé vers la droite
-                _gfx[current + shift] = _gfx[current];
+                // If it's transparent Color
+                color = getRGB(_gfx[current    ], _gfx[current + 1], _gfx[current + 2]);
+                if (_gfx[current + 3] == 254 && getType() == MCHIP8) {
+                    _gfx[newPosition    ] = _gfxBuffer[newPosition    ];
+                    _gfx[newPosition + 1] = _gfxBuffer[newPosition + 1];
+                    _gfx[newPosition + 2] = _gfxBuffer[newPosition + 2];
+                    _gfx[newPosition + 3] = 254; //_gfxBuffer[i + 3];
+                } else {
+                    // else we take pixel on the screen
+                    _gfx[newPosition    ] = _gfx[current    ];
+                    _gfx[newPosition + 1] = _gfx[current + 1];
+                    _gfx[newPosition + 2] = _gfx[current + 2];
+                    _gfx[newPosition + 3] = _gfx[current + 3];
+                }
             } else {
+                // And if we're not in MegaMode...
                 // Do the same in buffer if we're not in Mega Mode
-                _gfxBuffer[current + shift] = _gfxBuffer[current];
+                setPixel(newPosition, getPixel(current));
             }
 
             if (j <= shift) {
-                // Place the missing color
-                int colorPos = current % getBytesPerPixel();
-                if (colorPos == 0) {
-                    if (getType() == MCHIP8) {
-                        // New: Get pixel color on buffer
-                        color = getPixel(current);
-                    } else {
-                        // Do the same in buffer if we're not in Mega Mode
-                        color = getColor(getColorTheme()).backColor;
-                    }
+                // We replace the missing pixels by
+                if (getType() == MCHIP8) {
+                    // Transparent color in MChip mode
+                    color = getPixel(current) & 0xFFFFFF00;
+                } else {
+                    // Selected background color in theme
+                    color = getColor(getColorTheme()).backColor;
                 }
 
-                if (getType() == MCHIP8) {
-                    // Draw the pixels
-                    if (current % getBytesPerPixel() == 0)
-                        _gfx[current] = getR(color);
-                    if (current % getBytesPerPixel() == 1)
-                        _gfx[current] = getG(color);
-                    if (current % getBytesPerPixel() == 2)
-                        _gfx[current] = getB(color);
-                    if (current % getBytesPerPixel() == 3)
-                        _gfx[current] = getAlpha(color);
-                } else {
-                    // Draw the pixels
-                    if (current % getBytesPerPixel() == 0)
-                        _gfxBuffer[current] = getR(color);
-                    if (current % getBytesPerPixel() == 1)
-                        _gfxBuffer[current] = getG(color);
-                    if (current % getBytesPerPixel() == 2)
-                        _gfxBuffer[current] = getB(color);
-                    if (current % getBytesPerPixel() == 3)
-                        _gfxBuffer[current] = getAlpha(color);
+                // not buffer anymore
+                _gfx[current    ] = getR(color);
+                _gfx[current + 1] = getG(color);
+                _gfx[current + 2] = getB(color);
+                _gfx[current + 3] = 254; //getAlpha(color);
+
+                // Do the same in buffer if we're not in Mega Mode
+                if (getType() != MCHIP8) {
+                    setPixel(current, color);
                 }
             }
         }
@@ -661,58 +715,56 @@ void Chip8::scrollLeft() {
     // For each lines
     for (int i = 0; i < getHeight(); i++) {
         // For each col
-        for (int j = shift; j <= realWidth; j ++ ) {
+        for (int j = shift; j < realWidth; j += 4 ) {
             // This byte
             int current =  (i * realWidth) + j ;
+            int newPosition = current - shift;
 
             if (getType() == MCHIP8) {
-                // Sera décalé vers la gauche
-                _gfx[current - shift] = _gfx[current];
+                // If it's transparent Color
+                color = getRGB(_gfx[current    ], _gfx[current + 1], _gfx[current + 2]);
+                if ((_gfx[current + 3    ] == 254 && getType() == MCHIP8) || color == 0) {
+                    _gfx[newPosition    ] = _gfxBuffer[newPosition    ];
+                    _gfx[newPosition + 1] = _gfxBuffer[newPosition + 1];
+                    _gfx[newPosition + 2] = _gfxBuffer[newPosition + 2];
+                    _gfx[newPosition + 3] = 254; //_gfxBuffer[i + 3];
+                } else {
+                    // else we take pixel on the screen
+                    _gfx[newPosition    ] = _gfx[current    ];
+                    _gfx[newPosition + 1] = _gfx[current + 1];
+                    _gfx[newPosition + 2] = _gfx[current + 2];
+                    _gfx[newPosition + 3] = _gfx[current + 3];
+                }
             } else {
                 // And if we're not in MegaMode...
-                _gfxBuffer[current - shift] = _gfxBuffer[current];
+                // Do the same in buffer if we're not in Mega Mode
+                setPixel(newPosition, getPixel(current));
             }
 
             // If we are over the old screen
             if (j >= (realWidth - shift)) {
-                // Place the missing color
-                int colorPos = current % getBytesPerPixel();
-                if (colorPos == 0) {
-                    // Do the same in buffer if we're not in Mega Mode
-                    if (getType() == MCHIP8) {
-                        // New: Get pixel color on buffer
-                        color = getPixel(current);
-
-                    } else {
-                        color = getColor(getColorTheme()).backColor;
-                    }
+                // We replace the missing pixels by
+                if (getType() == MCHIP8) {
+                    // Transparent color in MChip mode
+                    color = getPixel(current) & 0xFFFFFF00;
+                } else {
+                    // Selected background color in theme
+                    color = getColor(getColorTheme()).backColor;
                 }
 
-                if (getType() == MCHIP8) {
-                    // Draw the pixels
-                    if (current % getBytesPerPixel() == 0)
-                        _gfx[current] = getR(color);
-                    if (current % getBytesPerPixel() == 1)
-                        _gfx[current] = getG(color);
-                    if (current % getBytesPerPixel() == 2)
-                        _gfx[current] = getB(color);
-                    if (current % getBytesPerPixel() == 3)
-                        _gfx[current] = getAlpha(color);
-                } else {
-                    // Draw the pixels
-                    if (current % getBytesPerPixel() == 0)
-                        _gfxBuffer[current] = getR(color);
-                    if (current % getBytesPerPixel() == 1)
-                        _gfxBuffer[current] = getG(color);
-                    if (current % getBytesPerPixel() == 2)
-                        _gfxBuffer[current] = getB(color);
-                    if (current % getBytesPerPixel() == 3)
-                        _gfxBuffer[current] = getAlpha(color);
+                // not buffer anymore
+                _gfx[current    ] = getR(color);
+                _gfx[current + 1] = getG(color);
+                _gfx[current + 2] = getB(color);
+                _gfx[current + 3] = 254; //getAlpha(color);
+
+                // Do the same in buffer if we're not in Mega Mode
+                if (getType() != MCHIP8) {
+                    setPixel(current, color);
                 }
             }
         }
     }
-    //flip();
 }
 
 /********************************** Sound **********************************/
@@ -735,11 +787,13 @@ void Chip8::playSound(byte repeat) {
     BkpI += 8;
     _soundBuffer = (unsigned char*)malloc(_soundBufferSize);
     // K = 0 => infinite; -1 for SDL_Mixer
-    _soundRepeat = (repeat == 0) ? -1: repeat;
+    _soundRepeat = repeat - 1;
 
     for (unsigned int i = 0; i < _soundBufferSize; i++) {
         _soundBuffer[i] = readMemB(BkpI + i);
     }
+    _soundRefresh = true;
+    _soundState = OPEN;
 }
 
 void Chip8::clearSound() {
@@ -748,6 +802,8 @@ void Chip8::clearSound() {
     _soundBuffer = NULL;
     _soundBufferSize = 0;
     _soundRepeat = 0;
+    _soundRefresh = true;
+    _soundState = CLOSE;
 }
 
 /********************************** Memory **********************************/
@@ -810,6 +866,7 @@ unsigned short int Chip8::readMemS(unsigned int adr) {
 
 bool Chip8::opcodesMega(byte Code, byte KK,  byte K) {
     string str;
+    int to;
     // Mega-Chip8 0x0XNN (NNNN) Opcodes
     switch (Code) {
         case 0x0:
@@ -817,6 +874,7 @@ bool Chip8::opcodesMega(byte Code, byte KK,  byte K) {
             break;
         case 0x1:
             // Mega-Chip8 0x01NN NNNN
+            to = readMemS(_pc);
             _I = (KK << 16) + readMemS(_pc); //(readMemB(_pc) << 8 | readMemB(_pc + 1));
             char buf[50];
             sprintf(buf, "%04X: LDI I, %04X %04X", _pc-2, KK, readMemS(_pc));
@@ -836,14 +894,6 @@ bool Chip8::opcodesMega(byte Code, byte KK,  byte K) {
             for (int i = 0; i <= KK; i++) {
                 // La couleur 0 se trouve à _I - bytesPerPixels, la couleur 1 est à _I
                 currentPALAddress = _I + ( i * getBytesPerPixel());
-
-                // break if Alpha != 255
-                /*if (readMemB(currentPALAddress) != 255) {
-                    printf("------------------> %02X (Color: %04X)\n", readMemB(currentPALAddress), getRGBA(readMemB(currentPALAddress + 1),
-                                                                                                          readMemB(currentPALAddress + 2),
-                                                                                                          readMemB(currentPALAddress + 3),
-                                                                                                          readMemB(currentPALAddress)));
-                }*/
 
                 _palette[i + 1] = getRGBA(readMemB(currentPALAddress + 1),
                                           readMemB(currentPALAddress + 2),
@@ -868,7 +918,7 @@ bool Chip8::opcodesMega(byte Code, byte KK,  byte K) {
         case 0x05:
             //05nn+ 	 Set Screenalpha to nn
             printf("TODO: ScreenAlpha - %04X\n", _opcode);
-            setScreenAlpha(KK);
+            setScreenAlpha((float)KK / 255.0);
             return true;
             break;
 
@@ -889,7 +939,6 @@ bool Chip8::opcodesMega(byte Code, byte KK,  byte K) {
 
         case 0x08:
             // 080n+ 	 Set sprite blendmode 		(BMODE n) (0=normal,1=25%,2=50%,3=75%,4=addative,5=multiply)
-            printf("TO TEST BlendMode - %04X\n", _opcode);
             switch (K) {
                 case 1:
                     setSpriteBlendMode(BLEND_25);
@@ -916,13 +965,6 @@ bool Chip8::opcodesMega(byte Code, byte KK,  byte K) {
         case 0x09:
             // Undocumented - MCHIP8 Set collision color index
             setCollisionColorIndex(K);
-            return true;
-            break;
-
-        case 0x0B:
-            // 00BN+    Scroll display N lines up	(SCRU n)
-            printf("TO TEST Scroll Up - %04X\n", _opcode);
-            scrollUp(K);
             return true;
             break;
 
@@ -971,6 +1013,7 @@ void Chip8::opcodesSuper(byte Code, byte K) {
             break;
         case 0xFD:
             // Quit the emulator
+            printf("Rom ask to exit emulation.\n");
             break;
         case 0xFE:
             // Set CHIP8 Graphic Mode
@@ -1244,8 +1287,13 @@ void Chip8::execute(double frequencyInMs = BASE_CLOCK_MS) {
     switch (code) {
     case 0x0000:
         // Special Codes for SCHIP & MCHIP Implementation
-        if (Y == 0xC && X != 0x4) {
+        if (Y == 0xC && X == 0x0) {
             scrollDown(K);
+            break;
+        } else if (Y == 0xB && X == 0x0) {
+            // Misplaced 00BN+    Scroll display N lines up	(SCRU n)
+            printf("TO TEST Scroll Up - %04X\n", _opcode);
+            scrollUp(K);
             break;
         }
 
@@ -1308,6 +1356,7 @@ void Chip8::execute(double frequencyInMs = BASE_CLOCK_MS) {
 
     case 0x7000:
         // Set Register X to Register X + KK;
+        // ATT: No carry in doc, we set one
         _V[X] += KK;
         break;
 

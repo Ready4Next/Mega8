@@ -12,6 +12,7 @@
 
 #include <wx/textctrl.h>
 #include <wx/wx.h>
+#include "Joysticks.h"
 
 class InputDialog: public wxDialog
 {
@@ -21,6 +22,8 @@ class InputDialog: public wxDialog
 		virtual ~InputDialog();
 
 		//(*Declarations(InputDialog)
+		wxStaticText* LblJoy2;
+		wxStaticText* LblJoy1;
 		wxButton* BtnCancel;
 		wxStaticText* StaticText1;
 		wxStaticBox* StaticBox2;
@@ -55,10 +58,17 @@ class InputDialog: public wxDialog
 		static const long ID_STATICBITMAP1;
 		static const long ID_STATICTEXT1;
 		static const long ID_PANEL1;
+		static const long ID_STATICTEXT2;
 		static const long ID_STATICTEXT3;
+		static const long ID_STATICTEXT4;
 		//*)
 
 		static const long ID_TxtKeypad[16];
+
+		SDL_Joystick *_joy1 = NULL;
+		SDL_Joystick *_joy2 = NULL;
+
+		void OnIdle(wxIdleEvent &event);
 
 	private:
 

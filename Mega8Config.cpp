@@ -54,6 +54,8 @@ void Mega8Config::resetConfig()
     // Graphic
     _LastFolder = wxEmptyString;
     setColorTheme(DEFAULT);
+    setSound(true);
+    setUseSleep(true);
     setFullScreen(false);
     setSpeedAuto(true);
     setDisplayHUD(false);
@@ -86,11 +88,16 @@ void Mega8Config::loadConfig(const wxString &profile)
     _SpeedAuto = readBool(wxT("SpeedAuto"));
     _DisplayHUD = readBool(wxT("DisplayHUD"));
     _Filtered = readBool(wxT("Filtered"));
+    _Sound = readBool(wxT("Sound"));
+    _UseSleep = readBool(wxT("UseSleep"));
     _SyncClock = readBool(wxT("SyncClock"));
     _ColorTheme = (Chip8ColorTheme)readLong(wxT("ColorTheme"));
     _InverseColor = readBool(wxT("InverseColor"));
     for (int i = 0; i <= sizeof(Chip8Types); i++) {
         _FrequencyRatio[i] = readLong(wxT("FrequencyRatio/") + getMachineTypeStr((Chip8Types) i));
+
+        // Removed 1024x
+        _FrequencyRatio[i] = (_FrequencyRatio[i] == 10) ? 9 : _FrequencyRatio[i];
     }
 
     // Save this profile if new
@@ -107,7 +114,7 @@ void Mega8Config::saveConfig(const wxString &profile)
         _currentProfile = profile;
     }
 
-    saveKeyboard(profile);
+    saveKeyboard(_currentProfile);
     writeString(wxT("LastFolder"), _LastFolder);
 
     writeBool(wxT("FullScreen"), _FullScreen);
@@ -117,6 +124,9 @@ void Mega8Config::saveConfig(const wxString &profile)
     writeBool(wxT("SyncClock"), _SyncClock);
     writeLong(wxT("ColorTheme"), (int)_ColorTheme);
     writeBool(wxT("InverseColor"), _InverseColor);
+    writeBool(wxT("Sound"), _Sound);
+    writeBool(wxT("UseSleep"), _UseSleep);
+
     for (int i = 0; i <= sizeof(Chip8Types); i++) {
         writeLong(wxT("FrequencyRatio/") + getMachineTypeStr((Chip8Types)i), _FrequencyRatio[i]);
     }
@@ -128,6 +138,7 @@ void Mega8Config::saveConfig(const wxString &profile)
 }
 
 void Mega8Config::reloadConfig(const wxString &profile) {
+    // Saves config to disk
     delete _config;
     _config = new wxConfig(wxT("Mega8"), wxT("Ready4Next"));
     // Reload
@@ -141,6 +152,7 @@ bool Mega8Config::loadKeyboard(const wxString &profile)
     wxString keyStr = wxEmptyString;
     wxAcceleratorEntry *ae = new wxAcceleratorEntry();
 
+    _hasJoystick = false;
     for (int i =0; i < 16; i++) {
         keyPath << wxT("Keys/") << profile << wxT("/") << i;
         keyStr = readString(keyPath);
@@ -152,25 +164,31 @@ bool Mega8Config::loadKeyboard(const wxString &profile)
             keyPath << wxT("Keys/") << wxT("General") << wxT("/") << i;
             keyStr = readString(keyPath);
         }
-        // Convert this string representation to keycode
 
-        // Can keycode be converted to string ?
-        try {
-            ae->FromString(keyStr);
-        } catch (int e) {
-            wxMessageBox(_("This key cannot be converted by wxAcceleratorEntry.\nI will fall back to default key configuration."), _("Key not supported"));
-            resetKeyboard();
-            return false;
+        // Convert this string representation to keycode or joystick code
+        if (keyStr.Left(3).Upper() != wxT("JOY")) {
+            // Can keycode be converted to string ?
+            try {
+                ae->FromString(keyStr);
+            } catch (int e) {
+                wxMessageBox(_("This key cannot be converted by wxAcceleratorEntry.\nI will fall back to default key configuration."), _("Key not supported"));
+                resetKeyboard();
+                return false;
+            }
+
+            // It's ok ? Are you sure ?
+            if (!ae->IsOk()) {
+                wxMessageBox(_("This key is not recognized.\nI will fall back to default key configuration."), _("Error reading key"));
+                resetKeyboard();
+                return false;
+            }
+
+            _Keys[i] = ae->GetKeyCode();
+        } else {
+            // Key joystick value
+            _Keys[i] = Joysticks::getCodeFromString(keyStr);
+            _hasJoystick = true;
         }
-
-        // It's ok ? Are you sure ?
-        if (!ae->IsOk()) {
-            wxMessageBox(_("This key is not recognized.\nI will fall back to default key configuration."), _("Error reading key"));
-            resetKeyboard();
-            return false;
-        }
-
-        _Keys[i] = ae->GetKeyCode();
         keyPath = wxEmptyString;
     }
 
@@ -181,12 +199,17 @@ bool Mega8Config::loadKeyboard(const wxString &profile)
 void Mega8Config::saveKeyboard(const wxString &profile)
 {
     wxString keyPath = wxEmptyString;
+    wxString key;
     wxAcceleratorEntry *ae = new wxAcceleratorEntry();
 
     for (int i =0; i < 16; i++) {
         keyPath << wxT("Keys/") << profile << wxT("/") << i;
-        ae->Set(wxACCEL_NORMAL, _Keys[i], 0);
-        wxString key = ae->ToString();
+        if (!getKeyIsJoy(i)) {
+            ae->Set(wxACCEL_NORMAL, _Keys[i], 0);
+            key = ae->ToString();
+        } else {
+            key = Joysticks::getStringFromCode(_Keys[i]);
+        }
         writeString(keyPath, key);
         keyPath = wxEmptyString;
     }

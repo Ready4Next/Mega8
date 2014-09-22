@@ -5,6 +5,7 @@
 #include <wx/string.h>
 // Keycodes definitions
 #include <wx/defs.h>
+#include "Joysticks.h"
 #include "Chip8.h"
 
 class Mega8Config
@@ -18,6 +19,9 @@ class Mega8Config
         void reloadConfig(const wxString &profile);
         void saveConfig(const wxString &profile);
 
+        // Is the key related to joystick ?
+        bool hasJoystick() { return _hasJoystick; }
+        bool getKeyIsJoy(unsigned char OriginalKey) { return _Keys[OriginalKey] < 0; }
         int *getKeys() { return _Keys; }
         int getKey(unsigned char OriginalKey) { return (OriginalKey < 16) ? _Keys[OriginalKey]: 0; }
         void setKey(unsigned char OriginalKey, int NewKey) { if (OriginalKey < 16) _Keys[OriginalKey] = NewKey; }
@@ -25,6 +29,10 @@ class Mega8Config
 
         wxString getLastFolder() { return _LastFolder; }
         void setLastFolder(const wxString &value) { _LastFolder = value; }
+        bool getSound() { return _Sound; }
+        void setSound(bool value) { _Sound = value; }
+        bool getUseSleep() { return _UseSleep; }
+        void setUseSleep(bool value) { _UseSleep = value; }
         bool getFullScreen() { return _FullScreen; }
         void setFullScreen(bool value) { _FullScreen = value; }
         bool getSpeedAuto() { return _SpeedAuto; }
@@ -54,11 +62,14 @@ class Mega8Config
         wxString _LastFolder;
         wxString _currentProfile;
         int _Keys[16];
+        bool _Sound;
+        bool _UseSleep;
         bool _FullScreen;
         bool _SpeedAuto;
         bool _DisplayHUD;
         bool _Filtered;
         bool _SyncClock;
+        bool _hasJoystick;
         long _FrequencyRatio[sizeof(Chip8Types) + 1];
         Chip8ColorTheme _ColorTheme;
         bool _InverseColor;

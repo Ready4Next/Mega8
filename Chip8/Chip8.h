@@ -45,6 +45,8 @@ const float    BASE_CLOCK    = 60;
 const double   BASE_CLOCK_MS = (1/BASE_CLOCK) * 1000;
 const double   BASE_CLOCK_NS = BASE_CLOCK_MS * 1000000;
 
+enum SoundState { OPEN = 1, CLOSE };
+
 // Chip-8 & SChip-8 font set
 const byte Chip8Font[240] =
 {
@@ -164,6 +166,28 @@ class BaseCHIP8 {
         bool getInverseColor() { return _inverseColor; }
         Chip8ColorTheme getColorTheme() { return _colorTheme; }
         Chip8Types getType() { return _type; }
+        const char *getTypeStr() {
+            switch (getType()) {
+                case CHIP8:
+                    return "Chip-8";
+                    break;
+
+                case SCHIP8:
+                    return "SChip-8";
+                    break;
+
+                case MCHIP8:
+                    return "MChip-8";
+                    break;
+
+                case CHIP8_HiRes:
+                    return "HiRes Chip-8";
+                    break;
+
+                default:
+                    return "Not supported yet";
+            }
+        }
         unsigned short getWidth() { return _width; }
         unsigned short getHeight() { return _height; }
         unsigned short getBytesPerPixel() { return _bytesPerPixel; }
@@ -195,23 +219,23 @@ class BaseCHIP8 {
 
             case RED:
                 tCol.foreColor = 0xFF0000FF;
-                tCol.backColor = 0;
+                tCol.backColor = 0xFF;
                 break;
 
             case GREEN:
-                tCol.foreColor = 0xFF000FF;
-                tCol.backColor = 0;
+                tCol.foreColor = 0xFF00FF;
+                tCol.backColor = 0xFF;
                 break;
 
             case BLUE:
                 tCol.foreColor = 0xFFFF;
-                tCol.backColor = 0;
+                tCol.backColor = 0xFF;
                 break;
 
             case DEFAULT:
             default:
                 tCol.foreColor = 0xFFFFFFFF;
-                tCol.backColor = 0;
+                tCol.backColor = 0xFF;
                 break;
             }
             if (_inverseColor) {
@@ -306,6 +330,9 @@ class Chip8: public BaseCHIP8
         unsigned long getSoundBufferSize() { return _soundBufferSize; }
         unsigned int getSoundBufferFrequency() { return _soundBufferFrequency; }
         unsigned char getSoundRepeat() { return _soundRepeat; }
+        // Read once property
+        bool getSoundRefresh() { if (_soundRefresh) { _soundRefresh = false; return true; } return _soundRefresh; }
+        SoundState getSoundState() { return _soundState; }
 
         // Others
         void setColorTheme(Chip8ColorTheme value);
@@ -327,6 +354,8 @@ class Chip8: public BaseCHIP8
         bool _loaded;
         bool _isRunning;
         bool _needToRefresh;
+        bool _soundRefresh;
+        SoundState _soundState;
 
         // Does the clock follow the CPU Frequency or it stick to the base frequency of 60 Hz ?
         bool _syncClockToOriginal;
@@ -350,11 +379,11 @@ class Chip8: public BaseCHIP8
 
         // Index register
         /* Chip 8 short - MChip8 int */
-        unsigned short _I;
+        unsigned int _I;
 
         // Program Counter [0x000 .. 0xFFF]
         /* Chip 8 short - MChip8 int */
-        unsigned short _pc;
+        unsigned int _pc;
 
         // Graphic 64 * 32 pixels
         unsigned char *_gfx;
@@ -384,6 +413,7 @@ class Chip8: public BaseCHIP8
         void drawScreen(byte coordX, byte coordY, byte K);
         void flip();
         void clearGfx();
+        void clearScreen();
         bool opcodesMega(byte Code, byte KK,  byte K);
         void opcodesSuper(byte Code, byte K);
         void opcodesCalc(byte Code, byte X, byte Y);

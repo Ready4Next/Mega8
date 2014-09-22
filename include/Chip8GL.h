@@ -39,8 +39,11 @@ class Chip8GL : public wxGLCanvas
         bool getIsRendering() { return _Rendering; }
         bool getFiltered() { return _Filtered; }
         void setFiltered(bool value) { _Filtered = value; }
+        bool getStopRender() { return _stopRender; }
+        void setStopRender(bool value) { _stopRender = value; }
         void setDisplayHUD(bool value) { _displayHUD = value; }
         bool getDisplayHUD() { return _displayHUD; }
+        wxBitmap getScreenshot();
     protected:
 
     private:
@@ -53,6 +56,7 @@ class Chip8GL : public wxGLCanvas
         int _FPS;
         vector<T_TEXT> _HUDLines;
         bool _displayHUD;
+        bool _stopRender;
 
         void prepare2DViewport(int topleft_x, int topleft_y, int bottomright_x, int bottomright_y);
         void updateGfx(unsigned char *pixels, int sourceW, int sourceH);

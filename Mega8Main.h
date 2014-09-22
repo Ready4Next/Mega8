@@ -33,8 +33,9 @@
 wxDECLARE_EVENT(wxEVT_COMMAND_CPUTHREAD_COMPLETED, wxThreadEvent);
 wxDECLARE_EVENT(wxEVT_COMMAND_CPUTHREAD_UPDATE, wxThreadEvent);
 
-const float FREQ_MENU_INDEX[] = { 1, 2, 10, 40, 80, 160, 320, 640, 1280, 10240, 40960 };
+const float FREQ_MENU_INDEX[] = { 1, 2, 10, 40, 80, 160, 320, 640, 1280, 10240 }; // , 40960 1024x Causes problems in Windows
 const int   SIZE_MENU_INDEX[] = { 1, 2, 3, 4, 5, 10 };
+const int   BEEP_CHANNEL = 0;
 
 class Mega8Frame;
 
@@ -66,8 +67,12 @@ class Mega8Frame: public wxFrame
         Chip8 *_machine;
         long _frequency;
         CPUThreadHandler *_CPUThread;
-        wxCriticalSection _CPUThreadCS;       // Protect the thread
-        InputDialog *dlgInput;                 // Input Configuration
+        wxCriticalSection _CPUThreadCS;         // Protect the thread
+        InputDialog *dlgInput;                  // Input Configuration
+        Mix_Chunk *_mcSound[16];                // Maximum sounds at the same time
+        int _currentSound;
+        stack<int> _channels;
+        int _maxChannels;                       // Maximum channels allocated by SDL_Mixer
 
         void DoStartCPUThread();
         void DoPauseCPUThread();
@@ -78,17 +83,22 @@ class Mega8Frame: public wxFrame
         void updateFrequency(int Multiplicator);
 
         void DoOpen();
+        void DoScreenshot();
         void Reset();
         void softReset();
         void hardReset();
         void CloseRom();
-        void updateStatus();
+        void updateStatusFPS();
+        void SetUseSleep(bool value);
+        void SetSound(bool value);
+        void SetPause(bool value);
         void SetSyncClock(bool value);
         void SetFiltered(bool value);
+        void SetDisplayHUD(bool value);
         void SetSpeedAuto(bool value);
         void SetFullScreenMode(bool value);
-        void SetColorTheme(Chip8ColorTheme value);
-        void SetInverseColor(bool value);
+        void SetColorTheme(Chip8ColorTheme value, bool updateCfg = true);
+        void SetInverseColor(bool value, bool updateCfg = true);
 
         void onIdle(wxIdleEvent &event);
         void OnPaint(wxPaintEvent &event);
@@ -120,6 +130,9 @@ class Mega8Frame: public wxFrame
         void OnMenuColorInverse(wxCommandEvent& event);
         void OnMenuDisplayHUDSelected(wxCommandEvent& event);
         void OnMenuCheckKeypadSelected(wxCommandEvent& event);
+        void OnMenuUseSleepSelected(wxCommandEvent& event);
+        void OnMenuScreenshotSelected(wxCommandEvent& event);
+        void OnMenuSoundSelected(wxCommandEvent& event);
         //*)
 
 
@@ -128,8 +141,10 @@ class Mega8Frame: public wxFrame
         static const long idMenuOpen;
         static const long idMenuClose;
         static const long idMenuQuit;
+        static const long idMenuUseSleep;
         static const long idMenuReset;
         static const long idMenuPause;
+        static const long idMenuSound;
         static const long idMenuCTDefault;
         static const long idMenuCTC64;
         static const long idMenuCTGameBoy;
@@ -149,9 +164,9 @@ class Mega8Frame: public wxFrame
         static const long idMenuSpeed16;
         static const long idMenuSpeed32;
         static const long idMenuSpeed256;
-        static const long idMenuSpeed1024;
         static const long idSyncToBase;
         static const long idMenuSpeed;
+        static const long idMenuScreenshot;
         static const long idMenuDisplayHUD;
         static const long idMenuFiltered;
         static const long idMenuSize1x1;
@@ -178,8 +193,8 @@ class Mega8Frame: public wxFrame
         //(*Declarations(Mega8Frame)
         wxMenuItem* MenuSpeed256;
         wxMenuItem* MnuCTC64;
-        wxMenuItem* MenuSpeed1024;
         wxMenuItem* MenuSpeedDiv20;
+        wxMenuItem* MenuScreenshot;
         wxMenuItem* MenuItem16;
         wxMenuItem* MenuItem12;
         wxMenuItem* MenuSpeedDiv4;
@@ -203,6 +218,7 @@ class Mega8Frame: public wxFrame
         wxMenuItem* MenuDisplayHUD;
         wxMenuBar* MenuBar1;
         wxMenuItem* MenuItem10;
+        wxMenuItem* MenuSound;
         wxMenuItem* MenuItem6;
         wxMenuItem* MenuItem4;
         wxMenuItem* MenuItem7;
@@ -214,6 +230,7 @@ class Mega8Frame: public wxFrame
         wxMenuItem* MenuSpeed1;
         wxMenuItem* MnuCTGreen;
         wxMenu* MenuItem8;
+        wxMenuItem* MenuUseSleep;
         wxMenuItem* MenuSpeed4;
         wxMenuItem* MenuSpeed16;
         //*)
