@@ -1,0 +1,45 @@
+Mega 1.3 WiP
+------------
+
+- Correction crash on exit
+- Multiple corrections for Windows builds (less crashes i hope...)
+- Correction Pause Music (Music wasn't paused :-/ my bad lol)
+- New Mega8 MTDemo: Testing / Debugging Draw Modes (Blending Modes)
+- New Mega8 MTDemo: Testing / Debugging Transparent Colors
+- New Mega8 MTDemo: Testing / Debugging internal index register jumps (high)
+- New Mega8 MTDemo: Testing / Debugging all scroll directions (even transparent)
+- New Mega8 MTDemo: Testing / Debugging Correct calculation in length of Music
+- New Mega8 MTDemo: Testing / Debugging more than one sound at 44100 Hz
+- Possibility to use 2 Joysticks maximum along with the keyboard
+- Removed speed 1024x (crashes on Windows)
+- FPS Limit to ~300
+- New shortcut to mute the sound: CTRL+'M' (Remember to activate the sound on first run !)
+- New shortcut to take a screenshot: CTRL+'S'
+- Finally made the width corrections on wxStatusBar panels !
+
+
+Mega8 1.2
+---------
+
+Windows / Linux
+- Added key configuration editor (Can be set by profile/ROM)
+- Corrected big mistake in sound !!! (length and frequency)
+- It supports from 11025 Hz up to 44100 Hz (still in 8bits mono)
+- With that correction, you can have more than one sound :-P
+- Now supports saving settings like Filtering activated, Fullscreen,...
+- Changed shortcuts (All "command" shortcuts must be set with CTRL+shortcut)
+- Size of main window defaults to 5x the sizeof Chip-8 resolution
+- Main window appear at the center of the screen
+- Correction with std::chrono precision. In Linux it delivers nano and microseconds as well, in Windows, only milliseconds (Aaargh !)
+  Now wxStopWatch is used, in Windows it make use of QueryPerformanceCounter
+- Small corrections on scrolling parts
+- Corrections when changing frequencies
+- Correction when calculating FPS
+
+Windows Only
+- Binaries finally released !!
+- Both in 32 and 64 bits
+
+Linux Only:
+- Binaries are in 64bits mode only
+- Command line compilation using Makefile broken for now...
