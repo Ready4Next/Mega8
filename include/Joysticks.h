@@ -2,7 +2,11 @@
 #define JOYSTICKS_H
 
 #include <wx/string.h>
-#include <SDL2/SDL.h>
+#ifdef WIN32
+	#include <SDL.h>
+#else
+	#include <SDL2/SDL.h>
+#endif
 #include <map>
 
 class Joysticks;
@@ -61,9 +65,9 @@ class Joystick {
         bool _opened;
         Joystick::EJoystickDirections _direction;
         Joystick::EJoystickDirections _persistantDirection;
-        int _button = -1;
-        int _persistantButton = -1;
-        int _threshold = 8000;
+        int _button;
+        int _persistantButton;
+        int _threshold;
 
         SDL_Joystick *_joy;
 };
@@ -106,8 +110,8 @@ class Joysticks
         // Instance
         static Joysticks _Instance;
 
-        bool _isMoveEvent = false;
-        bool _isButtonEvent = false;
+        bool _isMoveEvent;
+        bool _isButtonEvent;
 
         // Can be more than 2 with little modifications
         Joystick *_Joystick[2];

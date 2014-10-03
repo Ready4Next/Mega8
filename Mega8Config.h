@@ -18,6 +18,7 @@ class Mega8Config
         void loadConfig(const wxString &profile);
         void reloadConfig(const wxString &profile);
         void saveConfig(const wxString &profile);
+		void writeConfig();
 
         // Is the key related to joystick ?
         bool hasJoystick() { return _hasJoystick; }

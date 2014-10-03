@@ -102,7 +102,7 @@ void Mega8Config::loadConfig(const wxString &profile)
 
     // Save this profile if new
     if (isNew) {
-        saveConfig(profile);
+        //saveConfig(profile);
     }
 }
 
@@ -133,21 +133,25 @@ void Mega8Config::saveConfig(const wxString &profile)
 
     // Really save config
     if (_config != NULL) {
-        reloadConfig(profile);
+		writeConfig();
     }
 }
 
-void Mega8Config::reloadConfig(const wxString &profile) {
-    // Saves config to disk
+void Mega8Config::writeConfig() {
+	// Saves config to disk
     delete _config;
     _config = new wxConfig(wxT("Mega8"), wxT("Ready4Next"));
+}
+
+void Mega8Config::reloadConfig(const wxString &profile) {
+	writeConfig();
     // Reload
     loadConfig(profile);
 }
 
 bool Mega8Config::loadKeyboard(const wxString &profile)
 {
-    bool isNew = false;
+	bool isNew = _config->Exists(profile);
     wxString keyPath = wxEmptyString;
     wxString keyStr = wxEmptyString;
     wxAcceleratorEntry *ae = new wxAcceleratorEntry();
@@ -159,7 +163,6 @@ bool Mega8Config::loadKeyboard(const wxString &profile)
         // If no default key config for this profile found
         if (keyStr == wxEmptyString) {
             // Take from General
-            isNew = true;
             keyPath = wxEmptyString;
             keyPath << wxT("Keys/") << wxT("General") << wxT("/") << i;
             keyStr = readString(keyPath);

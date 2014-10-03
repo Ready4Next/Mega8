@@ -1,5 +1,20 @@
 #include "Chip8.h"
-#include <unistd.h>
+#ifndef WIN32
+	#include <unistd.h>
+#endif
+
+#if defined(_MSC_VER) || defined(__MINGW32__)  || defined(WIN32)
+int gettimeofday(struct timeval* tp, void* tzp) {
+	clock_t t;
+
+    t = clock();
+	float secs = (float)t/CLOCKS_PER_SEC;
+    tp->tv_sec = (long)floor(secs);
+    tp->tv_usec = (long)floor(secs * 1000);
+    // Success ;-)
+    return 0;
+}
+#endif
 
 Chip8::Chip8(): BaseCHIP8()
 {
@@ -16,7 +31,10 @@ Chip8::Chip8(): BaseCHIP8()
 
 Chip8::~Chip8() {
     //dtor
-    _loaded = false;
+}
+
+void Chip8::destroy() {
+	_loaded = false;
     _isRunning = false;
     if (_soundBuffer != NULL)
         free(_soundBuffer);
@@ -58,34 +76,25 @@ void Chip8::reset() {
     unsigned int i;
 
     // Mega-Chip Sound
-    free(_soundBuffer);
+	if (_soundBuffer != NULL)
+		free(_soundBuffer);
     _soundBuffer = NULL;
     _soundRepeat = 0;
 
-    // Allocate the screen
-    if (_gfx != NULL)
-        free(_gfx);
-    _gfx = (unsigned char*)malloc(getScreenSizeOf());
-    if (_gfxBuffer != NULL)
-        free(_gfxBuffer);
-    _gfxBuffer = (unsigned char *)malloc(getScreenSizeOf());
+	ChangeMachineType(CHIP8, false);
 
-    // Clear screen & gfx
-    clearScreen();
-    clearGfx();
+	_loaded = false;
+	_pc = 0x200;
+	_timerDelay = 0;
+	_timerSound = 0;
+	_I = 0;
 
-    _loaded = false;
-    _pc = 0x200;
-    _timerDelay = 0;
-    _timerSound = 0;
-    _I = 0;
+	for (i = 0; i < 16; i++) {
+		_key[i] = false;
+		_V[i] = 0;
+	}
 
-    for (i = 0; i < 16; i++) {
-        _key[i] = false;
-        _V[i] = 0;
-    }
-
-    _isRunning = false;
+	_isRunning = false;
 }
 
 /*
@@ -97,13 +106,37 @@ void Chip8::reset() {
 void Chip8::ChangeMachineType(Chip8Types Type, bool extMode) {
     setExtendedMode(extMode);
     setType(Type);
+
+    // Allocate the screen
     if (_gfx != NULL)
         free(_gfx);
-    _gfx = (unsigned char *)malloc(getScreenSizeOf());
-    if (_gfxBuffer != NULL)
-        free(_gfxBuffer);
-    _gfxBuffer = (unsigned char *)malloc(getScreenSizeOf());
-    clearGfx();
+    _gfx = (unsigned char*)malloc(getScreenSizeOf());
+	
+	if (_gfx != NULL) {
+		if (_gfxBuffer != NULL)
+			free(_gfxBuffer);
+		_gfxBuffer = (unsigned char *)malloc(getScreenSizeOf());
+
+		if (_gfxBuffer != NULL) {
+			// Clear screen & gfx
+			clearScreen();
+			clearGfx();
+		} else {
+			printf("Can't allocate screenBuffer (%dx%dx%d) !\n", getWidth(), getHeight(), getBytesPerPixel());
+			if (_gfx != NULL)
+				free(_gfx);
+
+			_gfx = NULL;
+			_gfxBuffer = NULL;
+		}
+	} else {
+		if (_gfxBuffer != NULL)
+			free(_gfxBuffer);
+		printf("Can't allocate screen (%dx%dx%d) !\n", getWidth(), getHeight(), getBytesPerPixel());
+
+		_gfx = NULL;
+		_gfxBuffer = NULL;
+	}
 }
 
 /********************************** Graphics **********************************/
@@ -269,7 +302,7 @@ unsigned int BlendMul(unsigned int color, unsigned int newColor) {
 
 void Chip8::setScreenAlpha(float alpha) {
     if (alpha < 1 && alpha > 0) {
-        for (int i = 0; i < getScreenSizeOf(); i += getBytesPerPixel()) {
+        for (unsigned int i = 0; i < getScreenSizeOf(); i += getBytesPerPixel()) {
             // Calculate all pixels new alpha value from Screen
             unsigned int color = getRGBA(_gfx[ i % 4     ],
                                          _gfx[(i % 4) + 1],
@@ -875,7 +908,7 @@ bool Chip8::opcodesMega(byte Code, byte KK,  byte K) {
         case 0x1:
             // Mega-Chip8 0x01NN NNNN
             to = readMemS(_pc);
-            _I = (KK << 16) + readMemS(_pc); //(readMemB(_pc) << 8 | readMemB(_pc + 1));
+            _I = (KK << 16) + readMemS(_pc);
             char buf[50];
             sprintf(buf, "%04X: LDI I, %04X %04X", _pc-2, KK, readMemS(_pc));
             str = buf;

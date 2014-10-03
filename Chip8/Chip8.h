@@ -2,7 +2,16 @@
 #define CHIP8_H
 
 #include <stdlib.h>     /* srand, rand */
-#include <sys/time.h>       /* time */
+#include <math.h>
+
+/* Timeval & gettimeofday */
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(WIN32)
+	#include <time.h>
+	#include <winsock.h>
+#else
+	#include <sys/time.h>
+#endif
+
 #include <cstdio>
 #include <string.h>     // memcpy
 #include <math.h>
@@ -23,7 +32,9 @@ struct TCOLOR {
     unsigned int backColor;
 };
 
-#define byte unsigned char
+#ifndef RPCNDR_H
+	typedef unsigned char byte;
+#endif
 
 #define getNanoFromHertz(h)         (((double)1.0/h) * 1000) * 1000000)
 #define getMicroFromHertz(h)        (((double)1.0/h) * 1000000)
@@ -348,6 +359,7 @@ class Chip8: public BaseCHIP8
         void loadKeypad() ;
         void execute(double frequencyInMs);
         bool isRunning() { return _isRunning; }
+		void destroy();
 
     private:
 
@@ -400,7 +412,7 @@ class Chip8: public BaseCHIP8
         unsigned char _timerSound;
 
         // Stack
-        stack<unsigned short> _callStack;
+        stack<unsigned int> _callStack;
         deque<string> _opcodeTrace;
         //unsigned short _stack[16];
         //unsigned short _sp;

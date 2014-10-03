@@ -8,6 +8,9 @@ Joystick::Joystick(int Num)
     _number = Num;
     _joy = SDL_JoystickOpen(_number);
     _opened = (_joy != NULL);
+	_button = -1;
+    _persistantButton = -1;
+    _threshold = 8000;
 }
 
 Joystick::~Joystick()
@@ -350,6 +353,8 @@ Joysticks::Joysticks()
     //ctor
     Joysticks::_Joystick[0] = NULL;
     Joysticks::_Joystick[1] = NULL;
+	_isMoveEvent = false;
+	_isButtonEvent = false;
 }
 
 Joysticks::~Joysticks()

@@ -16,8 +16,14 @@
 #include <wx/frame.h>
 //*)
 
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
+#ifdef WIN32
+	#include <SDL.h>
+	#include <SDL_mixer.h>
+#else
+	#include <SDL2/SDL.h>
+	#include <SDL2/SDL_mixer.h>
+#endif
+
 #include <wx/wx.h>
 #include <wx/string.h>
 #include <iostream>     // std::cout, std::fixed

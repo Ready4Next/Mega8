@@ -181,7 +181,7 @@ void InputDialog::LoadConfig()
     wxString profileName, path;
     wxArrayString profiles;
     long index;
-    int generalIndex, currentProfileIndex, cnt;
+    int currentProfileIndex, cnt;
     bool finished;
 
     // Insert profile Names
@@ -336,7 +336,7 @@ void InputDialog::OnTxtKeypadOnKeydown(wxKeyEvent& event)
         }
     }
 
-    wxTextCtrl *txt;
+    wxTextCtrl *txt = NULL;
     int index;
 
     // Find object index

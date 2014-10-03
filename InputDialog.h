@@ -65,9 +65,6 @@ class InputDialog: public wxDialog
 
 		static const long ID_TxtKeypad[16];
 
-		SDL_Joystick *_joy1 = NULL;
-		SDL_Joystick *_joy2 = NULL;
-
 		void OnIdle(wxIdleEvent &event);
 
 	private:

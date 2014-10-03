@@ -21,10 +21,10 @@
 #include <wx/stdpaths.h>
 #include <wx/stopwatch.h>
 #include <wx/cmdline.h>
-#include <unistd.h>
 
 #ifndef __WIN32__
     #include "mega8.xpm"
+	#include <unistd.h>
 #else
    // Already included in res file
 #endif // __WIN32__
@@ -74,6 +74,11 @@ wxString wxbuildinfo(wxbuildinfoformat format)
     }
 
     wxbuild << _T("\n\nClock Precision: ")  << ((double) std::chrono::high_resolution_clock::period::num / std::chrono::high_resolution_clock::period::den);
+	wxbuild << _T("\nOpenGL Version: ")  << glGetString(GL_VERSION);
+	wxString glExt = glGetString(GL_EXTENSIONS);
+	glExt.Replace(" ", "\n");
+	wxbuild << _T("\nOpenGL Extensions: ")  << glExt;
+
     wxbuild << _T("\n\n\t\t(C) 2014 ") << APP_AUTHOR;
     wxbuild << _T("\n\nTTF \"Game Over\" by Pedro Muñoz Pastor");
     wxbuild << _T("\nKeypad Test [Hap, 2006]");
@@ -305,6 +310,8 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&Mega8Frame::OnAbout);
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Mega8Frame::OnClose);
     //*)
+
+	_exit = false;
 
     // Set Application icon
     wxIcon icon = wxICON(mega8);
@@ -539,6 +546,7 @@ void Mega8Frame::exitApplication()
 	SDL_Quit();
 
     if (_machine) {
+		_machine->destroy();
         delete _machine;
         _machine = NULL;
     }
@@ -643,7 +651,7 @@ void Mega8Frame::OnCPUThreadUpdate(wxThreadEvent&)
                 } else {
                     // Convert frequency
                     unsigned char *buf = _machine->getSoundBuffer();
-                    for (int i = 0; i < (_machine->getSoundBufferSize() * freqRatio); i++) {
+                    for (unsigned int i = 0; i < (_machine->getSoundBufferSize() * freqRatio); i++) {
                         int index = (int)floor(i / freqRatio);
                         convertedSoundBuffer[i] = buf[index];
                     }
@@ -1107,13 +1115,14 @@ void Mega8Frame::hardReset() {
     }
 
     // Make a "hard" reset
+	_machine->destroy();
     delete _machine;
     _machine = new Chip8();
     _machine->initialize(CHIP8);
 
     // Initialize machine
     GLDisplay->setStopRender(false);
-    Mega8Config::getInstance().saveConfig(CurrentRomName);
+    //Mega8Config::getInstance().saveConfig(CurrentRomName);
     Mega8Config::getInstance().reloadConfig(CurrentRomName);
     SetSyncClock(Mega8Config::getInstance().getSyncClock());
     SetFiltered(Mega8Config::getInstance().getFiltered());
