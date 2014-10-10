@@ -61,11 +61,11 @@ void Mega8Config::resetConfig()
     setDisplayHUD(false);
     setFiltered(false);
     setSyncClock(true);
-    setFrequencyRatio(CHIP8, 40);
-    setFrequencyRatio(CHIP8_HiRes, 40);
-    setFrequencyRatio(CHIP8_HiRes2, 40);
-    setFrequencyRatio(SCHIP8, 80);
-    setFrequencyRatio(MCHIP8, 640);
+    setFrequencyRatio(CHIP8, 4);
+    setFrequencyRatio(CHIP8_HiRes, 4);
+    setFrequencyRatio(CHIP8_HiRes2, 4);
+    setFrequencyRatio(SCHIP8, 5);
+    setFrequencyRatio(MCHIP8, 8);
 }
 
 void Mega8Config::loadConfig(const wxString &profile)
@@ -94,10 +94,8 @@ void Mega8Config::loadConfig(const wxString &profile)
     _ColorTheme = (Chip8ColorTheme)readLong(wxT("ColorTheme"));
     _InverseColor = readBool(wxT("InverseColor"));
     for (int i = 0; i <= sizeof(Chip8Types); i++) {
-        _FrequencyRatio[i] = readLong(wxT("FrequencyRatio/") + getMachineTypeStr((Chip8Types) i));
+        _FrequencyRatio[i] = (long)min((long)max((long)readLong(wxT("FrequencyRatio/") + getMachineTypeStr((Chip8Types) i)), (long)4), (long)9);
 
-        // Removed 1024x
-        _FrequencyRatio[i] = (_FrequencyRatio[i] == 10) ? 9 : _FrequencyRatio[i];
     }
 
     // Save this profile if new
@@ -133,21 +131,24 @@ void Mega8Config::saveConfig(const wxString &profile)
 
     // Really save config
     if (_config != NULL) {
-        reloadConfig(profile);
+		writeConfig();
     }
 }
 
+void Mega8Config::writeConfig() {
+	// Saves config to disk
+	_config->Flush(true);
+}
+
 void Mega8Config::reloadConfig(const wxString &profile) {
-    // Saves config to disk
-    delete _config;
-    _config = new wxConfig(wxT("Mega8"), wxT("Ready4Next"));
+	writeConfig();
     // Reload
     loadConfig(profile);
 }
 
 bool Mega8Config::loadKeyboard(const wxString &profile)
 {
-    bool isNew = false;
+	bool isNew = _config->Exists(profile);
     wxString keyPath = wxEmptyString;
     wxString keyStr = wxEmptyString;
     wxAcceleratorEntry *ae = new wxAcceleratorEntry();
@@ -159,7 +160,6 @@ bool Mega8Config::loadKeyboard(const wxString &profile)
         // If no default key config for this profile found
         if (keyStr == wxEmptyString) {
             // Take from General
-            isNew = true;
             keyPath = wxEmptyString;
             keyPath << wxT("Keys/") << wxT("General") << wxT("/") << i;
             keyStr = readString(keyPath);

@@ -13,6 +13,7 @@ Chip8GL::Chip8GL(wxWindow *parent, wxWindowID id, int GLCanvasAttributes[])
     _Context = new wxGLContext(this);
     _font = new FTPixmapFont(game_over_ttf, game_over_ttf_len);
     _FPS = 0;
+	_stopRender = false;
 }
 
 Chip8GL::~Chip8GL()

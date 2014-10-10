@@ -18,13 +18,14 @@ class Mega8Config
         void loadConfig(const wxString &profile);
         void reloadConfig(const wxString &profile);
         void saveConfig(const wxString &profile);
+		void writeConfig();
 
         // Is the key related to joystick ?
         bool hasJoystick() { return _hasJoystick; }
         bool getKeyIsJoy(unsigned char OriginalKey) { return _Keys[OriginalKey] < 0; }
-        int *getKeys() { return _Keys; }
-        int getKey(unsigned char OriginalKey) { return (OriginalKey < 16) ? _Keys[OriginalKey]: 0; }
-        void setKey(unsigned char OriginalKey, int NewKey) { if (OriginalKey < 16) _Keys[OriginalKey] = NewKey; }
+        long *getKeys() { return _Keys; }
+        long getKey(unsigned char OriginalKey) { return (OriginalKey < 16) ? _Keys[OriginalKey]: 0; }
+        void setKey(unsigned char OriginalKey, long NewKey) { if (OriginalKey < 16) _Keys[OriginalKey] = NewKey; }
         void resetKeyboard();
 
         wxString getLastFolder() { return _LastFolder; }
@@ -61,7 +62,7 @@ class Mega8Config
         // Properties
         wxString _LastFolder;
         wxString _currentProfile;
-        int _Keys[16];
+        long _Keys[16];
         bool _Sound;
         bool _UseSleep;
         bool _FullScreen;

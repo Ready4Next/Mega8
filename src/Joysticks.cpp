@@ -7,7 +7,21 @@ Joystick::Joystick(int Num)
 {
     _number = Num;
     _joy = SDL_JoystickOpen(_number);
+	_instance = SDL_JoystickInstanceID(_joy);
+
+	// Rumble
+	_hasRumble = false;
+	if (SDL_JoystickIsHaptic(_joy)) {
+		_hap = SDL_HapticOpenFromJoystick(_joy);
+		if (_hap) {
+			_hasRumble = SDL_HapticRumbleInit(_hap) == 0;
+		}
+	}
+
     _opened = (_joy != NULL);
+	_button = 0;
+    _persistantButton = 0;
+    _threshold = 8000;
 }
 
 Joystick::~Joystick()
@@ -18,7 +32,15 @@ Joystick::~Joystick()
 void Joystick::close()
 {
     if (_opened && _joy) {
+		if(_hasRumble && _hap)
+        {
+            SDL_HapticClose(_hap);
+            _hap = NULL;
+			_hasRumble = false;
+        }
         SDL_JoystickClose(_joy);
+		_joy = NULL;
+		_opened = false;
     }
 }
 
@@ -137,6 +159,32 @@ void Joystick::updateDirections(SDL_Event &evt)
                             _persistantDirection = _direction;
                         }
                         break;
+
+					// Angles
+					case SDL_HAT_LEFTDOWN:
+                        _direction = Joystick::EJoystickDirections::JOY_H_DOWN_LEFT;
+                        if (_persistantDirection != _direction)  {
+                            _persistantDirection = _direction;
+                        }
+                        break;
+                    case SDL_HAT_LEFTUP:
+                        _direction = Joystick::EJoystickDirections::JOY_H_UP_LEFT;
+                        if (_persistantDirection != _direction)  {
+                            _persistantDirection = _direction;
+                        }
+                        break;
+                    case SDL_HAT_RIGHTUP:
+                        _direction = Joystick::EJoystickDirections::JOY_H_UP_RIGHT;
+                        if (_persistantDirection != _direction)  {
+                            _persistantDirection = _direction;
+                        }
+                        break;
+                    case SDL_HAT_RIGHTDOWN:
+                        _direction = Joystick::EJoystickDirections::JOY_H_DOWN_RIGHT;
+                        if (_persistantDirection != _direction)  {
+                            _persistantDirection = _direction;
+                        }
+                        break;
                 }
                 break;
         }
@@ -145,122 +193,31 @@ void Joystick::updateDirections(SDL_Event &evt)
 
 void Joystick::updateButton(SDL_Event &evt)
 {
-    // Is it for me ?
-    _button = -1;
     if (evt.jbutton.which == _number) {
         if (evt.type == SDL_JOYBUTTONDOWN) {
-            _button = evt.jbutton.button;
+            _button |= (1 << evt.jbutton.button);
             if (_persistantButton != _button) {
                 _persistantButton = _button;
             }
         } else if (evt.type == SDL_JOYBUTTONUP) {
-            _button = -1;
+            _button &= ~(1 << evt.jbutton.button);
         }
     }
 }
 
+// Get actual pressed direction
 wxString Joystick::getDirectionStr()
 {
-    wxString result = wxEmptyString;
-
-    switch (_direction) {
-        // Pad
-        case Joystick::EJoystickDirections::JOY_DOWN:
-            result = wxT("DOWN");
-            break;
-        case Joystick::EJoystickDirections::JOY_UP:
-            result = wxT("UP");
-            break;
-        case Joystick::EJoystickDirections::JOY_LEFT:
-            result = wxT("LEFT");
-            break;
-        case Joystick::EJoystickDirections::JOY_RIGHT:
-            result = wxT("RIGHT");
-            break;
-
-        // Left Stick
-        case Joystick::EJoystickDirections::JOY_H_DOWN:
-            result = wxT("H-DOWN");
-            break;
-        case Joystick::EJoystickDirections::JOY_H_UP:
-            result = wxT("H-UP");
-            break;
-        case Joystick::EJoystickDirections::JOY_H_LEFT:
-            result = wxT("H-LEFT");
-            break;
-        case Joystick::EJoystickDirections::JOY_H_RIGHT:
-            result = wxT("H-RIGHT");
-            break;
-
-        // Right Stick
-        case Joystick::EJoystickDirections::JOY_R_DOWN:
-            result = wxT("R-DOWN");
-            break;
-        case Joystick::EJoystickDirections::JOY_R_UP:
-            result = wxT("R-UP");
-            break;
-        case Joystick::EJoystickDirections::JOY_R_LEFT:
-            result = wxT("R-LEFT");
-            break;
-        case Joystick::EJoystickDirections::JOY_R_RIGHT:
-            result = wxT("R-RIGHT");
-            break;
-    }
-
-    return result;
+	return getDirectionStrFromCode(_direction);
 }
 
+// Get last pressed direction
 wxString Joystick::getPersistantDirectionStr()
 {
-    wxString result = wxEmptyString;
-
-    switch (_persistantDirection) {
-        // Pad
-        case Joystick::EJoystickDirections::JOY_DOWN:
-            result = wxT("DOWN");
-            break;
-        case Joystick::EJoystickDirections::JOY_UP:
-            result = wxT("UP");
-            break;
-        case Joystick::EJoystickDirections::JOY_LEFT:
-            result = wxT("LEFT");
-            break;
-        case Joystick::EJoystickDirections::JOY_RIGHT:
-            result = wxT("RIGHT");
-            break;
-
-        // Left Stick
-        case Joystick::EJoystickDirections::JOY_H_DOWN:
-            result = wxT("H-DOWN");
-            break;
-        case Joystick::EJoystickDirections::JOY_H_UP:
-            result = wxT("H-UP");
-            break;
-        case Joystick::EJoystickDirections::JOY_H_LEFT:
-            result = wxT("H-LEFT");
-            break;
-        case Joystick::EJoystickDirections::JOY_H_RIGHT:
-            result = wxT("H-RIGHT");
-            break;
-
-        // Right Stick
-        case Joystick::EJoystickDirections::JOY_R_DOWN:
-            result = wxT("R-DOWN");
-            break;
-        case Joystick::EJoystickDirections::JOY_R_UP:
-            result = wxT("R-UP");
-            break;
-        case Joystick::EJoystickDirections::JOY_R_LEFT:
-            result = wxT("R-LEFT");
-            break;
-        case Joystick::EJoystickDirections::JOY_R_RIGHT:
-            result = wxT("R-RIGHT");
-            break;
-    }
-
-    return result;
+	return getDirectionStrFromCode(_persistantDirection);
 }
 
+// Translate code to string
 wxString Joystick::getDirectionStrFromCode(Joystick::EJoystickDirections direction)
 {
     std::map<Joystick::EJoystickDirections, wxString> m;
@@ -279,10 +236,15 @@ wxString Joystick::getDirectionStrFromCode(Joystick::EJoystickDirections directi
     m[Joystick::EJoystickDirections::JOY_H_UP] = wxT("H-UP");
     m[Joystick::EJoystickDirections::JOY_H_DOWN] = wxT("H-DOWN");
 
+	m[Joystick::EJoystickDirections::JOY_H_UP_LEFT] =  wxT("H-UP-LEFT");
+    m[Joystick::EJoystickDirections::JOY_H_UP_RIGHT] =  wxT("H-UP-RIGHT");
+    m[Joystick::EJoystickDirections::JOY_H_DOWN_LEFT] = wxT("H-DOWN-LEFT");
+	m[Joystick::EJoystickDirections::JOY_H_DOWN_RIGHT] = wxT("H-DOWN-RIGHT");
+
     return m[direction];
 }
 
-Joystick::EJoystickDirections Joystick::getDirectionFromStr(const wxString &direction)
+Joystick::EJoystickDirections Joystick::getDirectionCodeFromStr(const wxString &direction)
 {
     std::map<wxString, Joystick::EJoystickDirections> m;
     m[wxT("LEFT")] = Joystick::EJoystickDirections::JOY_LEFT;
@@ -300,26 +262,69 @@ Joystick::EJoystickDirections Joystick::getDirectionFromStr(const wxString &dire
     m[wxT("H-UP")] =  Joystick::EJoystickDirections::JOY_H_UP;
     m[wxT("H-DOWN")] =  Joystick::EJoystickDirections::JOY_H_DOWN;
 
+	m[wxT("H-UP-LEFT")] =  Joystick::EJoystickDirections::JOY_H_UP_LEFT;
+    m[wxT("H-UP-RIGHT")] =  Joystick::EJoystickDirections::JOY_H_UP_RIGHT;
+    m[wxT("H-DOWN-LEFT")] =  Joystick::EJoystickDirections::JOY_H_DOWN_LEFT;
+    m[wxT("H-DOWN-RIGHT")] =  Joystick::EJoystickDirections::JOY_H_DOWN_RIGHT;
+
     return m[direction.Upper()];
 }
 
+// Button are mapped to bits now
 wxString Joystick::getButtonStr()
 {
-    wxString result = wxEmptyString;
-
-    if (_button != -1) {
-        result.Printf(wxT("BTN_%d"), _button);
-    }
-    return result;
+	return Joystick::getButtonStrFromCode(_persistantButton);
 }
 
 wxString Joystick::getPersistantButtonStr()
 {
-    wxString result = wxEmptyString;
+	return Joystick::getButtonStrFromCode(_persistantButton);
+}
 
-    if (_persistantButton != -1) {
-        result.Printf(wxT("BTN_%d"), _persistantButton);
-    }
+// Static
+long Joystick::getButtonCodeFromStr(const wxString &buttonStr) 
+{
+	long result = 0;
+
+	if (buttonStr != wxEmptyString) {
+		wxString btnStr = buttonStr;
+		btnStr.Remove(0, 6);
+
+		if (btnStr.Left(4).Upper() == "BTN_") {
+			// BTN_
+			wxStringTokenizer buttonTokenizer(btnStr, "+");
+			while ( buttonTokenizer.HasMoreTokens() )
+			{
+				wxString token = buttonTokenizer.GetNextToken();
+				// BTN_x
+				wxStringTokenizer buttonNumTokenizer(token, "_");
+				buttonNumTokenizer.GetNextToken();
+				long btnNum = 0;
+				buttonNumTokenizer.GetNextToken().ToLong(&btnNum);
+				result |= (1 << btnNum);
+			}
+		} 
+	}
+
+	return result;
+}
+
+// Static 
+wxString Joystick::getButtonStrFromCode(long buttonCode)
+{
+	wxString result = wxEmptyString;
+	wxString glue = wxEmptyString;
+
+	int i = 0;
+	while (buttonCode > 0) {
+		if ((buttonCode & 1) == 1) {
+			result.Printf(wxT("%s%sBTN_%d"), result, glue, i);
+			glue = "+";
+		}
+		buttonCode >>= 1;
+		i++;
+	}
+
     return result;
 }
 
@@ -350,6 +355,8 @@ Joysticks::Joysticks()
     //ctor
     Joysticks::_Joystick[0] = NULL;
     Joysticks::_Joystick[1] = NULL;
+	_isMoveEvent = false;
+	_isButtonEvent = false;
 }
 
 Joysticks::~Joysticks()
@@ -387,39 +394,46 @@ void Joysticks::initJoysticks() {
     }
 }
 
-int Joysticks::getCodeFromJoystick(Joystick *joy, bool persistant = false)
+long Joysticks::getCodeFromJoystick(Joystick *joy, bool persistant = false)
 {
-    int result = -1;
+    int result = 0;
 
     if (joy) {
+
+		// First the joystick number - Limit to 6
+		result = joy->getMyNum() & 1;
+
         if (IsMoveEvent()) {
-            result = ((persistant) ? joy->getPersistantDirection() : joy->getDirection()) - (joy->getMyNum() * 100);
+            result += ((persistant) ? joy->getPersistantDirection() : joy->getDirection());
         } else if (IsButtonEvent()) {
-            result = Joystick::JOY_BUTTON_0 - ((persistant) ? joy->getPersistantButton() : joy->getButton()) - (joy->getMyNum() * 100);
+			result += ((persistant) ? joy->getPersistantButton() : joy->getButton()) << Joystick::JOY_BUTTON_0_SHIFT;
         }
     }
 
-    return result;
+	// Return a negative value to differ from keyboard code
+    return result * -1;
 }
 
 // Check if the code is in current state of the joystick
-bool Joysticks::checkCodeFromJoystick(Joystick *joy, int code)
+bool Joysticks::checkCodeFromJoystick(Joystick *joy, long code)
 {
     int joyNum;
 
     // Get the joystick number
-    joyNum = (int)abs(floor(code / 100));
-    code += joyNum * 100;
-
+	code = abs(code);
+    joyNum = (int)code & 0x01;
+	code -= joyNum;
+    
     // Check if it's the correct joystick
     if (joy->getMyNum() == joyNum) {
         // Get button state from joystick
-        if (code <= Joystick::JOY_BUTTON_0) {
+		long btnCode = code >> Joystick::JOY_BUTTON_0_SHIFT;
+		if (btnCode > 0) {
             // The code is in joy button state ?
-            if (joy->getButton() == abs(code - Joystick::JOY_BUTTON_0)) {
+			if (joy->getButton() == btnCode) {
                 return true;
             }
-        } else if (code < 0) {
+        } else {
             // Get directional state from joystick
             if ( code == (int)joy->getDirection()) {
                 return true;
@@ -430,9 +444,9 @@ bool Joysticks::checkCodeFromJoystick(Joystick *joy, int code)
     return false;
 }
 
-int Joysticks::getCodeFromString(const wxString &str)
+long Joysticks::getCodeFromString(const wxString &str)
 {
-    int result = -1;
+    long result = 0;
 
     if (str != wxEmptyString && str.Left(3).Upper() == "JOY") {
         wxStringTokenizer tokenizer(str, "_");
@@ -441,32 +455,41 @@ int Joysticks::getCodeFromString(const wxString &str)
         int joyNum = wxAtoi(token);
         token = tokenizer.GetNextToken();
         if (token.Upper() == "BTN") {
-            int btn = Joystick::JOY_BUTTON_0 - wxAtoi(tokenizer.GetNextToken());
-            result = btn - (joyNum * 100);
+			long btn = Joystick::getButtonCodeFromStr(str) << Joystick::JOY_BUTTON_0_SHIFT;
+            result = btn + joyNum;
         } else {
-            result = Joystick::getDirectionFromStr(token) - (joyNum * 100);
+			result = Joystick::getDirectionCodeFromStr(token) + joyNum;
         }
     }
 
-    return result;
+	// Return a negative value to differ from keyboard codes
+    return result * -1;
 }
 
-wxString Joysticks::getStringFromCode(int code)
+wxString Joysticks::getStringFromCode(long code)
 {
     wxString result = wxEmptyString;
     int joyNum;
 
     // Get the joystick number
-    joyNum = (int)abs(floor(code / 100));
-    code += joyNum * 100;
-    if (code <= Joystick::JOY_BUTTON_0) {
-        int btn = abs(code - Joystick::JOY_BUTTON_0);
-        result.Printf("JOY_%d_BTN_%d", joyNum, btn);
+	code = abs(code);
+    joyNum = code & 0x01;
+	code -= joyNum;
+	long btnCode = code >> Joystick::JOY_BUTTON_0_SHIFT;
+    if (btnCode > 0) {
+		result.Printf("JOY_%d_%s", joyNum, Joystick::getButtonStrFromCode(btnCode));
     } else {
         result.Printf("JOY_%d_%s", joyNum, Joystick::getDirectionStrFromCode((Joystick::EJoystickDirections) code));
     }
 
     return result;
+}
+
+void Joystick::playRumble(float strength, int milli) {
+	if (_hasRumble && _hap && strength < 1 && strength > 0)
+		if (SDL_HapticRumblePlay(_hap, strength, milli) != 0) {
+            printf( "Warning: Unable to play rumble! %s\n", SDL_GetError() );
+        }
 }
 
 // Return the joystick who generated the event
@@ -506,6 +529,9 @@ Joystick *Joysticks::updateJoyState() {
                     Joysticks::_Joystick[1]->updateButton(evt);
                     result = Joysticks::_Joystick[1];
                 }
+
+				result->playRumble(0.75, 500);
+
                 _isButtonEvent = true;
                 break;
 

@@ -21,10 +21,10 @@
 #include <wx/stdpaths.h>
 #include <wx/stopwatch.h>
 #include <wx/cmdline.h>
-#include <unistd.h>
 
 #ifndef __WIN32__
     #include "mega8.xpm"
+	#include <unistd.h>
 #else
    // Already included in res file
 #endif // __WIN32__
@@ -36,7 +36,7 @@
 
 #define APP_TITLE "Mega/Super/HiRes/Chip-8 Emulator"
 #define APP_SHORTNAME "Mega8"
-#define APP_VERSION "1.3"
+#define APP_VERSION "1.3.1"
 #define APP_AUTHOR "Ready4Next/Junta"
 
 //helper functions
@@ -74,6 +74,11 @@ wxString wxbuildinfo(wxbuildinfoformat format)
     }
 
     wxbuild << _T("\n\nClock Precision: ")  << ((double) std::chrono::high_resolution_clock::period::num / std::chrono::high_resolution_clock::period::den);
+	wxbuild << _T("\nOpenGL Version: ")  << glGetString(GL_VERSION);
+	/* Debug: wxString glExt = glGetString(GL_EXTENSIONS);
+	glExt.Replace(" ", "\n");
+	wxbuild << _T("\nOpenGL Extensions: ")  << glExt;*/
+
     wxbuild << _T("\n\n\t\t(C) 2014 ") << APP_AUTHOR;
     wxbuild << _T("\n\nTTF \"Game Over\" by Pedro Muñoz Pastor");
     wxbuild << _T("\nKeypad Test [Hap, 2006]");
@@ -168,6 +173,7 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     Menu3 = new wxMenu();
     MenuUseSleep = new wxMenuItem(Menu3, idMenuUseSleep, _("Use Sleep"), _("Enable sleep in thread (recommended)"), wxITEM_CHECK);
     Menu3->Append(MenuUseSleep);
+    MenuUseSleep->Enable(false);
     Menu3->AppendSeparator();
     MenuItem4 = new wxMenuItem(Menu3, idMenuReset, _("Reset"), _("Reset Emulator"), wxITEM_NORMAL);
     Menu3->Append(MenuItem4);
@@ -306,6 +312,8 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&Mega8Frame::OnClose);
     //*)
 
+	_exit = false;
+
     // Set Application icon
     wxIcon icon = wxICON(mega8);
     SetIcon(icon);
@@ -328,7 +336,11 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     Connect(wxID_ANY,wxEVT_COMMAND_CPUTHREAD_UPDATE,(wxObjectEventFunction)&Mega8Frame::OnCPUThreadUpdate);
 
     // Init SDL
-    SDL_Init(SDL_INIT_AUDIO | SDL_INIT_JOYSTICK);
+	if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC) < 0) {
+		wxMessageBox(_("Cannot initialize SDL... Exiting..."), APP_TITLE);
+		exit(0);
+	}
+
     SDL_JoystickEventState(SDL_ENABLE);
 
     // Init SDL_Mixer
@@ -379,6 +391,7 @@ Mega8Frame::Mega8Frame(wxWindow* parent,wxWindowID id)
     SetSound(Mega8Config::getInstance().getSound());
     SetUseSleep(Mega8Config::getInstance().getUseSleep());
     SetDisplayHUD(Mega8Config::getInstance().getDisplayHUD());
+	SetInverseColor(Mega8Config::getInstance().getInverseColor());
 
     // Load "BIOS" ;-)
     _machine->loadBios();                   // Reminds me Nintendo Logo when power up...
@@ -420,12 +433,15 @@ void Mega8Frame::OnOpen(wxCommandEvent& event)
 }
 
 void Mega8Frame::DoOpen() {
+	//SetPause(true);
+
     wxFileDialog* OpenDialog = new wxFileDialog(
 		this, _("Open a M/S/Hi-Res/Chip-8 Rom"), CurrentRomDir, wxEmptyString,
 		_("All Chip-8 Roms (*.ch8;*.sc8;*.mc8)|*.ch8;*.sc8;*.mc8|All files (*)|*"),
 		wxFD_OPEN, wxDefaultPosition);
 
 	// Creates a "open file" dialog with 4 file types
+	SetFullScreenMode(false);
 	if (OpenDialog->ShowModal() == wxID_OK) // if the user click "Open" instead of "Cancel"
 	{
 	    hardReset();
@@ -453,6 +469,7 @@ void Mega8Frame::DoOpen() {
 
 	// Clean up
 	OpenDialog->Destroy();
+	//SetPause(false);
 }
 
 void Mega8Frame::DoScreenshot()
@@ -464,6 +481,7 @@ void Mega8Frame::DoScreenshot()
 		wxFD_SAVE | wxFD_OVERWRITE_PROMPT, wxDefaultPosition);
 
 	// Creates a "open file" dialog with 4 file types
+	SetFullScreenMode(false);
 	if (SaveDialog->ShowModal() == wxID_OK && SaveDialog->GetFilename() != wxEmptyString) // if the user click "Open" instead of "Cancel"
 	{
 	    // Take the screenshot from OpenL's context
@@ -486,7 +504,7 @@ void Mega8Frame::DoScreenshot()
                 screenShot.SaveFile(fileName, wxBITMAP_TYPE_BMP);
                 break;
 	    }
-	    wxMessageBox(_("Screenshot saved."), APP_SHORTNAME, wxOK);
+	    wxMessageBox(_("Screenshot saved: ") +  fileName, APP_SHORTNAME, wxOK);
 	}
 
 	// Clean up
@@ -539,6 +557,7 @@ void Mega8Frame::exitApplication()
 	SDL_Quit();
 
     if (_machine) {
+		_machine->destroy();
         delete _machine;
         _machine = NULL;
     }
@@ -551,16 +570,18 @@ void Mega8Frame::exitApplication()
 void Mega8Frame::DoStartCPUThread()
 {
     if (_machine) {
-        if (_machine->loaded()) {
+        if (_machine->loaded() && _CPUThread == NULL) {
+			_Paused = false;
             _CPUThread = new CPUThreadHandler(this);
             // Create the thread
             if ( _CPUThread->Run() != wxTHREAD_NO_ERROR ) {
-                    wxMessageBox("Error", "test");
                 wxLogError("Can't create thread!");
                 delete _CPUThread;
                 _machine = NULL;
             }
-        }
+        } else {
+			wxLogError("Can't create thread!");
+		}
     }
 }
 
@@ -574,7 +595,7 @@ void Mega8Frame::DoPauseCPUThread()
         // which in turn may return (because it completes its work) making
         // invalid the m_pThread pointer
         if (_CPUThread->Pause() != wxTHREAD_NO_ERROR )
-            wxLogError("Can't pause the thread!");
+            printf("Can't pause the thread!");
     }
 
     _Paused = true;
@@ -643,7 +664,7 @@ void Mega8Frame::OnCPUThreadUpdate(wxThreadEvent&)
                 } else {
                     // Convert frequency
                     unsigned char *buf = _machine->getSoundBuffer();
-                    for (int i = 0; i < (_machine->getSoundBufferSize() * freqRatio); i++) {
+                    for (unsigned int i = 0; i < (_machine->getSoundBufferSize() * freqRatio); i++) {
                         int index = (int)floor(i / freqRatio);
                         convertedSoundBuffer[i] = buf[index];
                     }
@@ -827,6 +848,9 @@ void Mega8Frame::DeleteCPUThread()
     if (_Paused)
         DoResumeCPUThread();
 
+	bool sExit = _exit;
+	_exit = true;
+
     {
         wxCriticalSectionLocker enter(_CPUThreadCS);
         if (_CPUThread)         // does the thread still exist?
@@ -854,6 +878,8 @@ void Mega8Frame::DeleteCPUThread()
         // wait for thread completion
         wxThread::This()->Sleep(1);
     }
+
+	_exit = sExit;
 }
 
 void Mega8Frame::onIdle(wxIdleEvent &event) {
@@ -865,22 +891,26 @@ void Mega8Frame::onIdle(wxIdleEvent &event) {
 
     if (!_exit) {
         if (_machine) {
-            if (_machine->loaded() ) {
+			if (_machine->loaded() && !_Paused) {
                 // Determine if we use sleep (May slow down emulation but may the CPU be cooler)
-                bool useSleep = Mega8Config::getInstance().getUseSleep();
 
                 t_end = chrono.TimeInMicro();
                 t =  t_end - t_start;
 
-                // Frame Limit: 300 FPS
-                if (_machine->getScreen() != NULL && t >= 3333.33) {
-                    GLDisplay->Render(_machine->getScreen(), _machine->getWidth(), _machine->getHeight());
-                    GLDisplay->Flip();
+                // Frame Limit: 60 FPS or VBLANK
+				if (_machine->getScreen() != NULL && (t > 16667 || _machine->getVBlank(true))) {
+					byte *bufferScreen = (byte*) malloc(_machine->getScreenSizeOf());
+					if (bufferScreen) {
+						memcpy(bufferScreen, _machine->getScreen(), _machine->getScreenSizeOf());
+						GLDisplay->Render(bufferScreen, _machine->getWidth(), _machine->getHeight());
+						GLDisplay->Flip();
 
-                    chrono.Start(0);
-                    t_start = chrono.TimeInMicro();
+						chrono.Start(0);
+						t_start = chrono.TimeInMicro();
 
-                    updateStatusFPS();
+						updateStatusFPS();
+						free(bufferScreen);
+					}
                 }
 
                 // Update joystick if we have
@@ -889,7 +919,7 @@ void Mega8Frame::onIdle(wxIdleEvent &event) {
                     Joystick *joy = Joysticks::getInstance().updateJoyState();
                     // If there is a state update in one of the joysticks
                     if (joy) {
-                        int *keys = Mega8Config::getInstance().getKeys();
+                        long *keys = Mega8Config::getInstance().getKeys();
                         for (int i = 0; i < 16; i++) {
                             if (Mega8Config::getInstance().getKeyIsJoy(i)) {
                                 // Convert joy value to code
@@ -930,80 +960,102 @@ wxThread::ExitCode CPUThreadHandler::Entry()
     wxStopWatch chrono;
 
     chrono.Start(0);
-    wxLongLong t_start = chrono.TimeInMicro();
-    wxLongLong t_end = chrono.TimeInMicro();
-    wxLongLong t;
+    wxLongLong t_start;
+    wxLongLong t_end;
+    long t;
+	static int waitTime = 0;
     unsigned long baseFrequency, currentFrequency;
 
+	//wxCriticalSectionLocker enter(_handler->_CPUThreadCS);
+
     // TestDestroy is called to ensure that calls Pause(), Delete(),...
-    while (!TestDestroy()) {
+	bool exitThread = TestDestroy();
+	t_start = chrono.TimeInMicro();
+	while (!exitThread && !_handler->_exit) {
 
-        // Determine if we use sleep (May slow down emulation but may the CPU be cooler)
-        bool useSleep = Mega8Config::getInstance().getUseSleep();
+		// Determine if we use sleep (May slow down emulation but may the CPU be cooler)
+		bool useSleep = Mega8Config::getInstance().getUseSleep();
 
-        // Calc elapsed time
-        //if (!useSleep) {
-        t_end = chrono.TimeInMicro();
-        t = (t_end - t_start);
-        //}
+		// Base frequency for this type of chip
+		baseFrequency = _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ;
 
-        // Base frequency for this type of chip
-        baseFrequency = _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ;
+		// Get actual frequency
+		if (_handler->_frequency != -1)
+			// User sets the frequency
+			currentFrequency = _handler->_frequency;
+		else {
+			// Frequency is set on auto
+			currentFrequency = _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ;
+		}
 
-        // Get actual frequency
-        if (_handler->_frequency != -1)
-            // User sets the frequency
-            currentFrequency = _handler->_frequency;
-        else {
-            // Frequency is set on auto
-            currentFrequency = _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ;
-        }
+		/*wxPrintf("Start: %ld - End: %ld - T: %ld - Current frequency: %.5f\n", t_start,
+																				t_end,
+																				t,
+																				getMicroFromHertz(currentFrequency));*/
 
-        /*wxPrintf("Start: %ld - End: %ld - T: %ld - Current frequency: %.5f\n", t_start,
-                                                                                t_end,
-                                                                                t,
-                                                                                getMicroFromHertz(currentFrequency));*/
+		// How much cycles do we must execute to fill the time that have passed since the last loop ?
+		t = 0;
+		long cycleMicro =  getMicroFromHertz(currentFrequency);
+		double cycleMilli = getMilliFromHertz(currentFrequency);
 
-        // Can we execute the next instruction ?
-        if (t >= getMicroFromHertz(currentFrequency)) {
-            if (_handler->_machine) {
-                if (_handler->_machine->loaded()) {
-                    // Execute one opcode and give the actual frequency so the chip can know when he must decrease the clocks
-                    _handler->_machine->execute(getMilliFromHertz(currentFrequency));
-                }
-            }
+		t_end = chrono.TimeInMicro();
+		t = (t_end.ToLong() - t_start.ToLong());
 
-            // If base frequency changed, we changed Chip-8's type
-            if (baseFrequency != _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ) {
-                if (Mega8Config::getInstance().getSpeedAuto()) {
-                    // Search for new frequency multiplicator
-                    for (int i = 0; i < (int)(sizeof(FREQ_MENU_INDEX) / sizeof(float)); i++)
-                        if (FREQ_MENU_INDEX[i] == _handler->_machine->getFrequencyMultiplicator()) {
-                            Mega8Config::getInstance().setFrequencyRatio(_handler->_machine->getType(), i);
-                        }
-                }
+		if (t > cycleMicro) {
+			// Reinit chrono
+			/*chrono.Start(0);
+			t_start = chrono.TimeInMicro();*/
+			if (_handler->_machine) {
+				if (_handler->_machine->loaded()) {
+					// Execute one opcode and give the actual frequency so the chip can know when he must decrease the clocks
+					do {
+						_handler->_machine->execute(cycleMilli);
+						exitThread = TestDestroy();
+						cycleMicro += cycleMicro;
 
-                // Adjust frequency with new type of Chip based upon what the user has chosen for it
-                // Or if SpeedAuto is set, it's the Chip that decides
-                _handler->updateFrequency(FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_handler->_machine->getType())]);
-            }
+						// If base frequency changed, we changed Chip-8's type
+						if (baseFrequency != _handler->_machine->getFrequencyMultiplicator() * BASE_FREQ) {
+							if (Mega8Config::getInstance().getSpeedAuto()) {
+								// Search for new frequency multiplicator
+								for (int i = 0; i < (int)(sizeof(FREQ_MENU_INDEX) / sizeof(float)); i++)
+									if (FREQ_MENU_INDEX[i] == _handler->_machine->getFrequencyMultiplicator()) {
+										Mega8Config::getInstance().setFrequencyRatio(_handler->_machine->getType(), i);
+									}
+							}
 
-            wxQueueEvent(_handler, new wxThreadEvent(wxEVT_COMMAND_CPUTHREAD_UPDATE));
+							// Adjust frequency with new type of Chip based upon what the user has chosen for it
+							// Or if SpeedAuto is set, it's the Chip that decides
+							wxQueueEvent(_handler, new wxThreadEvent(wxEVT_COMMAND_CPUTHREAD_UPDATE));
+							_handler->updateFrequency(FREQ_MENU_INDEX[Mega8Config::getInstance().getFrequencyRatio(_handler->_machine->getType())]);
+							wxThread::Yield();
+						}
 
-            // Restart Counter
-            //if (!useSleep) {
-            chrono.Start(0);
-            t_start = chrono.TimeInMicro();
-            //}
-        }
+					} while (!_handler->_machine->getVBlank() && !exitThread);
 
-        // Sleep some micro-seconds (half of waiting time)
-        if (useSleep) {
-            //wxPrintf("Sleeping for %ld microseconds...\n", (unsigned long)getMicroFromHertz(currentFrequency));
-            wxMicroSleep((unsigned long)getMicroFromHertz(currentFrequency) / 2);
-            //usleep((unsigned long)getMicroFromHertz(currentFrequency));
-        }
-    }
+				}
+			}
+
+			wxQueueEvent(_handler, new wxThreadEvent(wxEVT_COMMAND_CPUTHREAD_UPDATE));
+
+			/*t_end = chrono.TimeInMicro();
+			t = (t_end.ToLong() - t_start.ToLong());
+			if (cycleMicro - t >= 0) {
+				wxMicroSleep(cycleMicro - t);
+				// Restart Counter
+				chrono.Start(0);
+				t_start = chrono.TimeInMicro();
+			}*/
+			//wxMicroSleep(cycleMicro);
+
+			// Restart Counter
+			chrono.Start(0);
+			t_start = chrono.TimeInMicro();
+		} else {
+			int waitTime = (cycleMicro - t);
+			wxMicroSleep((waitTime > 0) ? waitTime : cycleMicro);
+			exitThread = TestDestroy();
+		}
+	}
     // signal the event handler that this thread is going to be destroyed
     // NOTE: here we assume that using the Handler pointer is safe,
     //       (in this case this is assured by the Frame destructor)
@@ -1107,20 +1159,22 @@ void Mega8Frame::hardReset() {
     }
 
     // Make a "hard" reset
+	_machine->destroy();
     delete _machine;
     _machine = new Chip8();
     _machine->initialize(CHIP8);
 
     // Initialize machine
     GLDisplay->setStopRender(false);
-    Mega8Config::getInstance().saveConfig(CurrentRomName);
-    Mega8Config::getInstance().reloadConfig(CurrentRomName);
+	Mega8Config::getInstance().saveConfig(CurrentRomName);
+    //Mega8Config::getInstance().reloadConfig(CurrentRomName);
     SetSyncClock(Mega8Config::getInstance().getSyncClock());
     SetFiltered(Mega8Config::getInstance().getFiltered());
     SetFullScreenMode(Mega8Config::getInstance().getFullScreen());
     SetColorTheme(Mega8Config::getInstance().getColorTheme());
     SetSound(Mega8Config::getInstance().getSound());
     SetUseSleep(Mega8Config::getInstance().getUseSleep());
+	SetInverseColor(Mega8Config::getInstance().getInverseColor());
 }
 
 void Mega8Frame::CloseRom() {
@@ -1205,7 +1259,7 @@ void Mega8Frame::OnMenuSpeedSelected(wxCommandEvent& event)
         }
 
         /*if (event.GetId() == Mega8Frame::idMenuSpeed1024) {
-            _frequency = BASE_FREQ * FREQ_MENU_INDEX[10];
+            _frequencydo = BASE_FREQ * FREQ_MENU_INDEX[10];
             Mega8Config::getInstance().setFrequencyRatio(_machine->getType(), 10);
         }*/
 
@@ -1302,7 +1356,7 @@ void Mega8Frame::updateStatusFPS() {
 
 void Mega8Frame::OnKeyDown(wxKeyEvent& event)
 {
-    int *keys;
+    long *keys;
     int keyCode = event.GetKeyCode();
     int freqRatio;
 
@@ -1338,7 +1392,6 @@ void Mega8Frame::OnKeyDown(wxKeyEvent& event)
                         SetPause(true);
                     }
                     MenuSpeedAuto->Check(false);
-                    _frequency = 0;
 
                     freqRatio = Mega8Config::getInstance().getFrequencyRatio(_machine->getType());
                     if (freqRatio >= (sizeof(FREQ_MENU_INDEX)/sizeof(float)) - 1)
@@ -1360,7 +1413,6 @@ void Mega8Frame::OnKeyDown(wxKeyEvent& event)
                         SetPause(true);
                     }
                     MenuSpeedAuto->Check(false);
-                    _frequency = 0;
 
                     freqRatio = Mega8Config::getInstance().getFrequencyRatio(_machine->getType());
                     if (freqRatio > 0)
@@ -1433,7 +1485,7 @@ void Mega8Frame::OnKeyDown(wxKeyEvent& event)
 
 void Mega8Frame::OnKeyUp(wxKeyEvent& event)
 {
-    int *keys;
+    long *keys;
 
     if (!wxGetKeyState(WXK_CONTROL)) {
         keys = Mega8Config::getInstance().getKeys();

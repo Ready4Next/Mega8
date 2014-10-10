@@ -1,19 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
-	<ActiveTarget name="Release" />
-	<File name="src/Chip8GL.cpp" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<ActiveTarget name="Win64" />
+	<File name="include/Chip8GL.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="7811" topLine="275" />
-		</Cursor>
-	</File>
-	<File name="src/Joysticks.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="18041" topLine="511" />
-		</Cursor>
-	</File>
-	<File name="Chip8/Chip8.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="14817" topLine="377" />
+			<Cursor1 position="1375" topLine="22" />
 		</Cursor>
 	</File>
 	<File name="include/bell.h" open="0" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -21,64 +11,9 @@
 			<Cursor1 position="9931" topLine="114" />
 		</Cursor>
 	</File>
-	<File name="Mega8App.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="513" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="Chip8/Chip8.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7937" topLine="282" />
-		</Cursor>
-	</File>
-	<File name="include/game_over.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="0" topLine="30" />
-		</Cursor>
-	</File>
-	<File name="include/Chip8GL.h" open="0" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1375" topLine="22" />
-		</Cursor>
-	</File>
-	<File name="wxsmith/Mega8frame.wxs" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="39" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="InputDialog.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="283" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="InputDialog.cpp" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="6594" topLine="100" />
-		</Cursor>
-	</File>
-	<File name="Mega8Config.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2173" topLine="77" />
-		</Cursor>
-	</File>
-	<File name="Mega8Main.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="3330" topLine="90" />
-		</Cursor>
-	</File>
-	<File name="Mega8Config.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="2678" topLine="51" />
-		</Cursor>
-	</File>
 	<File name="include/Joysticks.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="972" topLine="33" />
-		</Cursor>
-	</File>
-	<File name="README.md" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1012" topLine="15" />
 		</Cursor>
 	</File>
 	<File name="res.rc" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -86,14 +21,79 @@
 			<Cursor1 position="50" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="Mega8Main.cpp" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="Mega8Main.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="40267" topLine="912" />
+			<Cursor1 position="3330" topLine="90" />
+		</Cursor>
+	</File>
+	<File name="InputDialog.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="283" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/Chip8GL.cpp" open="0" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7811" topLine="275" />
+		</Cursor>
+	</File>
+	<File name="Chip8/Chip8.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="7937" topLine="282" />
 		</Cursor>
 	</File>
 	<File name="Mega8App.cpp" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="411" topLine="10" />
+		</Cursor>
+	</File>
+	<File name="include/game_over.h" open="0" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="30" />
+		</Cursor>
+	</File>
+	<File name="Mega8App.h" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="513" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="Mega8Config.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2532" topLine="77" />
+		</Cursor>
+	</File>
+	<File name="wxsmith/Mega8frame.wxs" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="39" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="src/Joysticks.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="12726" topLine="320" />
+		</Cursor>
+	</File>
+	<File name="Mega8Config.h" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2678" topLine="51" />
+		</Cursor>
+	</File>
+	<File name="Mega8Main.cpp" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="22443" topLine="449" />
+		</Cursor>
+	</File>
+	<File name="README.md" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1012" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="InputDialog.cpp" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6594" topLine="100" />
+		</Cursor>
+	</File>
+	<File name="Chip8/Chip8.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="14817" topLine="377" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>

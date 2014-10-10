@@ -2,7 +2,16 @@
 #define CHIP8_H
 
 #include <stdlib.h>     /* srand, rand */
-#include <sys/time.h>       /* time */
+#include <math.h>
+
+/* Timeval & gettimeofday */
+#if defined(_MSC_VER) || defined(__MINGW32__) || defined(WIN32)
+	#include <time.h>
+	#include <winsock.h>
+#else
+	#include <sys/time.h>
+#endif
+
 #include <cstdio>
 #include <string.h>     // memcpy
 #include <math.h>
@@ -23,7 +32,9 @@ struct TCOLOR {
     unsigned int backColor;
 };
 
-#define byte unsigned char
+#ifndef RPCNDR_H
+	typedef unsigned char byte;
+#endif
 
 #define getNanoFromHertz(h)         (((double)1.0/h) * 1000) * 1000000)
 #define getMicroFromHertz(h)        (((double)1.0/h) * 1000000)
@@ -317,6 +328,9 @@ class Chip8: public BaseCHIP8
         // Accesseurs - Display
         unsigned char *getScreen() { return _gfx; };
 
+		// Simulate VBLANK
+		bool getVBlank(bool flip = false) { if (_VBlank) { _VBlank = (flip ? false : _VBlank); return true; } return _VBlank; }
+
         // Keyboard
         bool getKey(unsigned char key) { return _key[key]; }
         void setKey(unsigned char key, bool value) { _key[key] = value; }
@@ -348,6 +362,7 @@ class Chip8: public BaseCHIP8
         void loadKeypad() ;
         void execute(double frequencyInMs);
         bool isRunning() { return _isRunning; }
+		void destroy();
 
     private:
 
@@ -355,6 +370,7 @@ class Chip8: public BaseCHIP8
         bool _isRunning;
         bool _needToRefresh;
         bool _soundRefresh;
+		bool _VBlank;
         SoundState _soundState;
 
         // Does the clock follow the CPU Frequency or it stick to the base frequency of 60 Hz ?
@@ -400,7 +416,7 @@ class Chip8: public BaseCHIP8
         unsigned char _timerSound;
 
         // Stack
-        stack<unsigned short> _callStack;
+        stack<unsigned int> _callStack;
         deque<string> _opcodeTrace;
         //unsigned short _stack[16];
         //unsigned short _sp;
@@ -421,14 +437,14 @@ class Chip8: public BaseCHIP8
         void opcodesOther(byte Code, byte X);
 
         // Get/Set pixel ** Buffer Only **
-        void setPixel(byte X, byte Y, byte R, byte G, byte B, byte Alpha);
-        void setPixel(byte X, byte Y, unsigned int color);
-        void setPixel(unsigned int adr, byte R, byte G, byte B, byte Alpha);
-        void setPixel(unsigned int adr, unsigned int color);
+        void setPixel(byte X, byte Y, byte R, byte G, byte B, byte Alpha, bool onBuffer);
+        void setPixel(byte X, byte Y, unsigned int color, bool onBuffer);
+        void setPixel(unsigned int adr, byte R, byte G, byte B, byte Alpha, bool onBuffer);
+        void setPixel(unsigned int adr, unsigned int color, bool onBuffer);
 
         unsigned int getPixelAdr(byte X, byte Y);
-        unsigned int getPixel(byte X, byte Y);
-        unsigned int getPixel(unsigned int adr);
+        unsigned int getPixel(byte X, byte Y, bool onBuffer);
+        unsigned int getPixel(unsigned int adr, bool onBuffer);
         unsigned int getMegaColor(int spriteX, int spriteY, int destX, int destY);
 
         // Animations

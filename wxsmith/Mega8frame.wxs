@@ -28,6 +28,7 @@
 				<object class="wxMenuItem" name="idMenuUseSleep" variable="MenuUseSleep" member="yes">
 					<label>Use Sleep</label>
 					<help>Enable sleep in thread (recommended)</help>
+					<enabled>0</enabled>
 					<handler function="OnMenuUseSleepSelected" entry="EVT_MENU" />
 					<checkable>1</checkable>
 				</object>

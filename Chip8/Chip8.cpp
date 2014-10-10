@@ -1,5 +1,19 @@
 #include "Chip8.h"
-#include <unistd.h>
+#ifndef WIN32
+	#include <unistd.h>
+#endif
+
+#if defined(_MSC_VER) || defined(__MINGW32__)  || defined(WIN32)
+int gettimeofday(struct timeval* tp, void* tzp) {
+	typedef std::chrono::high_resolution_clock Clock;
+
+	auto duration = Clock::now().time_since_epoch();
+	tp->tv_sec = (long)chrono::duration_cast<chrono::seconds>(duration).count();
+    tp->tv_usec = (long)chrono::duration_cast<chrono::microseconds>(duration).count();
+    // Success ;-)
+    return 0;
+}
+#endif
 
 Chip8::Chip8(): BaseCHIP8()
 {
@@ -16,7 +30,10 @@ Chip8::Chip8(): BaseCHIP8()
 
 Chip8::~Chip8() {
     //dtor
-    _loaded = false;
+}
+
+void Chip8::destroy() {
+	_loaded = false;
     _isRunning = false;
     if (_soundBuffer != NULL)
         free(_soundBuffer);
@@ -58,34 +75,25 @@ void Chip8::reset() {
     unsigned int i;
 
     // Mega-Chip Sound
-    free(_soundBuffer);
+	if (_soundBuffer != NULL)
+		free(_soundBuffer);
     _soundBuffer = NULL;
     _soundRepeat = 0;
 
-    // Allocate the screen
-    if (_gfx != NULL)
-        free(_gfx);
-    _gfx = (unsigned char*)malloc(getScreenSizeOf());
-    if (_gfxBuffer != NULL)
-        free(_gfxBuffer);
-    _gfxBuffer = (unsigned char *)malloc(getScreenSizeOf());
+	ChangeMachineType(CHIP8, false);
 
-    // Clear screen & gfx
-    clearScreen();
-    clearGfx();
+	_loaded = false;
+	_pc = 0x200;
+	_timerDelay = 0;
+	_timerSound = 0;
+	_I = 0;
 
-    _loaded = false;
-    _pc = 0x200;
-    _timerDelay = 0;
-    _timerSound = 0;
-    _I = 0;
+	for (i = 0; i < 16; i++) {
+		_key[i] = false;
+		_V[i] = 0;
+	}
 
-    for (i = 0; i < 16; i++) {
-        _key[i] = false;
-        _V[i] = 0;
-    }
-
-    _isRunning = false;
+	_isRunning = false;
 }
 
 /*
@@ -97,13 +105,37 @@ void Chip8::reset() {
 void Chip8::ChangeMachineType(Chip8Types Type, bool extMode) {
     setExtendedMode(extMode);
     setType(Type);
+
+    // Allocate the screen
     if (_gfx != NULL)
         free(_gfx);
-    _gfx = (unsigned char *)malloc(getScreenSizeOf());
-    if (_gfxBuffer != NULL)
-        free(_gfxBuffer);
-    _gfxBuffer = (unsigned char *)malloc(getScreenSizeOf());
-    clearGfx();
+    _gfx = (unsigned char*)malloc(getScreenSizeOf());
+	
+	if (_gfx != NULL) {
+		if (_gfxBuffer != NULL)
+			free(_gfxBuffer);
+		_gfxBuffer = (unsigned char *)malloc(getScreenSizeOf());
+
+		if (_gfxBuffer != NULL) {
+			// Clear screen & gfx
+			clearScreen();
+			clearGfx();
+		} else {
+			printf("Can't allocate screenBuffer (%dx%dx%d) !\n", getWidth(), getHeight(), getBytesPerPixel());
+			if (_gfx != NULL)
+				free(_gfx);
+
+			_gfx = NULL;
+			_gfxBuffer = NULL;
+		}
+	} else {
+		if (_gfxBuffer != NULL)
+			free(_gfxBuffer);
+		printf("Can't allocate screen (%dx%dx%d) !\n", getWidth(), getHeight(), getBytesPerPixel());
+
+		_gfx = NULL;
+		_gfxBuffer = NULL;
+	}
 }
 
 /********************************** Graphics **********************************/
@@ -135,42 +167,54 @@ unsigned int Chip8::getPixelAdr(byte X, byte Y) {
     }
 }
 
-void Chip8::setPixel(byte X, byte Y, byte R, byte G, byte B, byte Alpha) {
-    if (_gfxBuffer != NULL) {
+void Chip8::setPixel(byte X, byte Y, byte R, byte G, byte B, byte Alpha, bool onBuffer = true) {
+    
+	byte *curGfx = (onBuffer ? _gfxBuffer : _gfx);
+
+	if (curGfx != NULL) {
         unsigned int adr = getPixelAdr(X, Y);
-        setPixel(adr, R, G, B, Alpha);
+        setPixel(adr, R, G, B, Alpha, onBuffer);
     } else {
         printf("CHIP8::setPixel(X,Y,RGBA): gfxBuffer is NULL !\n");
     }
 }
 
-void Chip8::setPixel(byte X, byte Y, unsigned int color) {
-    if (_gfxBuffer != NULL) {
+void Chip8::setPixel(byte X, byte Y, unsigned int color, bool onBuffer = true) {
+    
+	byte *curGfx = (onBuffer ? _gfxBuffer : _gfx);
+
+	if (curGfx != NULL) {
         unsigned int adr = getPixelAdr(X, Y);
-        setPixel(adr, color);
+        setPixel(adr, color, onBuffer);
     } else {
         printf("CHIP8::setPixel(X,Y,color): gfxBuffer is NULL !\n");
     }
 }
 
-unsigned int Chip8::getPixel(byte X, byte Y) {
-    if (_gfxBuffer != NULL) {
+unsigned int Chip8::getPixel(byte X, byte Y, bool onBuffer = true) {
+
+	byte *curGfx = (onBuffer ? _gfxBuffer : _gfx);
+	
+	if (curGfx != NULL) {
         unsigned int adr = getPixelAdr(X, Y);
-        return getPixel(adr);
+        return getPixel(adr, onBuffer);
     } else {
         printf("CHIP8::getPixel(X,Y): gfxBuffer is NULL !\n");
         return 0;
     }
 }
 
-void Chip8::setPixel(unsigned int adr, byte R, byte G, byte B, byte Alpha) {
-    if (_gfxBuffer != NULL) {
+void Chip8::setPixel(unsigned int adr, byte R, byte G, byte B, byte Alpha, bool onBuffer = true) {
+
+	byte *curGfx = (onBuffer ? _gfxBuffer : _gfx);
+
+	if (curGfx != NULL) {
         if (adr < getScreenSizeOf()) {
             // Colors are in RGBA
-            _gfxBuffer[adr    ] = R;
-            _gfxBuffer[adr + 1] = G;
-            _gfxBuffer[adr + 2] = B;
-            _gfxBuffer[adr + 3] = Alpha;
+            curGfx[adr    ] = R;
+			curGfx[adr + 1] = G;
+			curGfx[adr + 2] = B;
+			curGfx[adr + 3] = Alpha;
         } else {
             printf("CHIP8::setPixel(adr,RGBA): Trying to write from outside the screen ! Adress: %04X.\n", adr);
         }
@@ -179,29 +223,35 @@ void Chip8::setPixel(unsigned int adr, byte R, byte G, byte B, byte Alpha) {
     }
 }
 
-void Chip8::setPixel(unsigned int adr, unsigned int color) {
-    if (_gfxBuffer != NULL) {
+void Chip8::setPixel(unsigned int adr, unsigned int color, bool onBuffer = true) {
+    
+	byte *curGfx = (onBuffer ? _gfxBuffer : _gfx);
+	
+	if (curGfx != NULL) {
         // Colors are in RGBA
         byte R = getR(color);
         byte G = getG(color);
         byte B = getB(color);
         byte Alpha = getAlpha(color);
 
-        setPixel(adr, R, G, B, Alpha);
+        setPixel(adr, R, G, B, Alpha, onBuffer);
     } else {
         printf("CHIP8::setPixel(adr, color): gfxBuffer is NULL !\n");
     }
 }
 
-unsigned int Chip8::getPixel(unsigned int adr) {
-    if (_gfxBuffer != NULL) {
+unsigned int Chip8::getPixel(unsigned int adr, bool onBuffer = true) {
+   
+	byte *curGfx = (onBuffer ? _gfxBuffer : _gfx);
+	
+	if (curGfx != NULL) {
         // Ensure we're on screen
         if (adr < getScreenSizeOf()) {
             // Array Address
-            return getRGBA(_gfxBuffer[adr    ],
-                           _gfxBuffer[adr + 1],
-                           _gfxBuffer[adr + 2],
-                           _gfxBuffer[adr + 3]);
+			return getRGBA(curGfx[adr    ],
+						   curGfx[adr + 1],
+                           curGfx[adr + 2],
+                           curGfx[adr + 3]);
         } else {
             printf("CHIP8::getPixel(adr): Trying to read from outside of the screen ! Adress: %04X.\n", adr);
             return 0;
@@ -269,24 +319,19 @@ unsigned int BlendMul(unsigned int color, unsigned int newColor) {
 
 void Chip8::setScreenAlpha(float alpha) {
     if (alpha < 1 && alpha > 0) {
-        for (int i = 0; i < getScreenSizeOf(); i += getBytesPerPixel()) {
+        for (unsigned int i = 0; i < getScreenSizeOf(); i += getBytesPerPixel()) {
             // Calculate all pixels new alpha value from Screen
-            unsigned int color = getRGBA(_gfx[ i % 4     ],
-                                         _gfx[(i % 4) + 1],
-                                         _gfx[(i % 4) + 2],
-                                         _gfx[(i % 4) + 3]);
+			unsigned int color = getPixel(i % 4, false);
+
             // Calculate already defined color alpha
-            if (_gfx[(i % 4) + 3] != 255)
-                color = getColorAlpha(color, (float)_gfx[(i % 4) + 3] / 255.0);
+            if (getAlpha(color) != 255)
+                color = getColorAlpha(color, (float)getAlpha(color) / 255.0);
 
             // Calculate the new alpha set by the instruction & blend it with the buffer
             color = BlendAlpha(getPixel(i), color, alpha);
 
             // Set the new pixel directly on screen
-            _gfx[ i % 4     ] = (byte) getR(color) % 0xFF;
-            _gfx[(i % 4) + 1] = (byte) getB(color) % 0xFF;
-            _gfx[(i % 4) + 2] = (byte) getG(color) % 0xFF;
-            _gfx[(i % 4) + 3] = (byte) getAlpha(color) % 0xFF;
+			setPixel(i % 4, color, false);
         }
     }
 }
@@ -294,7 +339,7 @@ void Chip8::setScreenAlpha(float alpha) {
 unsigned int Chip8::getMegaColor(int spriteX, int spriteY, int destX, int destY) {
     // In the palette, colors are already in RGBA
     unsigned int color = _palette[readMemB(_I + spriteX + spriteY)];
-    unsigned int oldColor = getPixel(destX, destY);
+    unsigned int oldColor = getPixel(destX, destY, true);
 
     // if color == 0, draw transparent
     if ((color >> 8) == 0) {
@@ -361,10 +406,7 @@ void Chip8::clearScreen() {
     if (_gfx != NULL) {
         for (unsigned int i = 0; i < getScreenSizeOf(); i += getBytesPerPixel()) {
             color = getColor(getColorTheme()).backColor;
-            _gfx[i    ] = 0;
-            _gfx[i + 1] = 0;
-            _gfx[i + 2] = 0;
-            _gfx[i + 3] = 255;
+            setPixel(i, color, false);
         }
     }
 }
@@ -528,16 +570,13 @@ void Chip8::scrollDown(byte lines) {
             color = getRGB(_gfx[start    ], _gfx[start + 1], _gfx[start + 2]);
 
             if ((_gfx[start + 3] == 254 && getType() == MCHIP8) || color == 0) {
-                _gfx[i    ] = _gfxBuffer[i    ];
-                _gfx[i + 1] = _gfxBuffer[i + 1];
-                _gfx[i + 2] = _gfxBuffer[i + 2];
-                _gfx[i + 3] = 254; //_gfxBuffer[i + 3];
+				// Take pixel from buffer
+				unsigned int col = (getPixel(i) & 0xFFFFFF00) | 0xFE;
+				// Set it to screen
+				setPixel(i, col, false);
             } else {
                 // else we take pixel on the screen
-                _gfx[i    ] = _gfx[start    ];
-                _gfx[i + 1] = _gfx[start + 1];
-                _gfx[i + 2] = _gfx[start + 2];
-                _gfx[i + 3] = _gfx[start + 3];
+				setPixel(i, getPixel(start, false), false);
             }
 
             // Do the same in buffer if we're not in Mega Mode
@@ -555,10 +594,7 @@ void Chip8::scrollDown(byte lines) {
             }
 
             // not buffer anymore
-            _gfx[i    ] = getR(color);
-            _gfx[i + 1] = getG(color);
-            _gfx[i + 2] = getB(color);
-            _gfx[i + 3] = 254; //getAlpha(color);
+			setPixel(i, (color & 0xFFFFFF00) | 0xFE, false);
 
             // Do the same in buffer if we're not in Mega Mode
             if (getType() != MCHIP8) {
@@ -588,16 +624,13 @@ void Chip8::scrollUp(byte lines) {
             // If it's transparent Color
             color = getRGB(_gfx[start    ], _gfx[start + 1], _gfx[start + 2]);
             if ((_gfx[start + 3] == 254 && getType() == MCHIP8) || color == 0) {
-                _gfx[i    ] = _gfxBuffer[i    ];
-                _gfx[i + 1] = _gfxBuffer[i + 1];
-                _gfx[i + 2] = _gfxBuffer[i + 2];
-                _gfx[i + 3] = 254; //_gfxBuffer[i + 3];
+                // Take pixel from buffer
+				unsigned int col = (getPixel(i) & 0xFFFFFF00) | 0xFE;
+				// Set it to screen
+				setPixel(i, col, false);
             } else {
                 // else we take pixel on the screen
-                _gfx[i    ] = _gfx[start    ];
-                _gfx[i + 1] = _gfx[start + 1];
-                _gfx[i + 2] = _gfx[start + 2];
-                _gfx[i + 3] = _gfx[start + 3];
+				setPixel(i, getPixel(start, false), false);
             }
 
             // Do the same in buffer if we're not in Mega Mode
@@ -615,10 +648,7 @@ void Chip8::scrollUp(byte lines) {
             }
 
             // not buffer anymore
-            _gfx[i    ] = getR(color);
-            _gfx[i + 1] = getG(color);
-            _gfx[i + 2] = getB(color);
-            _gfx[i + 3] = 254; //getAlpha(color);
+            setPixel(i, (color & 0xFFFFFF00) | 0xFE, false);
 
             // Do the same in buffer if we're not in Mega Mode
             if (getType() != MCHIP8) {
@@ -656,16 +686,10 @@ void Chip8::scrollRight() {
                 // If it's transparent Color
                 color = getRGB(_gfx[current    ], _gfx[current + 1], _gfx[current + 2]);
                 if (_gfx[current + 3] == 254 && getType() == MCHIP8) {
-                    _gfx[newPosition    ] = _gfxBuffer[newPosition    ];
-                    _gfx[newPosition + 1] = _gfxBuffer[newPosition + 1];
-                    _gfx[newPosition + 2] = _gfxBuffer[newPosition + 2];
-                    _gfx[newPosition + 3] = 254; //_gfxBuffer[i + 3];
+					setPixel(newPosition, (getPixel(newPosition) & 0xFFFFFF00) | 0xFE, false);
                 } else {
                     // else we take pixel on the screen
-                    _gfx[newPosition    ] = _gfx[current    ];
-                    _gfx[newPosition + 1] = _gfx[current + 1];
-                    _gfx[newPosition + 2] = _gfx[current + 2];
-                    _gfx[newPosition + 3] = _gfx[current + 3];
+					setPixel(newPosition, getPixel(current, false), false);
                 }
             } else {
                 // And if we're not in MegaMode...
@@ -684,10 +708,7 @@ void Chip8::scrollRight() {
                 }
 
                 // not buffer anymore
-                _gfx[current    ] = getR(color);
-                _gfx[current + 1] = getG(color);
-                _gfx[current + 2] = getB(color);
-                _gfx[current + 3] = 254; //getAlpha(color);
+				setPixel(current, (color & 0xFFFFFF00) | 0xFE, false);
 
                 // Do the same in buffer if we're not in Mega Mode
                 if (getType() != MCHIP8) {
@@ -724,16 +745,10 @@ void Chip8::scrollLeft() {
                 // If it's transparent Color
                 color = getRGB(_gfx[current    ], _gfx[current + 1], _gfx[current + 2]);
                 if ((_gfx[current + 3    ] == 254 && getType() == MCHIP8) || color == 0) {
-                    _gfx[newPosition    ] = _gfxBuffer[newPosition    ];
-                    _gfx[newPosition + 1] = _gfxBuffer[newPosition + 1];
-                    _gfx[newPosition + 2] = _gfxBuffer[newPosition + 2];
-                    _gfx[newPosition + 3] = 254; //_gfxBuffer[i + 3];
+					setPixel(newPosition, (getPixel(newPosition) & 0xFFFFFF00) | 0xFE, false);
                 } else {
                     // else we take pixel on the screen
-                    _gfx[newPosition    ] = _gfx[current    ];
-                    _gfx[newPosition + 1] = _gfx[current + 1];
-                    _gfx[newPosition + 2] = _gfx[current + 2];
-                    _gfx[newPosition + 3] = _gfx[current + 3];
+					setPixel(newPosition, getPixel(current, false), false);
                 }
             } else {
                 // And if we're not in MegaMode...
@@ -753,10 +768,7 @@ void Chip8::scrollLeft() {
                 }
 
                 // not buffer anymore
-                _gfx[current    ] = getR(color);
-                _gfx[current + 1] = getG(color);
-                _gfx[current + 2] = getB(color);
-                _gfx[current + 3] = 254; //getAlpha(color);
+				setPixel(current, (color & 0xFFFFFF00) | 0xFE, false);
 
                 // Do the same in buffer if we're not in Mega Mode
                 if (getType() != MCHIP8) {
@@ -875,7 +887,7 @@ bool Chip8::opcodesMega(byte Code, byte KK,  byte K) {
         case 0x1:
             // Mega-Chip8 0x01NN NNNN
             to = readMemS(_pc);
-            _I = (KK << 16) + readMemS(_pc); //(readMemB(_pc) << 8 | readMemB(_pc + 1));
+            _I = (KK << 16) + readMemS(_pc);
             char buf[50];
             sprintf(buf, "%04X: LDI I, %04X %04X", _pc-2, KK, readMemS(_pc));
             str = buf;
@@ -986,10 +998,13 @@ void Chip8::opcodesSuper(byte Code, byte K) {
             ChangeMachineType(MCHIP8, true);
             break;
         case 0xE0:
+			// Force VBlank everytime we draw in chip8 modes
+			_VBlank = getType() != MCHIP8;
             // Clear screen - ATT in MCHIP8 mode this is used to update the screen
             if (getType() == MCHIP8) {
                 //TODO: screenbuffer
                 flip();
+				_VBlank = true;
             }
             clearGfx();
             break;
@@ -1005,10 +1020,11 @@ void Chip8::opcodesSuper(byte Code, byte K) {
             break;
         // SCHIP8
         case 0xFB:
+			_VBlank = true;
             scrollRight();
-
             break;
         case 0xFC:
+			_VBlank = true;
             scrollLeft();
             break;
         case 0xFD:
@@ -1288,11 +1304,12 @@ void Chip8::execute(double frequencyInMs = BASE_CLOCK_MS) {
     case 0x0000:
         // Special Codes for SCHIP & MCHIP Implementation
         if (Y == 0xC && X == 0x0) {
+			_VBlank = true;
             scrollDown(K);
             break;
         } else if (Y == 0xB && X == 0x0) {
             // Misplaced 00BN+    Scroll display N lines up	(SCRU n)
-            printf("TO TEST Scroll Up - %04X\n", _opcode);
+            _VBlank = true;
             scrollUp(K);
             break;
         }
@@ -1300,6 +1317,7 @@ void Chip8::execute(double frequencyInMs = BASE_CLOCK_MS) {
         // HiRes Chip8 Clearscreen
         if (NNN == 0x230) {
             clearGfx();
+			_VBlank = true;
             break;
         }
 
@@ -1392,6 +1410,8 @@ void Chip8::execute(double frequencyInMs = BASE_CLOCK_MS) {
         break;
 
     case 0xD000:
+		// Force VBlank everytime we draw in chip8 modes
+		_VBlank = getType() != MCHIP8;
         drawScreen(_V[X], _V[Y], K);
         break;
 

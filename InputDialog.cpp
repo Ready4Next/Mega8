@@ -181,7 +181,7 @@ void InputDialog::LoadConfig()
     wxString profileName, path;
     wxArrayString profiles;
     long index;
-    int generalIndex, currentProfileIndex, cnt;
+    int currentProfileIndex, cnt;
     bool finished;
 
     // Insert profile Names
@@ -264,7 +264,7 @@ void InputDialog::LoadKeypad(const wxString &profile)
 
         for (int i = 0; i < 16; i++) {
             // Convert this string representation to keycode
-            int key = Mega8Config::getInstance().getKey(KeypadCorrespondingIndex[i]);
+            long key = Mega8Config::getInstance().getKey(KeypadCorrespondingIndex[i]);
             if (key > 0) {
                 ae->Set(wxACCEL_NORMAL, key, 0);
                 _TxtKeypad[i]->SetValue(ae->ToString());
@@ -336,7 +336,7 @@ void InputDialog::OnTxtKeypadOnKeydown(wxKeyEvent& event)
         }
     }
 
-    wxTextCtrl *txt;
+    wxTextCtrl *txt = NULL;
     int index;
 
     // Find object index
